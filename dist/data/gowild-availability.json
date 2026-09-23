@@ -1,15 +1,34 @@
 {
   "schemaVersion": 1,
-  "status": "ready",
+  "status": "checked",
   "authenticated": true,
-  "lastAttemptAt": "2026-09-23T15:36:48-07:00",
-  "lastSuccessfulAt": null,
-  "checkedFlights": 0,
+  "lastAttemptAt": "2026-09-23T23:22:15.588446+00:00",
+  "lastSuccessfulAt": "2026-09-23T23:20:15.679Z",
+  "checkedFlights": 7,
   "window": {
     "minimumHoursBeforeDeparture": 18,
     "maximumHoursBeforeDeparture": 42
   },
   "availability": [],
   "lastAlertKeys": [],
-  "publicNote": "No Frontier account, traveler, or payment data is stored in this public file."
+  "publicNote": "No Frontier account, traveler, or payment data is stored in this public file.",
+  "coverage": {
+    "complete": false,
+    "travelDates": [
+      "2026-09-24"
+    ],
+    "origin": "SFO",
+    "destinations": [
+      "LAS",
+      "LAX",
+      "DEN",
+      "SAN",
+      "SLC"
+    ],
+    "checkedNonstopFlightsWithinWindow": 7,
+    "note": {
+      "en": "Partial refresh: SFO to LAS, LAX, DEN and SAN for September 24. Seven nonstop flights within the 18–42 hour window checked; no GoWild availability on those flights. SFO to SLC returned connections only. Other directions and September 25 were not refreshed; browser timeouts interrupted the run.",
+      "zh": "部分更新：已检查 9 月 24 日 SFO 飞 LAS、LAX、DEN、SAN 在未来 18–42 小时内的 7 班直飞，未发现这些航班的 GoWild 座位。SFO 飞 SLC 仅返回转机。浏览器超时中断，其他方向及 9 月 25 日尚未更新。"
+    }
+  }
 }

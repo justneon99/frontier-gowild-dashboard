@@ -15,7 +15,7 @@ Do not disable the existing local monitor until the cloud task has completed one
 
 > Create a cloud-browser scheduled monitor for Frontier Airlines GoWild inventory. It must continue running when my computer is off.
 >
-> Use only official Frontier properties under `flyfrontier.com` or `booking.flyfrontier.com` for authenticated inventory. Monitor one-way, one-adult, Frontier-operated nonstop flights in both directions among SJC, SFO, SLC, LAX, SAN, LAS, DEN, and SEA, for departures 18–42 hours from each check. Treat only a fare explicitly labeled GoWild or GoWild! Pass in an authenticated official result as GoWild availability. Keep Standard and Discount Den fares separate and never infer GoWild from a low ordinary price.
+> Use only official Frontier properties under `flyfrontier.com` or `booking.flyfrontier.com` for authenticated inventory. Monitor one-way, one-adult, Frontier-operated nonstop flights in both directions among SJC, SFO, SLC, LAX, SAN, LAS, and DEN, for departures 18–42 hours from each check. Treat only a fare explicitly labeled GoWild or GoWild! Pass in an authenticated official result as GoWild availability. Keep Standard and Discount Den fares separate and never infer GoWild from a low ordinary price.
 >
 > Create active cloud schedules in `America/Los_Angeles`. Start a midnight monitoring run at 12:00 AM Pacific and, within that run, recheck at 12:01, 12:02, 12:04, 12:08, 12:16, 12:32, and 1:00 AM Pacific. Also check at 12:00 PM America/Denver and 12:00 PM America/Los_Angeles. If the scheduler cannot express both noon time zones in one task, create the minimum number of cloud schedules required. Stay quiet when results are unchanged and no action is needed.
 >
