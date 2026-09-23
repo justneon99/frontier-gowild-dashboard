@@ -71,7 +71,7 @@
     .type-label{font-size:11px;padding:5px 8px;border-radius:7px;background:var(--amber-bg);color:#715000;font-weight:800;white-space:nowrap}
     .alert{margin:18px 22px 22px;background:var(--amber-bg);border:1px solid #f0d58b;border-radius:14px;padding:14px 16px;color:#664a08;font-size:13px}
     .radar{padding:22px}
-    .airport-cloud{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:20px}
+    .airport-cloud{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px}
     .airport{border:1px solid var(--line);background:#f8fbf9;border-radius:13px;padding:10px 4px;text-align:center;font-weight:900;cursor:pointer;transition:.15s}
     .airport:hover,.airport.selected{background:var(--green);color:#fff;border-color:var(--green)}
     .bars{display:flex;flex-direction:column;gap:10px}
@@ -96,10 +96,10 @@
   <main>
     <section class="mast">
       <div class="hero">
-        <div class="eyebrow">7 个机场 · 15 个直飞组合</div>
+        <div class="eyebrow">8 个机场 · 18 个直飞组合</div>
         <h1>便宜票出现时，<br>第一眼就能看到。</h1>
         <p>把 GoWild 实时库存、普通低价和 Frontier 直飞班期分开显示，避免把普通促销价误当成通票座位。</p>
-        <div class="hero-tags"><span class="hero-tag">SJC</span><span class="hero-tag">SFO</span><span class="hero-tag">SLC</span><span class="hero-tag">LAX</span><span class="hero-tag">SAN</span><span class="hero-tag">LAS</span><span class="hero-tag">DEN</span></div>
+        <div class="hero-tags"><span class="hero-tag">SJC</span><span class="hero-tag">SFO</span><span class="hero-tag">SLC</span><span class="hero-tag">LAX</span><span class="hero-tag">SAN</span><span class="hero-tag">LAS</span><span class="hero-tag">DEN</span><span class="hero-tag">SEA</span></div>
       </div>
       <aside class="monitor-card">
         <div class="monitor-head"><div><div class="monitor-title">自动监控</div><div class="monitor-big">运行中</div></div><span class="status-pill">ACTIVE</span></div>
@@ -109,8 +109,8 @@
     </section>
 
     <section class="kpis">
-      <div class="kpi"><div class="kpi-label">当前直飞组合</div><div class="kpi-value" id="activeCount">14</div><div class="kpi-note">另有 1 条季节性直飞</div></div>
-      <div class="kpi"><div class="kpi-label">每日有班次</div><div class="kpi-value">12</div><div class="kpi-note">抽样周内每日直飞</div></div>
+      <div class="kpi"><div class="kpi-label">当前直飞组合</div><div class="kpi-value" id="activeCount">17</div><div class="kpi-note">另有 1 条季节性直飞</div></div>
+      <div class="kpi"><div class="kpi-label">每日有班次</div><div class="kpi-value">15</div><div class="kpi-note">抽样周内每日直飞</div></div>
       <div class="kpi"><div class="kpi-label">观察到最低普通票</div><div class="kpi-value">$19</div><div class="kpi-note">可能要求 Discount Den</div></div>
       <div class="kpi"><div class="kpi-label">已验证 GoWild</div><div class="kpi-value">0</div><div class="kpi-note">需要有效通票登录</div></div>
     </section>
@@ -118,7 +118,7 @@
     <div class="layout">
       <div>
         <section class="panel">
-          <div class="panel-head"><div><h2>直飞航线与星期</h2><div class="sub">班期来自代表性样本周；点击右侧箭头查看来源。</div></div><span class="status-pill" id="resultCount">15 条</span></div>
+          <div class="panel-head"><div><h2>直飞航线与星期</h2><div class="sub">班期来自代表性样本周；点击右侧箭头查看来源。</div></div><span class="status-pill" id="resultCount">18 条</span></div>
           <div class="filters">
             <select id="originFilter" aria-label="出发机场"><option value="all">全部出发机场</option></select>
             <select id="destinationFilter" aria-label="到达机场"><option value="all">全部到达机场</option></select>
@@ -157,6 +157,7 @@
           <details><summary>数据限制与来源</summary><ul class="sources">
             <li><a href="https://www.flyfrontier.com/deals/gowild-pass/" target="_blank" rel="noreferrer">Frontier GoWild 官方说明</a></li>
             <li><a href="https://www.flyfrontier.com/frontiermiles/terms-and-conditions" target="_blank" rel="noreferrer">Frontier GoWild 条款</a></li>
+            <li><a href="https://flights.flyfrontier.com/en/flights-from-seattle" target="_blank" rel="noreferrer">Frontier 西雅图公开票价</a></li>
             <li><a href="https://www.flightsfrom.com/" target="_blank" rel="noreferrer">FlightsFrom 直飞班期</a></li>
             <li>价格与班期快照：2026-09-23。票价会在购买前变化。</li>
           </ul></details>
@@ -168,7 +169,7 @@
 
   <script>
     const D=['一','二','三','四','五','六','日'];
-    const airports=['SJC','SFO','SLC','LAX','SAN','LAS','DEN'];
+    const airports=['SJC','SFO','SLC','LAX','SAN','LAS','DEN','SEA'];
     const routes=[
       {pair:'SJC–LAS',from:'SJC',to:'LAS',status:'Active',days:[1,0,0,1,1,0,1],fare:23,source:'https://www.flightsfrom.com/SJC-LAS'},
       {pair:'SJC–LAX',from:'SJC',to:'LAX',status:'Active',days:[1,0,0,1,1,0,1],fare:23,source:'https://www.directflights.com/SJC-LAX'},
@@ -184,10 +185,13 @@
       {pair:'LAX–DEN',from:'LAX',to:'DEN',status:'Active',days:[1,1,1,1,1,1,1],fare:32,source:'https://www.flightsfrom.com/LAX-DEN'},
       {pair:'SAN–LAS',from:'SAN',to:'LAS',status:'Active',days:[1,1,1,1,1,1,1],fare:23,source:'https://www.flightsfrom.com/SAN-LAS'},
       {pair:'SAN–DEN',from:'SAN',to:'DEN',status:'Active',days:[1,1,1,1,1,1,1],fare:21,source:'https://www.flightsfrom.com/SAN-DEN'},
-      {pair:'LAS–DEN',from:'DEN',to:'LAS',status:'Active',days:[1,1,1,1,1,1,1],fare:52,source:'https://www.flightsfrom.com/DEN-LAS'}
+      {pair:'LAS–DEN',from:'DEN',to:'LAS',status:'Active',days:[1,1,1,1,1,1,1],fare:52,source:'https://www.flightsfrom.com/DEN-LAS'},
+      {pair:'SEA–LAS',from:'SEA',to:'LAS',status:'Active',days:[1,1,1,1,1,1,1],fare:27,source:'https://www.flightsfrom.com/SEA-LAS'},
+      {pair:'SEA–DEN',from:'SEA',to:'DEN',status:'Active',days:[1,1,1,1,1,1,1],fare:22,source:'https://www.flightsfrom.com/SEA-DEN'},
+      {pair:'SEA–LAX',from:'SEA',to:'LAX',status:'Active',days:[1,1,1,1,1,1,1],fare:32,source:'https://www.flightsfrom.com/SEA-LAX'}
     ];
     const fares=[
-      ['SFO→LAS',19,'2026-11-11','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-francisco'],['SFO→LAX',19,'2026-12-08','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-francisco'],['SFO→SAN',19,'2026-12-01','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-francisco'],['SLC→DEN',19,'2026-11-14','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-salt-lake-city'],['LAX→LAS',19,'2026-11-04','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-los-angeles'],['SAN→DEN',21,'2026-11-10','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-diego'],['SJC→LAS',23,'2026-11-09','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-jose'],['SJC→LAX',23,'2026-10-26','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-jose'],['SLC→LAS',23,'2026-11-12','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-salt-lake-city'],['SAN→LAS',23,'2026-10-17','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-diego'],['SFO→DEN',26,'2026-11-16','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-francisco'],['DEN→LAX',32,'2026-10-13','普通票','https://flights.flyfrontier.com/en/flights-from-denver'],['SLC→LAX',33,'2026-10-27','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-salt-lake-city'],['DEN→LAS',52,'2026-11-18','普通票','https://flights.flyfrontier.com/en/flights-from-denver']
+      ['SFO→LAS',19,'2026-11-11','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-francisco'],['SFO→LAX',19,'2026-12-08','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-francisco'],['SFO→SAN',19,'2026-12-01','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-francisco'],['SLC→DEN',19,'2026-11-14','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-salt-lake-city'],['LAX→LAS',19,'2026-11-04','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-los-angeles'],['SAN→DEN',21,'2026-11-10','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-diego'],['SEA→DEN',22,'2026-10-21','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-seattle'],['SJC→LAS',23,'2026-11-09','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-jose'],['SJC→LAX',23,'2026-10-26','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-jose'],['SLC→LAS',23,'2026-11-12','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-salt-lake-city'],['SAN→LAS',23,'2026-10-17','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-diego'],['SFO→DEN',26,'2026-11-16','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-francisco'],['SEA→LAS',27,'2026-10-19','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-seattle'],['DEN→LAX',32,'2026-10-13','普通票','https://flights.flyfrontier.com/en/flights-from-denver'],['SEA→LAX',32,'2026-10-23','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-seattle'],['SLC→LAX',33,'2026-10-27','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-salt-lake-city'],['DEN→LAS',52,'2026-11-18','普通票','https://flights.flyfrontier.com/en/flights-from-denver']
     ];
     const statusLabel={Active:'当前直飞',Seasonal:'11/21 起季节性'};
     const statusClass={Active:'active',Seasonal:'seasonal'};
