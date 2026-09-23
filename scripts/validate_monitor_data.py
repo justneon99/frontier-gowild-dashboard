@@ -44,7 +44,8 @@ def main():
         iso(item["departureAt"])
         iso(item["observedAt"])
         frontier_url(item["bookingUrl"])
-        assert float(item["displayedTotal"]) >= 0
+        assert item["currency"] == "USD"
+        assert 0 <= float(item["displayedTotal"]) < 100
     assert history["schemaVersion"] == 1
     iso(history["updatedAt"])
     assert isinstance(history["observations"], list)
@@ -52,7 +53,8 @@ def main():
         origin, destination = item["route"].split("→")
         assert origin in AIRPORTS and destination in AIRPORTS and origin != destination
         assert item["nonstop"] is True
-        assert float(item["amount"]) >= 0
+        assert item["currency"] == "USD"
+        assert 0 <= float(item["amount"]) < 100
         datetime.fromisoformat(item["travelDate"])
         iso(item["observedAt"])
         frontier_url(item["source"])

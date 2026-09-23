@@ -40,3 +40,6 @@ Do not disable the existing local monitor until the cloud task has completed one
 9. Return to the original Codex task and pause the local monitor only after steps 1–8 pass.
 
 Authentication sessions can expire, Frontier can require user takeover, and Frontier may block cloud-browser traffic. The task must report these states rather than treating a failed login as “no GoWild availability.”
+
+
+Only save, display, or alert on USD fares strictly below $100, including displayed taxes and fees. Discard fares of $100 or more before storing observations; never replace them with zero. Apply this to Standard, Discount Den and GoWild. Frontier may return expensive options in its search results; do not persist them. Cycle through all eligible routes in both directions across SJC, SFO, SLC, LAX, SAN, LAS and DEN. Resume previously unchecked directions first and rotate origins rather than always starting with SFO. Persist a non-sensitive route/date coverage cursor locally. Mark interrupted runs as partial and distinguish unchecked routes from checked routes with no qualifying low fare.
