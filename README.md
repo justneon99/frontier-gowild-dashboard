@@ -2,6 +2,8 @@
 
 Public dashboard: <https://justneon99.github.io/frontier-gowild-dashboard/>
 
+To move monitoring to another ChatGPT account with Work Cloud, use [CLOUD_ACCOUNT_HANDOFF.md](CLOUD_ACCOUNT_HANDOFF.md).
+
 The dashboard separates three kinds of information:
 
 - Frontier nonstop routes and representative weekday schedules.
