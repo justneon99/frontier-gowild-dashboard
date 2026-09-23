@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-09-23T15:10:36-07:00",
+  "observations": [
+    {"route":"SFO→LAS","amount":19,"currency":"USD","travelDate":"2026-11-11","observedAt":"2026-09-23T12:00:00-07:00","fareType":"Discount Den Basic","nonstop":true,"source":"https://flights.flyfrontier.com/en/flights-from-san-francisco"},
+    {"route":"SFO→LAX","amount":19,"currency":"USD","travelDate":"2026-12-08","observedAt":"2026-09-23T12:00:00-07:00","fareType":"Discount Den Basic","nonstop":true,"source":"https://flights.flyfrontier.com/en/flights-from-san-francisco"},
+    {"route":"SFO→SAN","amount":19,"currency":"USD","travelDate":"2026-12-01","observedAt":"2026-09-23T12:00:00-07:00","fareType":"Discount Den Basic","nonstop":true,"source":"https://flights.flyfrontier.com/en/flights-from-san-francisco"},
+    {"route":"SLC→DEN","amount":19,"currency":"USD","travelDate":"2026-11-14","observedAt":"2026-09-23T12:00:00-07:00","fareType":"Discount Den Basic","nonstop":true,"source":"https://flights.flyfrontier.com/en/flights-from-salt-lake-city"},
+    {"route":"LAX→LAS","amount":19,"currency":"USD","travelDate":"2026-11-04","observedAt":"2026-09-23T12:00:00-07:00","fareType":"Discount Den Basic","nonstop":true,"source":"https://flights.flyfrontier.com/en/flights-from-los-angeles"},
+    {"route":"SAN→DEN","amount":21,"currency":"USD","travelDate":"2026-11-10","observedAt":"2026-09-23T12:00:00-07:00","fareType":"Discount Den Basic","nonstop":true,"source":"https://flights.flyfrontier.com/en/flights-from-san-diego"},
+    {"route":"SEA→DEN","amount":22,"currency":"USD","travelDate":"2026-10-21","observedAt":"2026-09-23T12:00:00-07:00","fareType":"Discount Den Basic","nonstop":true,"source":"https://flights.flyfrontier.com/en/flights-from-seattle"},
+    {"route":"SJC→LAS","amount":23,"currency":"USD","travelDate":"2026-11-09","observedAt":"2026-09-23T12:00:00-07:00","fareType":"Discount Den Basic","nonstop":true,"source":"https://flights.flyfrontier.com/en/flights-from-san-jose"},
+    {"route":"SJC→LAX","amount":23,"currency":"USD","travelDate":"2026-10-26","observedAt":"2026-09-23T12:00:00-07:00","fareType":"Discount Den Basic","nonstop":true,"source":"https://flights.flyfrontier.com/en/flights-from-san-jose"},
+    {"route":"SLC→LAS","amount":23,"currency":"USD","travelDate":"2026-11-12","observedAt":"2026-09-23T12:00:00-07:00","fareType":"Discount Den Basic","nonstop":true,"source":"https://flights.flyfrontier.com/en/flights-from-salt-lake-city"},
+    {"route":"SAN→LAS","amount":23,"currency":"USD","travelDate":"2026-10-17","observedAt":"2026-09-23T12:00:00-07:00","fareType":"Discount Den Basic","nonstop":true,"source":"https://flights.flyfrontier.com/en/flights-from-san-diego"},
+    {"route":"SFO→DEN","amount":26,"currency":"USD","travelDate":"2026-11-16","observedAt":"2026-09-23T12:00:00-07:00","fareType":"Discount Den Basic","nonstop":true,"source":"https://flights.flyfrontier.com/en/flights-from-san-francisco"},
+    {"route":"SEA→LAS","amount":27,"currency":"USD","travelDate":"2026-10-19","observedAt":"2026-09-23T12:00:00-07:00","fareType":"Discount Den Basic","nonstop":true,"source":"https://flights.flyfrontier.com/en/flights-from-seattle"},
+    {"route":"DEN→LAX","amount":32,"currency":"USD","travelDate":"2026-10-13","observedAt":"2026-09-23T12:00:00-07:00","fareType":"Standard","nonstop":true,"source":"https://flights.flyfrontier.com/en/flights-from-denver"},
+    {"route":"SEA→LAX","amount":32,"currency":"USD","travelDate":"2026-10-23","observedAt":"2026-09-23T12:00:00-07:00","fareType":"Discount Den Basic","nonstop":true,"source":"https://flights.flyfrontier.com/en/flights-from-seattle"},
+    {"route":"SLC→LAX","amount":33,"currency":"USD","travelDate":"2026-10-27","observedAt":"2026-09-23T12:00:00-07:00","fareType":"Discount Den Basic","nonstop":true,"source":"https://flights.flyfrontier.com/en/flights-from-salt-lake-city"},
+    {"route":"DEN→LAS","amount":52,"currency":"USD","travelDate":"2026-11-18","observedAt":"2026-09-23T12:00:00-07:00","fareType":"Standard","nonstop":true,"source":"https://flights.flyfrontier.com/en/flights-from-denver"}
+  ]
+}

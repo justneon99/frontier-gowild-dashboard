@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "status": "ready",
+  "authenticated": true,
+  "lastAttemptAt": "2026-09-23T15:36:48-07:00",
+  "lastSuccessfulAt": null,
+  "checkedFlights": 0,
+  "window": {
+    "minimumHoursBeforeDeparture": 18,
+    "maximumHoursBeforeDeparture": 42
+  },
+  "availability": [],
+  "lastAlertKeys": [],
+  "publicNote": "No Frontier account, traveler, or payment data is stored in this public file."
+}
