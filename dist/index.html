@@ -23,6 +23,8 @@
     .brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.02em;white-space:nowrap}
     .mark{width:34px;height:34px;border-radius:10px;background:var(--lime);display:grid;place-items:center;color:var(--green);font-size:18px}
     .nav-meta{margin-left:auto;display:flex;align-items:center;gap:10px;color:#d7e6df;font-size:14px}
+    .lang-btn{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.08);color:#fff;border-radius:999px;padding:7px 11px;font-size:13px;font-weight:800;cursor:pointer;white-space:nowrap}
+    .lang-btn:hover{background:rgba(255,255,255,.16)}
     .live-dot{width:9px;height:9px;border-radius:50%;background:#6ee7a8;box-shadow:0 0 0 5px rgba(110,231,168,.12)}
     main{max-width:1460px;margin:0 auto;padding:30px 24px 60px}
     .mast{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(330px,.75fr);gap:24px;align-items:stretch;margin-bottom:22px}
@@ -89,86 +91,95 @@
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <div class="brand"><span class="mark">✈</span><span>Frontier GoWild 航班雷达</span></div>
-      <div class="nav-meta"><i class="live-dot"></i><span>每日双时区 · 午夜加密</span><span>Pacific + Mountain</span></div>
+      <div class="brand"><span class="mark">✈</span><span data-i18n="brand">Frontier GoWild 航班雷达</span></div>
+      <div class="nav-meta"><i class="live-dot"></i><span data-i18n="navMonitor">每日双时区 · 午夜加密</span><span>Pacific + Mountain</span></div>
+      <button class="lang-btn" id="langToggle" aria-label="Switch to English">English</button>
     </div>
   </header>
   <main>
     <section class="mast">
       <div class="hero">
-        <div class="eyebrow">8 个机场 · 18 个直飞组合</div>
-        <h1>便宜票出现时，<br>第一眼就能看到。</h1>
-        <p>把 GoWild 实时库存、普通低价和 Frontier 直飞班期分开显示，避免把普通促销价误当成通票座位。</p>
+        <div class="eyebrow" data-i18n="eyebrow">8 个机场 · 18 个直飞组合</div>
+        <h1 data-i18n-html="headline">便宜票出现时，<br>第一眼就能看到。</h1>
+        <p data-i18n="heroCopy">把 GoWild 实时库存、普通低价和 Frontier 直飞班期分开显示，避免把普通促销价误当成通票座位。</p>
         <div class="hero-tags"><span class="hero-tag">SJC</span><span class="hero-tag">SFO</span><span class="hero-tag">SLC</span><span class="hero-tag">LAX</span><span class="hero-tag">SAN</span><span class="hero-tag">LAS</span><span class="hero-tag">DEN</span><span class="hero-tag">SEA</span></div>
       </div>
       <aside class="monitor-card">
-        <div class="monitor-head"><div><div class="monitor-title">自动监控</div><div class="monitor-big">运行中</div></div><span class="status-pill">ACTIVE</span></div>
-        <div class="monitor-sub">每天 Mountain 12:00 和 Pacific 12:00 各检查一次；午夜按 Pacific 00:00、00:01、00:02、00:04、00:08、00:16、00:32、01:00 指数加密检查。</div>
-        <div class="monitor-grid"><div class="mini"><b>≤ $30</b><span>普通票提醒线</span></div><div class="mini"><b>≥ 20%</b><span>降价提醒幅度</span></div></div>
+        <div class="monitor-head"><div><div class="monitor-title" data-i18n="autoMonitor">自动监控</div><div class="monitor-big" data-i18n="running">运行中</div></div><span class="status-pill">ACTIVE</span></div>
+        <div class="monitor-sub" data-i18n="monitorSchedule">每天 Mountain 12:00 和 Pacific 12:00 各检查一次；午夜按 Pacific 00:00、00:01、00:02、00:04、00:08、00:16、00:32、01:00 指数加密检查。</div>
+        <div class="monitor-grid"><div class="mini"><b>≤ $30</b><span data-i18n="fareAlert">普通票提醒线</span></div><div class="mini"><b>≥ 20%</b><span data-i18n="dropAlert">降价提醒幅度</span></div></div>
       </aside>
     </section>
 
     <section class="kpis">
-      <div class="kpi"><div class="kpi-label">当前直飞组合</div><div class="kpi-value" id="activeCount">17</div><div class="kpi-note">另有 1 条季节性直飞</div></div>
-      <div class="kpi"><div class="kpi-label">每日有班次</div><div class="kpi-value">15</div><div class="kpi-note">抽样周内每日直飞</div></div>
-      <div class="kpi"><div class="kpi-label">观察到最低普通票</div><div class="kpi-value">$19</div><div class="kpi-note">可能要求 Discount Den</div></div>
-      <div class="kpi"><div class="kpi-label">已验证 GoWild</div><div class="kpi-value">0</div><div class="kpi-note">需要有效通票登录</div></div>
+      <div class="kpi"><div class="kpi-label" data-i18n="currentNonstops">当前直飞组合</div><div class="kpi-value" id="activeCount">17</div><div class="kpi-note" data-i18n="seasonalNote">另有 1 条季节性直飞</div></div>
+      <div class="kpi"><div class="kpi-label" data-i18n="dailyService">每日有班次</div><div class="kpi-value">15</div><div class="kpi-note" data-i18n="dailyNote">抽样周内每日直飞</div></div>
+      <div class="kpi"><div class="kpi-label" data-i18n="lowestFare">观察到最低普通票</div><div class="kpi-value">$19</div><div class="kpi-note" data-i18n="discountNote">可能要求 Discount Den</div></div>
+      <div class="kpi"><div class="kpi-label" data-i18n="verifiedGoWild">已验证 GoWild</div><div class="kpi-value">0</div><div class="kpi-note" data-i18n="loginNote">需要有效通票登录</div></div>
     </section>
 
     <div class="layout">
       <div>
         <section class="panel">
-          <div class="panel-head"><div><h2>直飞航线与星期</h2><div class="sub">班期来自代表性样本周；点击右侧箭头查看来源。</div></div><span class="status-pill" id="resultCount">18 条</span></div>
+          <div class="panel-head"><div><h2 data-i18n="routesTitle">直飞航线与星期</h2><div class="sub" data-i18n="routesSub">班期来自代表性样本周；点击右侧箭头查看来源。</div></div><span class="status-pill" id="resultCount">18 条</span></div>
           <div class="filters">
             <select id="originFilter" aria-label="出发机场"><option value="all">全部出发机场</option></select>
             <select id="destinationFilter" aria-label="到达机场"><option value="all">全部到达机场</option></select>
             <select id="statusFilter" aria-label="航线状态"><option value="all">全部状态</option><option value="Active">当前直飞</option><option value="Seasonal">季节性</option></select>
             <input id="routeSearch" type="search" placeholder="搜索机场或航线，例如 SJC、LAS" aria-label="搜索航线">
-            <button class="ghost-btn" id="resetBtn">重置</button>
+            <button class="ghost-btn" id="resetBtn" data-i18n="reset">重置</button>
           </div>
           <div class="route-list" id="routeList"></div>
-          <div class="empty" id="routeEmpty">没有符合条件的航线。</div>
-          <div class="legend">星期顺序：一、二、三、四、五、六、日。绿色表示样本周至少有一班 Frontier 直飞；反向班期可能略有差异，订票前请再次确认具体日期。</div>
+          <div class="empty" id="routeEmpty" data-i18n="noRoutes">没有符合条件的航线。</div>
+          <div class="legend" data-i18n="weekdayLegend">星期顺序：一、二、三、四、五、六、日。绿色表示样本周至少有一班 Frontier 直飞；反向班期可能略有差异，订票前请再次确认具体日期。</div>
         </section>
 
         <section class="panel">
-          <div class="panel-head"><div><h2>最低价观察</h2><div class="sub">这是 Frontier 公开页面上的普通票或 Discount Den 价格，不是 GoWild 实时库存。</div></div><select id="fareSort" style="width:auto" aria-label="票价排序"><option value="price">按价格</option><option value="date">按日期</option></select></div>
-          <div style="overflow:auto"><table class="fare-table"><thead><tr><th>方向</th><th>价格</th><th>日期</th><th>票价类型</th><th>来源</th></tr></thead><tbody id="fareBody"></tbody></table></div>
-          <div class="alert"><b>为什么最近看不到便宜票？</b> “出发前一天”是开放窗口，不是座位保证。GoWild 座位有限，热门航班可能完全不释放；公开低价页面也可能包含转机或 Discount Den 条件。</div>
+          <div class="panel-head"><div><h2 data-i18n="faresTitle">最低价观察</h2><div class="sub" data-i18n="faresSub">这是 Frontier 公开页面上的普通票或 Discount Den 价格，不是 GoWild 实时库存。</div></div><select id="fareSort" style="width:auto" aria-label="票价排序"><option value="price">按价格</option><option value="date">按日期</option></select></div>
+          <div style="overflow:auto"><table class="fare-table"><thead><tr><th data-i18n="direction">方向</th><th data-i18n="price">价格</th><th data-i18n="date">日期</th><th data-i18n="fareType">票价类型</th><th data-i18n="source">来源</th></tr></thead><tbody id="fareBody"></tbody></table></div>
+          <div class="alert"><b data-i18n="whyNoDeals">为什么最近看不到便宜票？</b> <span data-i18n="whyNoDealsCopy">“出发前一天”是开放窗口，不是座位保证。GoWild 座位有限，热门航班可能完全不释放；公开低价页面也可能包含转机或 Discount Den 条件。</span></div>
         </section>
       </div>
 
       <aside>
         <section class="panel">
-          <div class="panel-head"><div><h2>机场机会分布</h2><div class="sub">选择机场查看其当前 Frontier 直飞组合。</div></div></div>
+          <div class="panel-head"><div><h2 data-i18n="airportTitle">机场机会分布</h2><div class="sub" data-i18n="airportSub">选择机场查看其当前 Frontier 直飞组合。</div></div></div>
           <div class="radar">
             <div class="airport-cloud" id="airportCloud"></div>
             <div class="bars" id="airportBars"></div>
           </div>
         </section>
         <section class="panel">
-          <div class="panel-head"><div><h2>实用抢票节奏</h2><div class="sub">国内 GoWild 官方规则是出发前一天开放，不保证精确到 24 小时。</div></div></div>
+          <div class="panel-head"><div><h2 data-i18n="strategyTitle">实用抢票节奏</h2><div class="sub" data-i18n="strategySub">国内 GoWild 官方规则是出发前一天开放，不保证精确到 24 小时。</div></div></div>
           <div class="strategy">
-            <div class="step"><div class="step-no">1</div><div><b>先看当天是否有直飞</b><span>SJC 的两条 Frontier 航线并非每天运行，先用上面的星期筛选排除无班次日期。</span></div></div>
-            <div class="step"><div class="step-no">2</div><div><b>出发前一天持续检查</b><span>Mountain 与 Pacific 中午各检查一次，Pacific 午夜从 1 分钟间隔逐步放宽到 1 小时。库存可能分批变化，不要把第一次“无票”当成最终结果。</span></div></div>
-            <div class="step"><div class="step-no">3</div><div><b>比较最终支付金额</b><span>GoWild 是每航段 $0.01 机票价，税费、行李、座位及 Early Booking 费用另计。</span></div></div>
-            <div class="step"><div class="step-no">4</div><div><b>固定行程保留普通票后备</b><span>当普通票低于 $30 且日期不能改时，确定性可能比等待通票库存更重要。</span></div></div>
+            <div class="step"><div class="step-no">1</div><div><b data-i18n="step1Title">先看当天是否有直飞</b><span data-i18n="step1Copy">SJC 的两条 Frontier 航线并非每天运行，先用上面的星期筛选排除无班次日期。</span></div></div>
+            <div class="step"><div class="step-no">2</div><div><b data-i18n="step2Title">出发前一天持续检查</b><span data-i18n="step2Copy">Mountain 与 Pacific 中午各检查一次，Pacific 午夜从 1 分钟间隔逐步放宽到 1 小时。库存可能分批变化，不要把第一次“无票”当成最终结果。</span></div></div>
+            <div class="step"><div class="step-no">3</div><div><b data-i18n="step3Title">比较最终支付金额</b><span data-i18n="step3Copy">GoWild 是每航段 $0.01 机票价，税费、行李、座位及 Early Booking 费用另计。</span></div></div>
+            <div class="step"><div class="step-no">4</div><div><b data-i18n="step4Title">固定行程保留普通票后备</b><span data-i18n="step4Copy">当普通票低于 $30 且日期不能改时，确定性可能比等待通票库存更重要。</span></div></div>
           </div>
-          <details><summary>数据限制与来源</summary><ul class="sources">
-            <li><a href="https://www.flyfrontier.com/deals/gowild-pass/" target="_blank" rel="noreferrer">Frontier GoWild 官方说明</a></li>
-            <li><a href="https://www.flyfrontier.com/frontiermiles/terms-and-conditions" target="_blank" rel="noreferrer">Frontier GoWild 条款</a></li>
-            <li><a href="https://flights.flyfrontier.com/en/flights-from-seattle" target="_blank" rel="noreferrer">Frontier 西雅图公开票价</a></li>
-            <li><a href="https://www.flightsfrom.com/" target="_blank" rel="noreferrer">FlightsFrom 直飞班期</a></li>
-            <li>价格与班期快照：2026-09-23。票价会在购买前变化。</li>
+          <details><summary data-i18n="limitsSources">数据限制与来源</summary><ul class="sources">
+            <li><a href="https://www.flyfrontier.com/deals/gowild-pass/" target="_blank" rel="noreferrer" data-i18n="gowildOverview">Frontier GoWild 官方说明</a></li>
+            <li><a href="https://www.flyfrontier.com/frontiermiles/terms-and-conditions" target="_blank" rel="noreferrer" data-i18n="gowildTerms">Frontier GoWild 条款</a></li>
+            <li><a href="https://flights.flyfrontier.com/en/flights-from-seattle" target="_blank" rel="noreferrer" data-i18n="seattleFares">Frontier 西雅图公开票价</a></li>
+            <li><a href="https://www.flightsfrom.com/" target="_blank" rel="noreferrer" data-i18n="scheduleSource">FlightsFrom 直飞班期</a></li>
+            <li data-i18n="snapshotNote">价格与班期快照：2026-09-23。票价会在购买前变化。</li>
           </ul></details>
         </section>
       </aside>
     </div>
-    <div class="footer">数据用于发现机会，不构成票价保证。最后更新：2026-09-23 · Frontier GoWild 航班雷达</div>
+    <div class="footer" data-i18n="footer">数据用于发现机会，不构成票价保证。最后更新：2026-09-23 · Frontier GoWild 航班雷达</div>
   </main>
 
   <script>
-    const D=['一','二','三','四','五','六','日'];
+    const I18N={
+      zh:{
+        title:'Frontier GoWild 航班雷达',brand:'Frontier GoWild 航班雷达',navMonitor:'每日双时区 · 午夜加密',eyebrow:'8 个机场 · 18 个直飞组合',headline:'便宜票出现时，<br>第一眼就能看到。',heroCopy:'把 GoWild 实时库存、普通低价和 Frontier 直飞班期分开显示，避免把普通促销价误当成通票座位。',autoMonitor:'自动监控',running:'运行中',monitorSchedule:'每天 Mountain 12:00 和 Pacific 12:00 各检查一次；午夜按 Pacific 00:00、00:01、00:02、00:04、00:08、00:16、00:32、01:00 指数加密检查。',fareAlert:'普通票提醒线',dropAlert:'降价提醒幅度',currentNonstops:'当前直飞组合',seasonalNote:'另有 1 条季节性直飞',dailyService:'每日有班次',dailyNote:'抽样周内每日直飞',lowestFare:'观察到最低普通票',discountNote:'可能要求 Discount Den',verifiedGoWild:'已验证 GoWild',loginNote:'需要有效通票登录',routesTitle:'直飞航线与星期',routesSub:'班期来自代表性样本周；点击右侧箭头查看来源。',reset:'重置',noRoutes:'没有符合条件的航线。',weekdayLegend:'星期顺序：一、二、三、四、五、六、日。绿色表示样本周至少有一班 Frontier 直飞；反向班期可能略有差异，订票前请再次确认具体日期。',faresTitle:'最低价观察',faresSub:'这是 Frontier 公开页面上的普通票或 Discount Den 价格，不是 GoWild 实时库存。',direction:'方向',price:'价格',date:'日期',fareType:'票价类型',source:'来源',whyNoDeals:'为什么最近看不到便宜票？',whyNoDealsCopy:'“出发前一天”是开放窗口，不是座位保证。GoWild 座位有限，热门航班可能完全不释放；公开低价页面也可能包含转机或 Discount Den 条件。',airportTitle:'机场机会分布',airportSub:'选择机场查看其当前 Frontier 直飞组合。',strategyTitle:'实用抢票节奏',strategySub:'国内 GoWild 官方规则是出发前一天开放，不保证精确到 24 小时。',step1Title:'先看当天是否有直飞',step1Copy:'SJC 的两条 Frontier 航线并非每天运行，先用上面的星期筛选排除无班次日期。',step2Title:'出发前一天持续检查',step2Copy:'Mountain 与 Pacific 中午各检查一次，Pacific 午夜从 1 分钟间隔逐步放宽到 1 小时。库存可能分批变化，不要把第一次“无票”当成最终结果。',step3Title:'比较最终支付金额',step3Copy:'GoWild 是每航段 $0.01 机票价，税费、行李、座位及 Early Booking 费用另计。',step4Title:'固定行程保留普通票后备',step4Copy:'当普通票低于 $30 且日期不能改时，确定性可能比等待通票库存更重要。',limitsSources:'数据限制与来源',gowildOverview:'Frontier GoWild 官方说明',gowildTerms:'Frontier GoWild 条款',seattleFares:'Frontier 西雅图公开票价',scheduleSource:'FlightsFrom 直飞班期',snapshotNote:'价格与班期快照：2026-09-23。票价会在购买前变化。',footer:'数据用于发现机会，不构成票价保证。最后更新：2026-09-23 · Frontier GoWild 航班雷达',allOrigins:'全部出发机场',allDestinations:'全部到达机场',allStatuses:'全部状态',current:'当前直飞',seasonal:'季节性',searchPlaceholder:'搜索机场或航线，例如 SJC、LAS',sortPrice:'按价格',sortDate:'按日期',routes:'条',fromObserved:'观察价起',noPrice:'暂无价格',openSource:'打开来源',noFareObservations:'当前筛选方向还没有公开低价观察。',days:'天',noConfirmed:'目前没有已确认的 Frontier 直飞组合。',standardFare:'普通票',langButton:'English',langAria:'Switch to English',depart:'出发',arrive:'到达',weekdays:['一','二','三','四','五','六','日']
+      },
+      en:{
+        title:'Frontier GoWild Flight Radar',brand:'Frontier GoWild Flight Radar',navMonitor:'Dual-time-zone daily checks · Midnight burst',eyebrow:'8 airports · 18 nonstop pairs',headline:'See low fares<br>the moment they appear.',heroCopy:'GoWild inventory, public low fares, and Frontier nonstop schedules are shown separately so promotional fares are never mistaken for pass availability.',autoMonitor:'Automated monitoring',running:'Running',monitorSchedule:'Checks at 12:00 PM Mountain and 12:00 PM Pacific. Pacific midnight checks run at 12:00, 12:01, 12:02, 12:04, 12:08, 12:16, 12:32, and 1:00 AM.',fareAlert:'Standard-fare alert',dropAlert:'Price-drop alert',currentNonstops:'Current nonstop pairs',seasonalNote:'Plus 1 seasonal nonstop',dailyService:'Daily service',dailyNote:'Daily in the sampled week',lowestFare:'Lowest public fare observed',discountNote:'May require Discount Den',verifiedGoWild:'Verified GoWild fares',loginNote:'Valid pass login required',routesTitle:'Nonstop routes and weekdays',routesSub:'Schedules use representative sample weeks. Open the arrow for the source.',reset:'Reset',noRoutes:'No routes match these filters.',weekdayLegend:'Weekdays run Monday through Sunday. Green means at least one Frontier nonstop in the sample week. Reverse-direction schedules may differ; confirm the exact date before booking.',faresTitle:'Lowest fare observations',faresSub:'These are public Standard or Discount Den fares, not live GoWild inventory.',direction:'Direction',price:'Price',date:'Date',fareType:'Fare type',source:'Source',whyNoDeals:'Why are cheap tickets hard to find?',whyNoDealsCopy:'“The day before departure” is an opening window, not a seat guarantee. GoWild inventory is limited and popular flights may release none. Public fare pages can also include connections or Discount Den conditions.',airportTitle:'Airport opportunity map',airportSub:'Select an airport to see its current Frontier nonstop pairs.',strategyTitle:'Practical booking rhythm',strategySub:'Frontier says domestic GoWild booking generally opens the day before departure; an exact 24-hour release is not guaranteed.',step1Title:'Confirm a nonstop operates that day',step1Copy:'The two SJC Frontier routes do not run every day. Use the weekday row first to remove dates without service.',step2Title:'Keep checking the day before',step2Copy:'Checks run at noon in Mountain and Pacific time. Pacific midnight checks expand from one minute to one hour. Inventory can change in batches, so the first “unavailable” result may not be final.',step3Title:'Compare the final checkout total',step3Copy:'GoWild airfare is $0.01 per segment. Taxes, fees, bags, seats, and any Early Booking charge are extra.',step4Title:'Keep a standard-fare backup',step4Copy:'When a standard fare is below $30 and the date is fixed, certainty may be more valuable than waiting for pass inventory.',limitsSources:'Data limits and sources',gowildOverview:'Frontier GoWild official overview',gowildTerms:'Frontier GoWild terms',seattleFares:'Frontier public fares from Seattle',scheduleSource:'FlightsFrom nonstop schedules',snapshotNote:'Fare and schedule snapshot: Sep 23, 2026. Prices can change before purchase.',footer:'Data is for opportunity discovery and is not a fare guarantee. Updated Sep 23, 2026 · Frontier GoWild Flight Radar',allOrigins:'All departure airports',allDestinations:'All arrival airports',allStatuses:'All statuses',current:'Current nonstop',seasonal:'Seasonal',searchPlaceholder:'Search an airport or route, such as SJC or LAS',sortPrice:'Sort by price',sortDate:'Sort by date',routes:'routes',fromObserved:'observed from',noPrice:'no fare',openSource:'Open source',noFareObservations:'No public low-fare observation matches this direction yet.',days:'days',noConfirmed:'No verified Frontier nonstop pairs.',standardFare:'Standard fare',langButton:'中文',langAria:'切换到中文',depart:'departure',arrive:'arrival',weekdays:['M','T','W','T','F','S','S']
+      }
+    };
+    let lang=localStorage.getItem('frontierLang')==='en'?'en':'zh';
     const airports=['SJC','SFO','SLC','LAX','SAN','LAS','DEN','SEA'];
     const routes=[
       {pair:'SJC–LAS',from:'SJC',to:'LAS',status:'Active',days:[1,0,0,1,1,0,1],fare:23,source:'https://www.flightsfrom.com/SJC-LAS'},
@@ -193,14 +204,27 @@
     const fares=[
       ['SFO→LAS',19,'2026-11-11','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-francisco'],['SFO→LAX',19,'2026-12-08','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-francisco'],['SFO→SAN',19,'2026-12-01','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-francisco'],['SLC→DEN',19,'2026-11-14','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-salt-lake-city'],['LAX→LAS',19,'2026-11-04','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-los-angeles'],['SAN→DEN',21,'2026-11-10','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-diego'],['SEA→DEN',22,'2026-10-21','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-seattle'],['SJC→LAS',23,'2026-11-09','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-jose'],['SJC→LAX',23,'2026-10-26','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-jose'],['SLC→LAS',23,'2026-11-12','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-salt-lake-city'],['SAN→LAS',23,'2026-10-17','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-diego'],['SFO→DEN',26,'2026-11-16','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-francisco'],['SEA→LAS',27,'2026-10-19','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-seattle'],['DEN→LAX',32,'2026-10-13','普通票','https://flights.flyfrontier.com/en/flights-from-denver'],['SEA→LAX',32,'2026-10-23','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-seattle'],['SLC→LAX',33,'2026-10-27','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-salt-lake-city'],['DEN→LAS',52,'2026-11-18','普通票','https://flights.flyfrontier.com/en/flights-from-denver']
     ];
-    const statusLabel={Active:'当前直飞',Seasonal:'11/21 起季节性'};
+    const statusLabel={zh:{Active:'当前直飞',Seasonal:'11/21 起季节性'},en:{Active:'Current nonstop',Seasonal:'Seasonal from Nov 21'}};
     const statusClass={Active:'active',Seasonal:'seasonal'};
     const origin=document.querySelector('#originFilter');
     const destination=document.querySelector('#destinationFilter');
-    airports.forEach(a=>{
-      origin.insertAdjacentHTML('beforeend',`<option value="${a}">${a} 出发</option>`);
-      destination.insertAdjacentHTML('beforeend',`<option value="${a}">到达 ${a}</option>`);
-    });
+    function refreshControlLabels(){
+      const t=I18N[lang],o=origin.value||'all',d=destination.value||'all',status=document.querySelector('#statusFilter').value||'all',sort=document.querySelector('#fareSort').value||'price';
+      origin.innerHTML=`<option value="all">${t.allOrigins}</option>`+airports.map(a=>`<option value="${a}">${lang==='zh'?`${a} ${t.depart}`:`${a} ${t.depart}`}</option>`).join('');
+      destination.innerHTML=`<option value="all">${t.allDestinations}</option>`+airports.map(a=>`<option value="${a}">${lang==='zh'?`${t.arrive} ${a}`:`${a} ${t.arrive}`}</option>`).join('');
+      document.querySelector('#statusFilter').innerHTML=`<option value="all">${t.allStatuses}</option><option value="Active">${t.current}</option><option value="Seasonal">${t.seasonal}</option>`;
+      document.querySelector('#fareSort').innerHTML=`<option value="price">${t.sortPrice}</option><option value="date">${t.sortDate}</option>`;
+      origin.value=o;destination.value=d;document.querySelector('#statusFilter').value=status;document.querySelector('#fareSort').value=sort;
+      const search=document.querySelector('#routeSearch');search.placeholder=t.searchPlaceholder;search.setAttribute('aria-label',t.searchPlaceholder);
+      origin.setAttribute('aria-label',t.allOrigins);destination.setAttribute('aria-label',t.allDestinations);
+    }
+    function applyLanguage(next){
+      lang=next;localStorage.setItem('frontierLang',lang);document.documentElement.lang=lang==='zh'?'zh-CN':'en';document.title=I18N[lang].title;
+      document.querySelectorAll('[data-i18n]').forEach(el=>{const key=el.dataset.i18n;if(I18N[lang][key])el.textContent=I18N[lang][key]});
+      document.querySelectorAll('[data-i18n-html]').forEach(el=>{const key=el.dataset.i18nHtml;if(I18N[lang][key])el.innerHTML=I18N[lang][key]});
+      const toggle=document.querySelector('#langToggle');toggle.textContent=I18N[lang].langButton;toggle.setAttribute('aria-label',I18N[lang].langAria);
+      refreshControlLabels();drawRoutes();drawFares();drawAirports(selectedAirport);
+    }
     function endpoints(r){return r.pair.split('–')}
     function directionLabel(r,o,d){
       const [a,b]=endpoints(r);
@@ -218,13 +242,14 @@
         const validDirection=o==='all'||d==='all'||(o!==d&&ep.includes(o)&&ep.includes(d));
         return originMatch&&destinationMatch&&validDirection&&(s==='all'||r.status===s)&&(!q||r.pair.includes(q));
       });
-      document.querySelector('#resultCount').textContent=`${data.length} 条`;
+      const t=I18N[lang];
+      document.querySelector('#resultCount').textContent=lang==='zh'?`${data.length} ${t.routes}`:`${data.length} ${t.routes}`;
       document.querySelector('#routeEmpty').style.display=data.length?'none':'block';
       document.querySelector('#routeList').innerHTML=data.map(r=>`<div class="route-row">
-        <div class="route-name">${directionLabel(r,o,d)}</div><span class="badge ${statusClass[r.status]}">${statusLabel[r.status]}</span>
-        <div class="week">${r.days.map((v,i)=>`<span class="day ${v===1?'on':v===null?'pending':''}">${D[i]}</span>`).join('')}</div>
-        <div class="fare">${r.fare?`$${r.fare}<small>观察价起</small>`:'—<small>暂无价格</small>'}</div>
-        <a class="out" href="${r.source}" target="_blank" rel="noreferrer" aria-label="打开 ${r.pair} 来源">↗</a></div>`).join('');
+        <div class="route-name">${directionLabel(r,o,d)}</div><span class="badge ${statusClass[r.status]}">${statusLabel[lang][r.status]}</span>
+        <div class="week">${r.days.map((v,i)=>`<span class="day ${v===1?'on':v===null?'pending':''}">${t.weekdays[i]}</span>`).join('')}</div>
+        <div class="fare">${r.fare?`$${r.fare}<small>${t.fromObserved}</small>`:`—<small>${t.noPrice}</small>`}</div>
+        <a class="out" href="${r.source}" target="_blank" rel="noreferrer" aria-label="${t.openSource}: ${r.pair}">↗</a></div>`).join('');
     }
     function drawFares(){
       const mode=document.querySelector('#fareSort').value;
@@ -233,13 +258,17 @@
         const [fo,fd]=f[0].split('→');
         return (o==='all'||fo===o)&&(d==='all'||fd===d);
       }).sort((a,b)=>mode==='price'?a[1]-b[1]:a[2].localeCompare(b[2]));
-      document.querySelector('#fareBody').innerHTML=data.length?data.map(f=>`<tr><td><b>${f[0]}</b></td><td class="price">$${f[1]}</td><td>${new Date(f[2]+'T12:00:00').toLocaleDateString('zh-CN',{month:'short',day:'numeric',year:'numeric'})}</td><td><span class="type-label">${f[3]}</span></td><td><a href="${f[4]}" target="_blank" rel="noreferrer">Frontier ↗</a></td></tr>`).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:32px">当前筛选方向还没有公开低价观察。</td></tr>';
+      const t=I18N[lang];
+      document.querySelector('#fareBody').innerHTML=data.length?data.map(f=>`<tr><td><b>${f[0]}</b></td><td class="price">$${f[1]}</td><td>${new Date(f[2]+'T12:00:00').toLocaleDateString(lang==='zh'?'zh-CN':'en-US',{month:'short',day:'numeric',year:'numeric'})}</td><td><span class="type-label">${f[3]==='普通票'?t.standardFare:f[3]}</span></td><td><a href="${f[4]}" target="_blank" rel="noreferrer">Frontier ↗</a></td></tr>`).join(''):`<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:32px">${t.noFareObservations}</td></tr>`;
     }
-    function drawAirports(selected='SJC'){
+    let selectedAirport='SJC';
+    function drawAirports(selected=selectedAirport){
+      selectedAirport=selected;
       document.querySelector('#airportCloud').innerHTML=airports.map(a=>`<button class="airport ${a===selected?'selected':''}" data-airport="${a}">${a}</button>`).join('');
       const related=routes.filter(r=>r.status==='Active'&&r.pair.includes(selected));
       const max=Math.max(1,...related.map(r=>r.days.filter(Boolean).length));
-      document.querySelector('#airportBars').innerHTML=related.length?related.map(r=>{const other=r.pair.split('–').find(x=>x!==selected);const n=r.days.filter(Boolean).length;return `<div class="bar-row"><b>${other}</b><div class="track"><div class="fill" style="width:${n/max*100}%"></div></div><span>${n} 天</span></div>`}).join(''):'<div class="sub">目前没有已确认的 Frontier 直飞组合。</div>';
+      const t=I18N[lang];
+      document.querySelector('#airportBars').innerHTML=related.length?related.map(r=>{const other=r.pair.split('–').find(x=>x!==selected);const n=r.days.filter(Boolean).length;return `<div class="bar-row"><b>${other}</b><div class="track"><div class="fill" style="width:${n/max*100}%"></div></div><span>${n} ${t.days}</span></div>`}).join(''):`<div class="sub">${t.noConfirmed}</div>`;
       document.querySelectorAll('.airport').forEach(b=>b.addEventListener('click',()=>drawAirports(b.dataset.airport)));
     }
     ['originFilter','destinationFilter'].forEach(id=>document.querySelector('#'+id).addEventListener('change',()=>{drawRoutes();drawFares()}));
@@ -247,7 +276,8 @@
     document.querySelector('#routeSearch').addEventListener('input',drawRoutes);
     document.querySelector('#fareSort').addEventListener('change',drawFares);
     document.querySelector('#resetBtn').addEventListener('click',()=>{origin.value='all';destination.value='all';document.querySelector('#statusFilter').value='all';document.querySelector('#routeSearch').value='';drawRoutes();drawFares()});
-    drawRoutes();drawFares();drawAirports();
+    document.querySelector('#langToggle').addEventListener('click',()=>applyLanguage(lang==='zh'?'en':'zh'));
+    applyLanguage(lang);
   </script>
 </body>
 </html>
