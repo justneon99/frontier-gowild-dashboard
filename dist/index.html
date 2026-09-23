@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Frontier GoWild 直飞航班、低价和可预订窗口监控。">
+  <title>Frontier GoWild 航班雷达</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%230b3227'/%3E%3Cpath d='M11 36 54 16 39 51l-7-12-13 7 5-13z' fill='%23d8f28b'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      --ink:#10221c; --muted:#60716b; --line:#dce6e0; --paper:#f3f7f4;
+      --white:#fff; --green:#0b4d3b; --green2:#14765a; --lime:#d8f28b;
+      --mint:#e5f3ec; --amber:#f4b942; --amber-bg:#fff5d9; --red:#b63a32;
+      --shadow:0 18px 50px rgba(9,54,40,.09); --radius:20px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+    button,input,select{font:inherit}
+    a{color:var(--green2)}
+    .topbar{position:sticky;top:0;z-index:20;background:rgba(11,50,39,.96);backdrop-filter:blur(16px);color:#fff;border-bottom:1px solid rgba(255,255,255,.12)}
+    .topbar-inner{max-width:1460px;margin:auto;padding:13px 24px;display:flex;align-items:center;gap:16px}
+    .brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.02em;white-space:nowrap}
+    .mark{width:34px;height:34px;border-radius:10px;background:var(--lime);display:grid;place-items:center;color:var(--green);font-size:18px}
+    .nav-meta{margin-left:auto;display:flex;align-items:center;gap:10px;color:#d7e6df;font-size:14px}
+    .live-dot{width:9px;height:9px;border-radius:50%;background:#6ee7a8;box-shadow:0 0 0 5px rgba(110,231,168,.12)}
+    main{max-width:1460px;margin:0 auto;padding:30px 24px 60px}
+    .mast{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(330px,.75fr);gap:24px;align-items:stretch;margin-bottom:22px}
+    .hero{border-radius:28px;background:linear-gradient(130deg,#0b3227 0%,#0c5e47 72%,#16805f 100%);color:#fff;padding:32px;position:relative;overflow:hidden;min-height:245px}
+    .hero:after{content:"";position:absolute;width:340px;height:340px;border:78px solid rgba(216,242,139,.12);border-radius:50%;right:-160px;top:-155px}
+    .eyebrow{color:var(--lime);font-size:13px;font-weight:800;letter-spacing:.11em;text-transform:uppercase}
+    h1{font-size:clamp(32px,4vw,54px);line-height:1.02;letter-spacing:-.045em;margin:12px 0 16px;max-width:820px}
+    .hero p{margin:0;max-width:760px;color:#dcece5;font-size:17px}
+    .hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:25px}
+    .hero-tag{padding:7px 11px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);border-radius:999px;font-size:13px}
+    .monitor-card{background:var(--white);border:1px solid var(--line);border-radius:28px;padding:26px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+    .monitor-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+    .monitor-title{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:800}
+    .status-pill{background:var(--mint);color:var(--green);border-radius:999px;padding:6px 10px;font-size:13px;font-weight:800}
+    .monitor-big{font-size:34px;font-weight:900;letter-spacing:-.04em;margin:19px 0 4px}
+    .monitor-sub{color:var(--muted);font-size:14px}
+    .monitor-grid{margin-top:auto;padding-top:21px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .mini{background:#f7faf8;border-radius:14px;padding:13px}
+    .mini b{display:block;font-size:19px}.mini span{font-size:12px;color:var(--muted)}
+    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+    .kpi{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:19px 20px;box-shadow:0 8px 30px rgba(9,54,40,.05)}
+    .kpi-label{color:var(--muted);font-size:13px;font-weight:700}.kpi-value{font-size:32px;font-weight:900;line-height:1.1;margin-top:8px;letter-spacing:-.04em}.kpi-note{font-size:12px;color:var(--muted);margin-top:5px}
+    .layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(340px,.72fr);gap:22px;align-items:start}
+    .panel{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:22px}
+    .panel-head{padding:21px 22px 17px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;gap:18px}
+    .panel h2{font-size:20px;letter-spacing:-.02em;margin:0}.sub{color:var(--muted);font-size:13px;margin-top:3px}
+    .filters{padding:16px 22px;display:grid;grid-template-columns:1fr 1fr 1fr 1.25fr auto;gap:10px;border-bottom:1px solid var(--line);background:#fbfdfc}
+    select,input{width:100%;border:1px solid #cad8d1;background:#fff;border-radius:11px;padding:10px 12px;color:var(--ink);outline:none}
+    select:focus,input:focus{border-color:var(--green2);box-shadow:0 0 0 3px rgba(20,118,90,.12)}
+    .ghost-btn{border:1px solid #cad8d1;background:#fff;border-radius:11px;padding:10px 14px;color:var(--green);font-weight:800;cursor:pointer}
+    .route-list{padding:8px 14px 14px}
+    .route-row{display:grid;grid-template-columns:125px 112px minmax(190px,1fr) 115px 24px;align-items:center;gap:12px;padding:13px 9px;border-bottom:1px solid #edf2ef}
+    .route-row:last-child{border-bottom:0}
+    .route-name{font-weight:900;font-size:17px;letter-spacing:-.02em}
+    .badge{display:inline-flex;width:max-content;border-radius:999px;padding:5px 9px;font-size:12px;font-weight:800}
+    .active{background:var(--mint);color:var(--green)}.seasonal{background:var(--amber-bg);color:#795300}.inactive{background:#f5e8e7;color:var(--red)}
+    .week{display:flex;gap:4px}.day{width:25px;height:25px;display:grid;place-items:center;border-radius:7px;font-size:11px;font-weight:800;background:#edf2ef;color:#9ba8a2}.day.on{background:var(--green);color:#fff}.day.pending{background:var(--amber-bg);color:#9a700b}
+    .fare{font-weight:900;text-align:right}.fare small{display:block;font-size:11px;font-weight:600;color:var(--muted)}
+    .out{color:#97a39e;text-decoration:none;font-size:20px;text-align:center}
+    .empty{display:none;text-align:center;padding:50px 20px;color:var(--muted)}
+    .legend{padding:0 22px 19px;color:var(--muted);font-size:12px}
+    .fare-table{width:100%;border-collapse:collapse}
+    .fare-table th{text-align:left;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em;padding:12px 18px;background:#fbfdfc;border-bottom:1px solid var(--line)}
+    .fare-table td{padding:14px 18px;border-bottom:1px solid #edf2ef;vertical-align:middle}.fare-table tr:last-child td{border-bottom:0}
+    .price{font-size:20px;font-weight:900;color:var(--green)}
+    .type-label{font-size:11px;padding:5px 8px;border-radius:7px;background:var(--amber-bg);color:#715000;font-weight:800;white-space:nowrap}
+    .alert{margin:18px 22px 22px;background:var(--amber-bg);border:1px solid #f0d58b;border-radius:14px;padding:14px 16px;color:#664a08;font-size:13px}
+    .radar{padding:22px}
+    .airport-cloud{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:20px}
+    .airport{border:1px solid var(--line);background:#f8fbf9;border-radius:13px;padding:10px 4px;text-align:center;font-weight:900;cursor:pointer;transition:.15s}
+    .airport:hover,.airport.selected{background:var(--green);color:#fff;border-color:var(--green)}
+    .bars{display:flex;flex-direction:column;gap:10px}
+    .bar-row{display:grid;grid-template-columns:66px 1fr 40px;gap:9px;align-items:center;font-size:13px}
+    .track{height:9px;background:#edf2ef;border-radius:10px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,var(--green2),#68b78f);border-radius:10px}
+    .strategy{padding:22px;display:grid;gap:13px}
+    .step{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}.step-no{width:34px;height:34px;border-radius:11px;background:var(--green);color:#fff;display:grid;place-items:center;font-weight:900}.step b{display:block;margin-bottom:2px}.step span{color:var(--muted);font-size:13px}
+    details{border-top:1px solid var(--line);padding:16px 22px}summary{cursor:pointer;font-weight:800;color:var(--green)}
+    .sources{padding:10px 0 0;margin:0;list-style:none}.sources li{padding:7px 0;font-size:13px}
+    .footer{color:var(--muted);font-size:12px;text-align:center;padding-top:10px}
+    @media(max-width:1000px){.mast,.layout{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}.filters{grid-template-columns:1fr 1fr}.route-row{grid-template-columns:110px 100px 1fr 80px 20px}}
+    @media(max-width:680px){main{padding:18px 12px 42px}.topbar-inner{padding:11px 13px}.nav-meta span:last-child{display:none}.hero{padding:24px;min-height:0}.mast{gap:14px}.kpis{gap:9px}.kpi{padding:15px}.kpi-value{font-size:27px}.filters{grid-template-columns:1fr}.route-row{grid-template-columns:1fr auto;gap:7px}.route-row .week{grid-column:1/-1}.fare{grid-column:1}.out{grid-column:2;grid-row:1}.airport-cloud{grid-template-columns:repeat(4,1fr)}.fare-table th:nth-child(3),.fare-table td:nth-child(3),.fare-table th:nth-child(4),.fare-table td:nth-child(4){display:none}.panel-head{padding:18px}.route-list{padding:6px 10px 12px}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><span class="mark">✈</span><span>Frontier GoWild 航班雷达</span></div>
+      <div class="nav-meta"><i class="live-dot"></i><span>每日检查 · 午夜加密</span><span>Pacific · PST/PDT</span></div>
+    </div>
+  </header>
+  <main>
+    <section class="mast">
+      <div class="hero">
+        <div class="eyebrow">7 个机场 · 15 个直飞组合</div>
+        <h1>便宜票出现时，<br>第一眼就能看到。</h1>
+        <p>把 GoWild 实时库存、普通低价和 Frontier 直飞班期分开显示，避免把普通促销价误当成通票座位。</p>
+        <div class="hero-tags"><span class="hero-tag">SJC</span><span class="hero-tag">SFO</span><span class="hero-tag">SLC</span><span class="hero-tag">LAX</span><span class="hero-tag">SAN</span><span class="hero-tag">LAS</span><span class="hero-tag">DEN</span></div>
+      </div>
+      <aside class="monitor-card">
+        <div class="monitor-head"><div><div class="monitor-title">自动监控</div><div class="monitor-big">运行中</div></div><span class="status-pill">ACTIVE</span></div>
+        <div class="monitor-sub">每天 12:00 检查一次；午夜按 00:00、00:01、00:02、00:04、00:08、00:16、00:32、01:00 指数加密检查。</div>
+        <div class="monitor-grid"><div class="mini"><b>≤ $30</b><span>普通票提醒线</span></div><div class="mini"><b>≥ 20%</b><span>降价提醒幅度</span></div></div>
+      </aside>
+    </section>
+
+    <section class="kpis">
+      <div class="kpi"><div class="kpi-label">当前直飞组合</div><div class="kpi-value" id="activeCount">14</div><div class="kpi-note">另有 1 条季节性直飞</div></div>
+      <div class="kpi"><div class="kpi-label">每日有班次</div><div class="kpi-value">12</div><div class="kpi-note">抽样周内每日直飞</div></div>
+      <div class="kpi"><div class="kpi-label">观察到最低普通票</div><div class="kpi-value">$19</div><div class="kpi-note">可能要求 Discount Den</div></div>
+      <div class="kpi"><div class="kpi-label">已验证 GoWild</div><div class="kpi-value">0</div><div class="kpi-note">需要有效通票登录</div></div>
+    </section>
+
+    <div class="layout">
+      <div>
+        <section class="panel">
+          <div class="panel-head"><div><h2>直飞航线与星期</h2><div class="sub">班期来自代表性样本周；点击右侧箭头查看来源。</div></div><span class="status-pill" id="resultCount">15 条</span></div>
+          <div class="filters">
+            <select id="originFilter" aria-label="出发机场"><option value="all">全部出发机场</option></select>
+            <select id="destinationFilter" aria-label="到达机场"><option value="all">全部到达机场</option></select>
+            <select id="statusFilter" aria-label="航线状态"><option value="all">全部状态</option><option value="Active">当前直飞</option><option value="Seasonal">季节性</option></select>
+            <input id="routeSearch" type="search" placeholder="搜索机场或航线，例如 SJC、LAS" aria-label="搜索航线">
+            <button class="ghost-btn" id="resetBtn">重置</button>
+          </div>
+          <div class="route-list" id="routeList"></div>
+          <div class="empty" id="routeEmpty">没有符合条件的航线。</div>
+          <div class="legend">星期顺序：一、二、三、四、五、六、日。绿色表示样本周至少有一班 Frontier 直飞；反向班期可能略有差异，订票前请再次确认具体日期。</div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head"><div><h2>最低价观察</h2><div class="sub">这是 Frontier 公开页面上的普通票或 Discount Den 价格，不是 GoWild 实时库存。</div></div><select id="fareSort" style="width:auto" aria-label="票价排序"><option value="price">按价格</option><option value="date">按日期</option></select></div>
+          <div style="overflow:auto"><table class="fare-table"><thead><tr><th>方向</th><th>价格</th><th>日期</th><th>票价类型</th><th>来源</th></tr></thead><tbody id="fareBody"></tbody></table></div>
+          <div class="alert"><b>为什么最近看不到便宜票？</b> “出发前一天”是开放窗口，不是座位保证。GoWild 座位有限，热门航班可能完全不释放；公开低价页面也可能包含转机或 Discount Den 条件。</div>
+        </section>
+      </div>
+
+      <aside>
+        <section class="panel">
+          <div class="panel-head"><div><h2>机场机会分布</h2><div class="sub">选择机场查看其当前 Frontier 直飞组合。</div></div></div>
+          <div class="radar">
+            <div class="airport-cloud" id="airportCloud"></div>
+            <div class="bars" id="airportBars"></div>
+          </div>
+        </section>
+        <section class="panel">
+          <div class="panel-head"><div><h2>实用抢票节奏</h2><div class="sub">国内 GoWild 官方规则是出发前一天开放，不保证精确到 24 小时。</div></div></div>
+          <div class="strategy">
+            <div class="step"><div class="step-no">1</div><div><b>先看当天是否有直飞</b><span>SJC 的两条 Frontier 航线并非每天运行，先用上面的星期筛选排除无班次日期。</span></div></div>
+            <div class="step"><div class="step-no">2</div><div><b>出发前一天持续检查</b><span>白天检查一次，午夜从 1 分钟间隔逐步放宽到 1 小时。库存可能分批变化，不要把第一次“无票”当成最终结果。</span></div></div>
+            <div class="step"><div class="step-no">3</div><div><b>比较最终支付金额</b><span>GoWild 是每航段 $0.01 机票价，税费、行李、座位及 Early Booking 费用另计。</span></div></div>
+            <div class="step"><div class="step-no">4</div><div><b>固定行程保留普通票后备</b><span>当普通票低于 $30 且日期不能改时，确定性可能比等待通票库存更重要。</span></div></div>
+          </div>
+          <details><summary>数据限制与来源</summary><ul class="sources">
+            <li><a href="https://www.flyfrontier.com/deals/gowild-pass/" target="_blank" rel="noreferrer">Frontier GoWild 官方说明</a></li>
+            <li><a href="https://www.flyfrontier.com/frontiermiles/terms-and-conditions" target="_blank" rel="noreferrer">Frontier GoWild 条款</a></li>
+            <li><a href="https://www.flightsfrom.com/" target="_blank" rel="noreferrer">FlightsFrom 直飞班期</a></li>
+            <li>价格与班期快照：2026-09-23。票价会在购买前变化。</li>
+          </ul></details>
+        </section>
+      </aside>
+    </div>
+    <div class="footer">数据用于发现机会，不构成票价保证。最后更新：2026-09-23 · Frontier GoWild 航班雷达</div>
+  </main>
+
+  <script>
+    const D=['一','二','三','四','五','六','日'];
+    const airports=['SJC','SFO','SLC','LAX','SAN','LAS','DEN'];
+    const routes=[
+      {pair:'SJC–LAS',from:'SJC',to:'LAS',status:'Active',days:[1,0,0,1,1,0,1],fare:23,source:'https://www.flightsfrom.com/SJC-LAS'},
+      {pair:'SJC–LAX',from:'SJC',to:'LAX',status:'Active',days:[1,0,0,1,1,0,1],fare:23,source:'https://www.directflights.com/SJC-LAX'},
+      {pair:'SFO–LAS',from:'SFO',to:'LAS',status:'Active',days:[1,1,1,1,1,1,1],fare:19,source:'https://www.flightsfrom.com/SFO-LAS'},
+      {pair:'SFO–LAX',from:'SFO',to:'LAX',status:'Active',days:[1,1,1,1,1,1,1],fare:19,source:'https://www.flightsfrom.com/SFO-LAX'},
+      {pair:'SFO–DEN',from:'SFO',to:'DEN',status:'Active',days:[1,1,1,1,1,1,1],fare:26,source:'https://www.flightsfrom.com/SFO-DEN'},
+      {pair:'SFO–SAN',from:'SFO',to:'SAN',status:'Active',days:[1,1,1,1,1,1,1],fare:19,source:'https://www.flightsfrom.com/SFO-SAN'},
+      {pair:'SFO–SLC',from:'SFO',to:'SLC',status:'Seasonal',days:[null,null,null,null,null,null,null],fare:null,source:'https://www.flightsfrom.com/SFO-SLC'},
+      {pair:'SLC–DEN',from:'SLC',to:'DEN',status:'Active',days:[1,1,1,1,1,1,1],fare:19,source:'https://www.flightsfrom.com/SLC-DEN'},
+      {pair:'SLC–LAX',from:'SLC',to:'LAX',status:'Active',days:[1,1,1,1,1,1,1],fare:33,source:'https://www.flightsfrom.com/SLC-LAX'},
+      {pair:'SLC–LAS',from:'SLC',to:'LAS',status:'Active',days:[1,1,1,1,1,1,1],fare:23,source:'https://www.flightsfrom.com/SLC-LAS'},
+      {pair:'LAX–LAS',from:'LAX',to:'LAS',status:'Active',days:[1,1,1,1,1,1,1],fare:19,source:'https://www.flightsfrom.com/LAX-LAS'},
+      {pair:'LAX–DEN',from:'LAX',to:'DEN',status:'Active',days:[1,1,1,1,1,1,1],fare:32,source:'https://www.flightsfrom.com/LAX-DEN'},
+      {pair:'SAN–LAS',from:'SAN',to:'LAS',status:'Active',days:[1,1,1,1,1,1,1],fare:23,source:'https://www.flightsfrom.com/SAN-LAS'},
+      {pair:'SAN–DEN',from:'SAN',to:'DEN',status:'Active',days:[1,1,1,1,1,1,1],fare:21,source:'https://www.flightsfrom.com/SAN-DEN'},
+      {pair:'LAS–DEN',from:'DEN',to:'LAS',status:'Active',days:[1,1,1,1,1,1,1],fare:52,source:'https://www.flightsfrom.com/DEN-LAS'}
+    ];
+    const fares=[
+      ['SFO→LAS',19,'2026-11-11','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-francisco'],['SFO→LAX',19,'2026-12-08','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-francisco'],['SFO→SAN',19,'2026-12-01','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-francisco'],['SLC→DEN',19,'2026-11-14','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-salt-lake-city'],['LAX→LAS',19,'2026-11-04','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-los-angeles'],['SAN→DEN',21,'2026-11-10','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-diego'],['SJC→LAS',23,'2026-11-09','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-jose'],['SJC→LAX',23,'2026-10-26','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-jose'],['SLC→LAS',23,'2026-11-12','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-salt-lake-city'],['SAN→LAS',23,'2026-10-17','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-diego'],['SFO→DEN',26,'2026-11-16','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-san-francisco'],['DEN→LAX',32,'2026-10-13','普通票','https://flights.flyfrontier.com/en/flights-from-denver'],['SLC→LAX',33,'2026-10-27','Discount Den Basic','https://flights.flyfrontier.com/en/flights-from-salt-lake-city'],['DEN→LAS',52,'2026-11-18','普通票','https://flights.flyfrontier.com/en/flights-from-denver']
+    ];
+    const statusLabel={Active:'当前直飞',Seasonal:'11/21 起季节性'};
+    const statusClass={Active:'active',Seasonal:'seasonal'};
+    const origin=document.querySelector('#originFilter');
+    const destination=document.querySelector('#destinationFilter');
+    airports.forEach(a=>{
+      origin.insertAdjacentHTML('beforeend',`<option value="${a}">${a} 出发</option>`);
+      destination.insertAdjacentHTML('beforeend',`<option value="${a}">到达 ${a}</option>`);
+    });
+    function endpoints(r){return r.pair.split('–')}
+    function directionLabel(r,o,d){
+      const [a,b]=endpoints(r);
+      if(o!=='all'&&d!=='all') return `${o}→${d}`;
+      if(o!=='all') return `${o}→${a===o?b:a}`;
+      if(d!=='all') return `${a===d?b:a}→${d}`;
+      return r.pair;
+    }
+    function drawRoutes(){
+      const o=origin.value,d=destination.value,s=document.querySelector('#statusFilter').value,q=document.querySelector('#routeSearch').value.trim().toUpperCase();
+      const data=routes.filter(r=>{
+        const ep=endpoints(r);
+        const originMatch=o==='all'||ep.includes(o);
+        const destinationMatch=d==='all'||ep.includes(d);
+        const validDirection=o==='all'||d==='all'||(o!==d&&ep.includes(o)&&ep.includes(d));
+        return originMatch&&destinationMatch&&validDirection&&(s==='all'||r.status===s)&&(!q||r.pair.includes(q));
+      });
+      document.querySelector('#resultCount').textContent=`${data.length} 条`;
+      document.querySelector('#routeEmpty').style.display=data.length?'none':'block';
+      document.querySelector('#routeList').innerHTML=data.map(r=>`<div class="route-row">
+        <div class="route-name">${directionLabel(r,o,d)}</div><span class="badge ${statusClass[r.status]}">${statusLabel[r.status]}</span>
+        <div class="week">${r.days.map((v,i)=>`<span class="day ${v===1?'on':v===null?'pending':''}">${D[i]}</span>`).join('')}</div>
+        <div class="fare">${r.fare?`$${r.fare}<small>观察价起</small>`:'—<small>暂无价格</small>'}</div>
+        <a class="out" href="${r.source}" target="_blank" rel="noreferrer" aria-label="打开 ${r.pair} 来源">↗</a></div>`).join('');
+    }
+    function drawFares(){
+      const mode=document.querySelector('#fareSort').value;
+      const o=origin.value,d=destination.value;
+      const data=[...fares].filter(f=>{
+        const [fo,fd]=f[0].split('→');
+        return (o==='all'||fo===o)&&(d==='all'||fd===d);
+      }).sort((a,b)=>mode==='price'?a[1]-b[1]:a[2].localeCompare(b[2]));
+      document.querySelector('#fareBody').innerHTML=data.length?data.map(f=>`<tr><td><b>${f[0]}</b></td><td class="price">$${f[1]}</td><td>${new Date(f[2]+'T12:00:00').toLocaleDateString('zh-CN',{month:'short',day:'numeric',year:'numeric'})}</td><td><span class="type-label">${f[3]}</span></td><td><a href="${f[4]}" target="_blank" rel="noreferrer">Frontier ↗</a></td></tr>`).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:32px">当前筛选方向还没有公开低价观察。</td></tr>';
+    }
+    function drawAirports(selected='SJC'){
+      document.querySelector('#airportCloud').innerHTML=airports.map(a=>`<button class="airport ${a===selected?'selected':''}" data-airport="${a}">${a}</button>`).join('');
+      const related=routes.filter(r=>r.status==='Active'&&r.pair.includes(selected));
+      const max=Math.max(1,...related.map(r=>r.days.filter(Boolean).length));
+      document.querySelector('#airportBars').innerHTML=related.length?related.map(r=>{const other=r.pair.split('–').find(x=>x!==selected);const n=r.days.filter(Boolean).length;return `<div class="bar-row"><b>${other}</b><div class="track"><div class="fill" style="width:${n/max*100}%"></div></div><span>${n} 天</span></div>`}).join(''):'<div class="sub">目前没有已确认的 Frontier 直飞组合。</div>';
+      document.querySelectorAll('.airport').forEach(b=>b.addEventListener('click',()=>drawAirports(b.dataset.airport)));
+    }
+    ['originFilter','destinationFilter'].forEach(id=>document.querySelector('#'+id).addEventListener('change',()=>{drawRoutes();drawFares()}));
+    document.querySelector('#statusFilter').addEventListener('change',drawRoutes);
+    document.querySelector('#routeSearch').addEventListener('input',drawRoutes);
+    document.querySelector('#fareSort').addEventListener('change',drawFares);
+    document.querySelector('#resetBtn').addEventListener('click',()=>{origin.value='all';destination.value='all';document.querySelector('#statusFilter').value='all';document.querySelector('#routeSearch').value='';drawRoutes();drawFares()});
+    drawRoutes();drawFares();drawAirports();
+  </script>
+</body>
+</html>
