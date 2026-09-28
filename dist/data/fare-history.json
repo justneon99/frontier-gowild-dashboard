@@ -1,7 +1,235 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-23T23:22:15.588446+00:00",
+  "updatedAt": "2026-09-28T12:06:30Z",
   "observations": [
+    {
+      "route": "SJC→LAS",
+      "amount": 34,
+      "currency": "USD",
+      "travelDate": "2026-11-12",
+      "observedAt": "2026-09-28T05:06:30-07:00",
+      "fareType": "Discount Den Basic",
+      "nonstop": true,
+      "source": "https://flights.flyfrontier.com/en/flights-from-san-jose",
+      "refreshStatus": "fresh",
+      "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
+    },
+    {
+      "route": "SFO→LAS",
+      "amount": 23,
+      "currency": "USD",
+      "travelDate": "2026-12-02",
+      "observedAt": "2026-09-28T05:06:30-07:00",
+      "fareType": "Discount Den Basic",
+      "nonstop": true,
+      "source": "https://flights.flyfrontier.com/en/flights-from-san-francisco",
+      "refreshStatus": "fresh",
+      "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
+    },
+    {
+      "route": "SFO→DEN",
+      "amount": 49,
+      "currency": "USD",
+      "travelDate": "2026-12-16",
+      "observedAt": "2026-09-28T05:06:30-07:00",
+      "fareType": "Discount Den Basic",
+      "nonstop": true,
+      "source": "https://flights.flyfrontier.com/en/flights-from-san-francisco",
+      "refreshStatus": "fresh",
+      "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
+    },
+    {
+      "route": "SLC→DEN",
+      "amount": 29,
+      "currency": "USD",
+      "travelDate": "2026-11-17",
+      "observedAt": "2026-09-28T05:06:30-07:00",
+      "fareType": "Discount Den Basic",
+      "nonstop": true,
+      "source": "https://flights.flyfrontier.com/en/flights-from-salt-lake-city",
+      "refreshStatus": "fresh",
+      "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
+    },
+    {
+      "route": "SLC→LAS",
+      "amount": 49,
+      "currency": "USD",
+      "travelDate": "2026-11-09",
+      "observedAt": "2026-09-28T05:06:30-07:00",
+      "fareType": "Discount Den Basic",
+      "nonstop": true,
+      "source": "https://flights.flyfrontier.com/en/flights-from-salt-lake-city",
+      "refreshStatus": "fresh",
+      "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
+    },
+    {
+      "route": "LAX→DEN",
+      "amount": 32,
+      "currency": "USD",
+      "travelDate": "2026-10-28",
+      "observedAt": "2026-09-28T05:06:30-07:00",
+      "fareType": "Discount Den Basic",
+      "nonstop": true,
+      "source": "https://flights.flyfrontier.com/en/flights-from-los-angeles",
+      "refreshStatus": "fresh",
+      "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
+    },
+    {
+      "route": "LAX→SLC",
+      "amount": 63,
+      "currency": "USD",
+      "travelDate": "2026-12-02",
+      "observedAt": "2026-09-28T05:06:30-07:00",
+      "fareType": "Discount Den Basic",
+      "nonstop": true,
+      "source": "https://flights.flyfrontier.com/en/flights-from-los-angeles",
+      "refreshStatus": "fresh",
+      "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
+    },
+    {
+      "route": "SAN→LAS",
+      "amount": 23,
+      "currency": "USD",
+      "travelDate": "2026-12-09",
+      "observedAt": "2026-09-28T05:06:30-07:00",
+      "fareType": "Discount Den Basic",
+      "nonstop": true,
+      "source": "https://flights.flyfrontier.com/en/flights-from-san-diego",
+      "refreshStatus": "fresh",
+      "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
+    },
+    {
+      "route": "SAN→DEN",
+      "amount": 44,
+      "currency": "USD",
+      "travelDate": "2026-12-15",
+      "observedAt": "2026-09-28T05:06:30-07:00",
+      "fareType": "Discount Den Basic",
+      "nonstop": true,
+      "source": "https://flights.flyfrontier.com/en/flights-from-san-diego",
+      "refreshStatus": "fresh",
+      "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
+    },
+    {
+      "route": "SAN→SFO",
+      "amount": 19,
+      "currency": "USD",
+      "travelDate": "2026-12-15",
+      "observedAt": "2026-09-28T05:06:30-07:00",
+      "fareType": "Discount Den Basic",
+      "nonstop": true,
+      "source": "https://flights.flyfrontier.com/en/flights-from-san-diego",
+      "refreshStatus": "fresh",
+      "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
+    },
+    {
+      "route": "LAS→SFO",
+      "amount": 23,
+      "currency": "USD",
+      "travelDate": "2026-11-18",
+      "observedAt": "2026-09-28T05:06:30-07:00",
+      "fareType": "Discount Den Basic",
+      "nonstop": true,
+      "source": "https://flights.flyfrontier.com/en/flights-from-las-vegas",
+      "refreshStatus": "fresh",
+      "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
+    },
+    {
+      "route": "LAS→SAN",
+      "amount": 23,
+      "currency": "USD",
+      "travelDate": "2026-11-21",
+      "observedAt": "2026-09-28T05:06:30-07:00",
+      "fareType": "Discount Den Basic",
+      "nonstop": true,
+      "source": "https://flights.flyfrontier.com/en/flights-from-las-vegas",
+      "refreshStatus": "fresh",
+      "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
+    },
+    {
+      "route": "LAS→SLC",
+      "amount": 49,
+      "currency": "USD",
+      "travelDate": "2026-12-02",
+      "observedAt": "2026-09-28T05:06:30-07:00",
+      "fareType": "Discount Den Basic",
+      "nonstop": true,
+      "source": "https://flights.flyfrontier.com/en/flights-from-las-vegas",
+      "refreshStatus": "fresh",
+      "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
+    },
+    {
+      "route": "LAS→SJC",
+      "amount": 34,
+      "currency": "USD",
+      "travelDate": "2026-10-30",
+      "observedAt": "2026-09-28T05:06:30-07:00",
+      "fareType": "Discount Den Basic",
+      "nonstop": true,
+      "source": "https://flights.flyfrontier.com/en/flights-from-las-vegas",
+      "refreshStatus": "fresh",
+      "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
+    },
+    {
+      "route": "DEN→LAS",
+      "amount": 39,
+      "currency": "USD",
+      "travelDate": "2026-12-16",
+      "observedAt": "2026-09-28T05:06:30-07:00",
+      "fareType": "Discount Den Basic",
+      "nonstop": true,
+      "source": "https://flights.flyfrontier.com/en/flights-from-denver",
+      "refreshStatus": "fresh",
+      "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
+    },
+    {
+      "route": "DEN→LAX",
+      "amount": 32,
+      "currency": "USD",
+      "travelDate": "2026-12-08",
+      "observedAt": "2026-09-28T05:06:30-07:00",
+      "fareType": "Discount Den Basic",
+      "nonstop": true,
+      "source": "https://flights.flyfrontier.com/en/flights-from-denver",
+      "refreshStatus": "fresh",
+      "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
+    },
+    {
+      "route": "DEN→SFO",
+      "amount": 49,
+      "currency": "USD",
+      "travelDate": "2026-11-18",
+      "observedAt": "2026-09-28T05:06:30-07:00",
+      "fareType": "Discount Den Basic",
+      "nonstop": true,
+      "source": "https://flights.flyfrontier.com/en/flights-from-denver",
+      "refreshStatus": "fresh",
+      "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
+    },
+    {
+      "route": "DEN→SLC",
+      "amount": 29,
+      "currency": "USD",
+      "travelDate": "2026-12-09",
+      "observedAt": "2026-09-28T05:06:30-07:00",
+      "fareType": "Discount Den Basic",
+      "nonstop": true,
+      "source": "https://flights.flyfrontier.com/en/flights-from-denver",
+      "refreshStatus": "fresh",
+      "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
+    },
+    {
+      "route": "DEN→SAN",
+      "amount": 44,
+      "currency": "USD",
+      "travelDate": "2026-12-15",
+      "observedAt": "2026-09-28T05:06:30-07:00",
+      "fareType": "Discount Den Basic",
+      "nonstop": true,
+      "source": "https://flights.flyfrontier.com/en/flights-from-denver",
+      "refreshStatus": "fresh",
+      "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
+    },
     {
       "route": "SFO→LAS",
       "amount": 19,
@@ -10,7 +238,9 @@
       "observedAt": "2026-09-23T12:00:00-07:00",
       "fareType": "Discount Den Basic",
       "nonstop": true,
-      "source": "https://flights.flyfrontier.com/en/flights-from-san-francisco"
+      "source": "https://flights.flyfrontier.com/en/flights-from-san-francisco",
+      "refreshStatus": "stale",
+      "refreshNote": "Historical observation retained with its original timestamp; not revalidated this week."
     },
     {
       "route": "SFO→LAX",
@@ -20,7 +250,9 @@
       "observedAt": "2026-09-23T12:00:00-07:00",
       "fareType": "Discount Den Basic",
       "nonstop": true,
-      "source": "https://flights.flyfrontier.com/en/flights-from-san-francisco"
+      "source": "https://flights.flyfrontier.com/en/flights-from-san-francisco",
+      "refreshStatus": "stale",
+      "refreshNote": "Historical observation retained with its original timestamp; not revalidated this week."
     },
     {
       "route": "SFO→SAN",
@@ -30,7 +262,9 @@
       "observedAt": "2026-09-23T12:00:00-07:00",
       "fareType": "Discount Den Basic",
       "nonstop": true,
-      "source": "https://flights.flyfrontier.com/en/flights-from-san-francisco"
+      "source": "https://flights.flyfrontier.com/en/flights-from-san-francisco",
+      "refreshStatus": "stale",
+      "refreshNote": "Historical observation retained with its original timestamp; not revalidated this week."
     },
     {
       "route": "SLC→DEN",
@@ -40,7 +274,9 @@
       "observedAt": "2026-09-23T12:00:00-07:00",
       "fareType": "Discount Den Basic",
       "nonstop": true,
-      "source": "https://flights.flyfrontier.com/en/flights-from-salt-lake-city"
+      "source": "https://flights.flyfrontier.com/en/flights-from-salt-lake-city",
+      "refreshStatus": "stale",
+      "refreshNote": "Historical observation retained with its original timestamp; not revalidated this week."
     },
     {
       "route": "LAX→LAS",
@@ -50,7 +286,9 @@
       "observedAt": "2026-09-23T12:00:00-07:00",
       "fareType": "Discount Den Basic",
       "nonstop": true,
-      "source": "https://flights.flyfrontier.com/en/flights-from-los-angeles"
+      "source": "https://flights.flyfrontier.com/en/flights-from-los-angeles",
+      "refreshStatus": "stale",
+      "refreshNote": "Historical observation retained with its original timestamp; not revalidated this week."
     },
     {
       "route": "SAN→DEN",
@@ -60,7 +298,9 @@
       "observedAt": "2026-09-23T12:00:00-07:00",
       "fareType": "Discount Den Basic",
       "nonstop": true,
-      "source": "https://flights.flyfrontier.com/en/flights-from-san-diego"
+      "source": "https://flights.flyfrontier.com/en/flights-from-san-diego",
+      "refreshStatus": "stale",
+      "refreshNote": "Historical observation retained with its original timestamp; not revalidated this week."
     },
     {
       "route": "SJC→LAS",
@@ -70,7 +310,9 @@
       "observedAt": "2026-09-23T12:00:00-07:00",
       "fareType": "Discount Den Basic",
       "nonstop": true,
-      "source": "https://flights.flyfrontier.com/en/flights-from-san-jose"
+      "source": "https://flights.flyfrontier.com/en/flights-from-san-jose",
+      "refreshStatus": "stale",
+      "refreshNote": "Historical observation retained with its original timestamp; not revalidated this week."
     },
     {
       "route": "SJC→LAX",
@@ -80,7 +322,9 @@
       "observedAt": "2026-09-23T12:00:00-07:00",
       "fareType": "Discount Den Basic",
       "nonstop": true,
-      "source": "https://flights.flyfrontier.com/en/flights-from-san-jose"
+      "source": "https://flights.flyfrontier.com/en/flights-from-san-jose",
+      "refreshStatus": "stale",
+      "refreshNote": "Historical observation retained with its original timestamp; not revalidated this week."
     },
     {
       "route": "SLC→LAS",
@@ -90,7 +334,9 @@
       "observedAt": "2026-09-23T12:00:00-07:00",
       "fareType": "Discount Den Basic",
       "nonstop": true,
-      "source": "https://flights.flyfrontier.com/en/flights-from-salt-lake-city"
+      "source": "https://flights.flyfrontier.com/en/flights-from-salt-lake-city",
+      "refreshStatus": "stale",
+      "refreshNote": "Historical observation retained with its original timestamp; not revalidated this week."
     },
     {
       "route": "SAN→LAS",
@@ -100,7 +346,9 @@
       "observedAt": "2026-09-23T12:00:00-07:00",
       "fareType": "Discount Den Basic",
       "nonstop": true,
-      "source": "https://flights.flyfrontier.com/en/flights-from-san-diego"
+      "source": "https://flights.flyfrontier.com/en/flights-from-san-diego",
+      "refreshStatus": "stale",
+      "refreshNote": "Historical observation retained with its original timestamp; not revalidated this week."
     },
     {
       "route": "SFO→DEN",
@@ -110,7 +358,9 @@
       "observedAt": "2026-09-23T12:00:00-07:00",
       "fareType": "Discount Den Basic",
       "nonstop": true,
-      "source": "https://flights.flyfrontier.com/en/flights-from-san-francisco"
+      "source": "https://flights.flyfrontier.com/en/flights-from-san-francisco",
+      "refreshStatus": "stale",
+      "refreshNote": "Historical observation retained with its original timestamp; not revalidated this week."
     },
     {
       "route": "DEN→LAX",
@@ -120,7 +370,9 @@
       "observedAt": "2026-09-23T12:00:00-07:00",
       "fareType": "Standard",
       "nonstop": true,
-      "source": "https://flights.flyfrontier.com/en/flights-from-denver"
+      "source": "https://flights.flyfrontier.com/en/flights-from-denver",
+      "refreshStatus": "stale",
+      "refreshNote": "Historical observation retained with its original timestamp; not revalidated this week."
     },
     {
       "route": "SLC→LAX",
@@ -130,7 +382,9 @@
       "observedAt": "2026-09-23T12:00:00-07:00",
       "fareType": "Discount Den Basic",
       "nonstop": true,
-      "source": "https://flights.flyfrontier.com/en/flights-from-salt-lake-city"
+      "source": "https://flights.flyfrontier.com/en/flights-from-salt-lake-city",
+      "refreshStatus": "stale",
+      "refreshNote": "Historical observation retained with its original timestamp; not revalidated this week."
     },
     {
       "route": "DEN→LAS",
@@ -140,7 +394,9 @@
       "observedAt": "2026-09-23T12:00:00-07:00",
       "fareType": "Standard",
       "nonstop": true,
-      "source": "https://flights.flyfrontier.com/en/flights-from-denver"
+      "source": "https://flights.flyfrontier.com/en/flights-from-denver",
+      "refreshStatus": "stale",
+      "refreshNote": "Historical observation retained with its original timestamp; not revalidated this week."
     },
     {
       "route": "SFO→LAS",
@@ -151,7 +407,9 @@
       "observedAt": "2026-09-23T23:20:15.679Z",
       "fareType": "Standard",
       "nonstop": true,
-      "source": "https://booking.flyfrontier.com/Flight/Select"
+      "source": "https://booking.flyfrontier.com/Flight/Select",
+      "refreshStatus": "stale",
+      "refreshNote": "Historical observation retained with its original timestamp; not revalidated this week."
     },
     {
       "route": "SFO→LAS",
@@ -162,7 +420,173 @@
       "observedAt": "2026-09-23T23:20:15.679Z",
       "fareType": "Discount Den Basic",
       "nonstop": true,
-      "source": "https://booking.flyfrontier.com/Flight/Select"
+      "source": "https://booking.flyfrontier.com/Flight/Select",
+      "refreshStatus": "stale",
+      "refreshNote": "Historical observation retained with its original timestamp; not revalidated this week."
     }
-  ]
+  ],
+  "weeklyRefresh": {
+    "observedAt": "2026-09-28T05:06:30-07:00",
+    "windowStart": "2026-09-28",
+    "windowEnd": "2026-12-27",
+    "airportTimeZone": "America/Los_Angeles",
+    "quotedDirections": 19,
+    "reviewedDirections": 30,
+    "directions": [
+      {
+        "route": "SJC→LAS",
+        "status": "found_under_100",
+        "note": "One lowest official public quote under $100 retained."
+      },
+      {
+        "route": "LAS→SJC",
+        "status": "found_under_100",
+        "note": "One lowest official public quote under $100 retained."
+      },
+      {
+        "route": "SJC→LAX",
+        "status": "not_observed_in_public_deals",
+        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+      },
+      {
+        "route": "LAX→SJC",
+        "status": "not_observed_in_public_deals",
+        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+      },
+      {
+        "route": "SFO→LAS",
+        "status": "found_under_100",
+        "note": "One lowest official public quote under $100 retained."
+      },
+      {
+        "route": "LAS→SFO",
+        "status": "found_under_100",
+        "note": "One lowest official public quote under $100 retained."
+      },
+      {
+        "route": "SFO→LAX",
+        "status": "not_observed_in_public_deals",
+        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+      },
+      {
+        "route": "LAX→SFO",
+        "status": "not_observed_in_public_deals",
+        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+      },
+      {
+        "route": "SFO→DEN",
+        "status": "found_under_100",
+        "note": "One lowest official public quote under $100 retained."
+      },
+      {
+        "route": "DEN→SFO",
+        "status": "found_under_100",
+        "note": "One lowest official public quote under $100 retained."
+      },
+      {
+        "route": "SFO→SAN",
+        "status": "not_observed_in_public_deals",
+        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+      },
+      {
+        "route": "SAN→SFO",
+        "status": "found_under_100",
+        "note": "One lowest official public quote under $100 retained."
+      },
+      {
+        "route": "SFO→SLC",
+        "status": "not_observed_in_public_deals",
+        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+      },
+      {
+        "route": "SLC→SFO",
+        "status": "not_observed_in_public_deals",
+        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+      },
+      {
+        "route": "SLC→DEN",
+        "status": "found_under_100",
+        "note": "One lowest official public quote under $100 retained."
+      },
+      {
+        "route": "DEN→SLC",
+        "status": "found_under_100",
+        "note": "One lowest official public quote under $100 retained."
+      },
+      {
+        "route": "SLC→LAX",
+        "status": "not_observed_in_public_deals",
+        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+      },
+      {
+        "route": "LAX→SLC",
+        "status": "found_under_100",
+        "note": "One lowest official public quote under $100 retained."
+      },
+      {
+        "route": "SLC→LAS",
+        "status": "found_under_100",
+        "note": "One lowest official public quote under $100 retained."
+      },
+      {
+        "route": "LAS→SLC",
+        "status": "found_under_100",
+        "note": "One lowest official public quote under $100 retained."
+      },
+      {
+        "route": "LAX→LAS",
+        "status": "not_observed_in_public_deals",
+        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+      },
+      {
+        "route": "LAS→LAX",
+        "status": "not_observed_in_public_deals",
+        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+      },
+      {
+        "route": "LAX→DEN",
+        "status": "found_under_100",
+        "note": "One lowest official public quote under $100 retained."
+      },
+      {
+        "route": "DEN→LAX",
+        "status": "found_under_100",
+        "note": "One lowest official public quote under $100 retained."
+      },
+      {
+        "route": "SAN→LAS",
+        "status": "found_under_100",
+        "note": "One lowest official public quote under $100 retained."
+      },
+      {
+        "route": "LAS→SAN",
+        "status": "found_under_100",
+        "note": "One lowest official public quote under $100 retained."
+      },
+      {
+        "route": "SAN→DEN",
+        "status": "found_under_100",
+        "note": "One lowest official public quote under $100 retained."
+      },
+      {
+        "route": "DEN→SAN",
+        "status": "found_under_100",
+        "note": "One lowest official public quote under $100 retained."
+      },
+      {
+        "route": "LAS→DEN",
+        "status": "not_observed_in_public_deals",
+        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+      },
+      {
+        "route": "DEN→LAS",
+        "status": "found_under_100",
+        "note": "One lowest official public quote under $100 retained."
+      }
+    ],
+    "note": {
+      "zh": "本周核实 30 个直飞方向；官方公开低价页观察到 19 个低于 $100 的 Discount Den 报价。其余 11 个方向在本轮公开页面中未观察到合格报价，动态日历未能完整核实，因此不代表无航班或无低价。公开报价不是 GoWild 库存。",
+      "en": "This week reviewed 30 nonstop directions and observed 19 Discount Den quotes below $100 on Frontier public deal pages. No qualifying quote was observed for the other 11 directions; the full dynamic calendar could not be completely verified, so this does not mean no flight or low fare exists. Public quotes are not GoWild inventory."
+    }
+  }
 }

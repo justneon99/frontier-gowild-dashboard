@@ -32,7 +32,7 @@ def main():
     live = load("gowild-availability.json")
     history = load("fare-history.json")
     assert live["schemaVersion"] == 1
-    assert live["status"] in {"login_required", "ready", "checked", "available", "error"}
+    assert live["status"] in {"login_required", "ready", "checked", "available", "disabled", "error"}
     assert isinstance(live["authenticated"], bool)
     iso(live.get("lastAttemptAt"))
     iso(live.get("lastSuccessfulAt"))

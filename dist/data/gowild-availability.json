@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "status": "error",
+  "status": "disabled",
   "authenticated": false,
   "lastAttemptAt": "2026-09-24T12:01:24.013406Z",
   "lastSuccessfulAt": "2026-09-23T23:20:15.679Z",
@@ -14,14 +14,11 @@
   "publicNote": "No Frontier account, traveler, or payment data is stored in this public file.",
   "coverage": {
     "complete": false,
-    "travelDates": [
-      "2026-09-24",
-      "2026-09-25"
-    ],
+    "travelDates": [],
     "checkedNonstopFlightsWithinWindow": 0,
     "note": {
-      "en": "Check blocked before route coverage: Frontier account page returned a technical-error page, so authentication and GoWild inventory could not be verified. No route was treated as checked.",
-      "zh": "本次在航线检查前受阻：Frontier 账户页面返回技术错误，无法验证登录状态或 GoWild 库存。没有任何航线被标记为已检查。"
+      "en": "Authenticated real-time GoWild monitoring is disabled. This weekly refresh uses public fares only and does not read Gmail or retry login challenges.",
+      "zh": "登录态 GoWild 实时监控已关闭。本周更新只使用公开票价，不读取 Gmail，也不重试登录验证码。"
     }
   }
 }
