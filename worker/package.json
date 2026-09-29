@@ -1,0 +1,1 @@
+{"name":"frontier-gowild-reminders","private":true,"type":"module","scripts":{"dev":"wrangler dev","check":"wrangler deploy --dry-run","deploy":"wrangler deploy"},"devDependencies":{"wrangler":"^4.143.1"}}

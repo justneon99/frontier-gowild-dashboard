@@ -1,0 +1,21 @@
+{
+  "updatedAt": "2026-09-28",
+  "weekdays": "Monday first; representative schedule only, confirm travel date on Frontier",
+  "routes": [
+    {"a":"SJC","b":"LAS","days":[1,0,0,1,1,0,1],"status":"active","source":"https://www.flightsfrom.com/SJC-LAS"},
+    {"a":"SJC","b":"LAX","days":[1,0,0,1,1,0,1],"status":"active","source":"https://www.directflights.com/SJC-LAX"},
+    {"a":"SFO","b":"LAS","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/SFO-LAS"},
+    {"a":"SFO","b":"LAX","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/SFO-LAX"},
+    {"a":"SFO","b":"DEN","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/SFO-DEN"},
+    {"a":"SFO","b":"SAN","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/SFO-SAN"},
+    {"a":"SFO","b":"SLC","days":[null,null,null,null,null,null,null],"status":"seasonal","starts":"2026-11-21","source":"https://www.flightsfrom.com/SFO-SLC"},
+    {"a":"SLC","b":"DEN","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/SLC-DEN"},
+    {"a":"SLC","b":"LAX","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/SLC-LAX"},
+    {"a":"SLC","b":"LAS","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/SLC-LAS"},
+    {"a":"LAX","b":"LAS","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/LAX-LAS"},
+    {"a":"LAX","b":"DEN","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/LAX-DEN"},
+    {"a":"SAN","b":"LAS","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/SAN-LAS"},
+    {"a":"SAN","b":"DEN","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/SAN-DEN"},
+    {"a":"LAS","b":"DEN","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/DEN-LAS"}
+  ]
+}

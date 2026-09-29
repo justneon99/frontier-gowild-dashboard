@@ -1,25 +1,35 @@
-# Frontier GoWild Flight Radar
+# Frontier GoWild 航班雷达
 
-Public dashboard: <https://justneon99.github.io/frontier-gowild-dashboard/>
+Website: <https://justneon99.github.io/frontier-gowild-dashboard/>
 
-To move monitoring to another ChatGPT account with Work Cloud, use [CLOUD_ACCOUNT_HANDOFF.md](CLOUD_ACCOUNT_HANDOFF.md).
+The home page is a trip-planning app for the seven supported airports. It suggests dates from verified Frontier nonstop route patterns, filters published GoWild blackout dates, infers an indicative public fare range from recent observations, and calculates a booking-check reminder in the departure airport's local time. The prior dashboard remains at `dist/legacy.html`.
 
-The dashboard separates three kinds of information:
+The estimate is intentionally labeled as uncertain: existing observations are concentrated on fares below $100, and a fare observed for one travel date is not a quote for another date. Public Standard and Discount Den fares never represent authenticated GoWild inventory. The current schedule file is representative, not a live flight search.
 
-- Frontier nonstop routes and representative weekday schedules.
-- Public Standard and Discount Den fare observations stored in `dist/data/fare-history.json`.
-- Authenticated GoWild inventory stored in `dist/data/gowild-availability.json` only after it is verified on Frontier's official booking site.
-
-The public data never stores Frontier credentials, account identifiers, traveler details, cookies, or payment information. A local scheduled monitor reuses the user's signed-in browser session, queries one-way nonstop flights for one traveler, and writes only flight availability, displayed price, timestamps, and an official booking link. Booking and payment always require user confirmation on Frontier.
-
-The monitor alerts only when a new GoWild itinerary appears, a displayed total changes, a previously unavailable itinerary becomes available again, or login/CAPTCHA requires attention. Alert keys prevent duplicate notifications.
-
-Validate the deployable data and JavaScript before publishing:
+## Local checks
 
 ```sh
+node --test tests/*.test.mjs
+node --check dist/app.mjs
+node --check worker/src/index.mjs
 python3 scripts/validate_monitor_data.py
-python3 /Users/haoday/.codex/skills/frontier-airport-expander/scripts/validate_dashboard.py dist/index.html
+python3 /Users/haoday/.codex/skills/frontier-airport-expander/scripts/validate_dashboard.py dist/legacy.html
+python3 -m http.server 8765 --directory dist
 ```
 
+`dist/config.json` has an empty `apiBase` until the mail backend is deployed. The website then offers `.ics` download and clearly marks email reminders unavailable. Do not insert API keys or email credentials into any file under `dist/` or Git.
 
-Only save, display, or alert on USD fares strictly below $100, including displayed taxes and fees. Discard fares of $100 or more before storing observations; never replace them with zero. Apply this to Standard, Discount Den and GoWild. Frontier may return expensive options in its search results; do not persist them. Cycle through all eligible routes in both directions across SJC, SFO, SLC, LAX, SAN, LAS and DEN. Resume previously unchecked directions first and rotate origins rather than always starting with SFO. Persist a non-sensitive route/date coverage cursor locally. Mark interrupted runs as partial and distinguish unchecked routes from checked routes with no qualifying low fare.
+## Email and calendar backend
+
+`worker/src/index.mjs` contains a Cloudflare Worker using D1, Resend, and a five-minute cron. It supports email-link registration/sign-in, saved reminders, `.ics` invitations, updates/cancellations, and a due-time email. The user must accept the calendar invitation in their calendar app; the website cannot force a calendar notification. The server stores only verified email addresses, session hashes, and trip/reminder metadata. Frontier login and payment details are not involved.
+
+To activate it, a Cloudflare account and a Resend sending domain are required:
+
+1. Sign in with Wrangler (`npx wrangler login`) and create D1 (`npx wrangler d1 create frontier-gowild-reminders`). Put the returned database ID in `worker/wrangler.jsonc`.
+2. Apply `worker/schema.sql` to D1 with Wrangler. Configure `RESEND_API_KEY` and `MAIL_FROM` as Worker secrets; `MAIL_FROM` must use a verified sending domain.
+3. Deploy the Worker, set its `workers.dev` HTTPS URL as `apiBase` in `dist/config.json`, and publish the static site. Never commit Worker secrets.
+4. Test a new account end to end: receive sign-in link, save a trip, accept the emailed `.ics`, change/cancel it, and verify the due-time email. Check Gmail, Apple Calendar, and Outlook handling before treating all three as supported.
+
+The Worker rejects unsupported routes, expired windows, invalid reminder times, unverified sessions, and other website origins. Login links expire after 15 minutes. Sessions expire after 30 days. Email requests use provider idempotency keys. `worker/wrangler.jsonc` intentionally contains a database ID placeholder, so backend deployment is not complete until it is replaced.
+
+Source for booking windows and blackout dates: [Frontier GoWild official page](https://www.flyfrontier.com/deals/gowild-pass/). Service implementation references: [Cloudflare Workers Cron Triggers](https://developers.cloudflare.com/workers/configuration/cron-triggers/), [Cloudflare D1](https://developers.cloudflare.com/d1/worker-api/), [Resend Send Email](https://resend.com/docs/api-reference/emails/send-email).
