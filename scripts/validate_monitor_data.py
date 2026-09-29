@@ -9,7 +9,7 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "dist" / "data"
-AIRPORTS = {"SJC", "SFO", "SLC", "LAX", "SAN", "LAS", "DEN", "MCO", "CLT", "CUN", "SJO", "GUA", "SAL", "SAP", "EWR", "LGA"}
+AIRPORTS = {"SJC", "SFO", "SLC", "LAX", "SAN", "LAS", "DEN", "MCO", "CLT", "CUN", "SJO", "GUA", "SAL", "SAP", "EWR", "LGA", "SEA"}
 
 
 def load(name):

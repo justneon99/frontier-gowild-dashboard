@@ -447,6 +447,54 @@
       "source": "https://www.flightsfrom.com/DEN-CUN",
       "sampleWindow": "announced future service; weekdays unverified",
       "starts": "2027-03-05"
+    },
+    {
+      "a": "SEA",
+      "b": "DEN",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.directflights.com/SEA-DEN",
+      "sampleWindow": "2026-10-19 to 2026-10-25"
+    },
+    {
+      "a": "SEA",
+      "b": "LAS",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.directflights.com/SEA-LAS",
+      "sampleWindow": "2026-10-19 to 2026-10-25"
+    },
+    {
+      "a": "SEA",
+      "b": "LAX",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.directflights.com/SEA-LAX",
+      "sampleWindow": "2026-10-19 to 2026-10-25"
     }
   ]
 }

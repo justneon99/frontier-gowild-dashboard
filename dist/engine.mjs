@@ -1,5 +1,5 @@
-export const AIRPORTS = ['SJC', 'SFO', 'SLC', 'LAX', 'SAN', 'LAS', 'DEN', 'MCO', 'CLT', 'CUN', 'SJO', 'GUA', 'SAL', 'SAP', 'EWR', 'LGA'];
-export const TIME_ZONES = { SJC: 'America/Los_Angeles', SFO: 'America/Los_Angeles', SLC: 'America/Denver', LAX: 'America/Los_Angeles', SAN: 'America/Los_Angeles', LAS: 'America/Los_Angeles', DEN: 'America/Denver', MCO: 'America/New_York', CLT: 'America/New_York', CUN: 'America/Cancun', SJO: 'America/Costa_Rica', GUA: 'America/Guatemala', SAL: 'America/El_Salvador', SAP: 'America/Tegucigalpa', EWR: 'America/New_York', LGA: 'America/New_York' };
+export const AIRPORTS = ['SJC', 'SFO', 'SLC', 'LAX', 'SAN', 'LAS', 'DEN', 'MCO', 'CLT', 'CUN', 'SJO', 'GUA', 'SAL', 'SAP', 'EWR', 'LGA', 'SEA'];
+export const TIME_ZONES = { SJC: 'America/Los_Angeles', SFO: 'America/Los_Angeles', SLC: 'America/Denver', LAX: 'America/Los_Angeles', SAN: 'America/Los_Angeles', LAS: 'America/Los_Angeles', DEN: 'America/Denver', MCO: 'America/New_York', CLT: 'America/New_York', CUN: 'America/Cancun', SJO: 'America/Costa_Rica', GUA: 'America/Guatemala', SAL: 'America/El_Salvador', SAP: 'America/Tegucigalpa', EWR: 'America/New_York', LGA: 'America/New_York', SEA: 'America/Los_Angeles' };
 const INTERNATIONAL_AIRPORTS = new Set(['CUN', 'SJO', 'GUA', 'SAL', 'SAP']);
 export const bookingWindowDays = (origin, destination) => INTERNATIONAL_AIRPORTS.has(origin) || INTERNATIONAL_AIRPORTS.has(destination) ? 10 : 1;
 

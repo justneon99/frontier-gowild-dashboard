@@ -25,6 +25,15 @@ test('new nonstop coverage distinguishes seasonal dates from unknown weekdays',(
   assert.equal(recommend({origin:'MCO',destination:'SJO',from:'2026-10-24',to:'2026-10-24'},routes,[],now).options[0].reminder.localDate,'2026-10-14');
   assert.equal(recommend({origin:'SAN',destination:'SAP',from:'2026-10-24',to:'2026-10-24'},routes,[],now).status,'no_verified_nonstop');
 });
+test('Seattle only recommends verified Frontier nonstops in either direction',()=>{
+  const routes=routesData.routes;
+  assert.equal(routes.filter(route=>route.a==='SEA'||route.b==='SEA').length,3);
+  for(const destination of ['DEN','LAS','LAX']){
+    assert.equal(recommend({origin:'SEA',destination,from:'2026-10-24',to:'2026-10-24'},routes,[],now).status,'ok');
+    assert.equal(recommend({origin:destination,destination:'SEA',from:'2026-10-24',to:'2026-10-24'},routes,[],now).status,'ok');
+  }
+  assert.equal(recommend({origin:'SEA',destination:'SFO',from:'2026-10-24',to:'2026-10-24'},routes,[],now).status,'no_verified_nonstop');
+});
 test('filters non-operating and GoWild blackout dates',()=>{
   const result=recommend({origin:'SJC',destination:'LAS',from:'2026-10-07',to:'2026-10-12',hour:0},routes,[],now);
   assert.deepEqual(result.options.map(option=>option.travelDate),[]);
