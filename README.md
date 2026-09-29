@@ -35,3 +35,5 @@ To activate it, a Cloudflare account and a Resend sending domain are required:
 The Worker rejects unsupported routes, expired windows, invalid reminder times, unverified sessions, and other website origins. Login links expire after 15 minutes. Sessions expire after 30 days. Email requests use provider idempotency keys. `worker/wrangler.jsonc` intentionally contains a database ID placeholder, so backend deployment is not complete until it is replaced.
 
 Source for booking windows and blackout dates: [Frontier GoWild official page](https://www.flyfrontier.com/deals/gowild-pass/). Service implementation references: [Cloudflare Workers Cron Triggers](https://developers.cloudflare.com/workers/configuration/cron-triggers/), [Cloudflare D1](https://developers.cloudflare.com/d1/worker-api/), [Resend Send Email](https://resend.com/docs/api-reference/emails/send-email).
+
+Airport opportunity totals combine current and planned nonstop service, counting each destination once. SFO–SLC keeps one bidirectional route with a dated schedule-source note; public fare offers alone do not verify earlier Frontier nonstop dates.

@@ -106,7 +106,21 @@
       ],
       "status": "seasonal",
       "starts": "2026-11-21",
-      "source": "https://www.flightsfrom.com/SFO-SLC"
+      "source": "https://www.flightsfrom.com/SFO-SLC",
+      "reviewedAt": "2026-09-29",
+      "displayLabel": {
+        "zh": "Frontier 直飞 · 班期待核实",
+        "en": "Frontier nonstop · verify dates"
+      },
+      "scheduleNote": {
+        "zh": "此双向航线统一展示。公开班期来源列出 Frontier 自 2026-11-21 恢复直飞；更早日期的 Frontier 直飞尚未核实，不能据此断言没有航班。官网公开报价未注明是否直飞，具体日期请到 Frontier 查询。",
+        "en": "One entry covers both directions. Public schedule sources list Frontier nonstop service from Nov 21, 2026. Earlier Frontier nonstop dates remain unverified; this does not establish that no flights exist. Public fare pages do not specify nonstop service. Check exact dates with Frontier."
+      },
+      "bookingSource": "https://flights.flyfrontier.com/en/flights-from-san-francisco-to-salt-lake-city",
+      "additionalSources": [
+        "https://www.flightsfrom.com/SLC-SFO",
+        "https://www.flightconnections.com/flights-from-sfo-to-slc"
+      ]
     },
     {
       "a": "SLC",

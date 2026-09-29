@@ -96,7 +96,7 @@ test('airport opportunities use nonstop routes and fresh fares in the correct di
     {route:'SFO→SLC',amount:30,currency:'USD',nonstop:false,observedAt:'2026-09-28T12:00:00Z',refreshStatus:'fresh'}
   ];
   const sfo=airportOpportunities(schedule,fares).find(item=>item.airport==='SFO');
-  assert.equal(sfo.currentCount,1);assert.equal(sfo.seasonalCount,1);
+  assert.equal(sfo.totalCount,2);assert.equal(sfo.currentCount,1);assert.equal(sfo.seasonalCount,1);
   assert.equal(sfo.lowestOutgoing.amount,23);
   assert.equal(sfo.destinations.find(item=>item.airport==='LAS').toQuote,null);
   assert.equal(sfo.destinations.find(item=>item.airport==='SLC').fromQuote,null);

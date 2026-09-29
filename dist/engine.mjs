@@ -131,7 +131,7 @@ export function airportOpportunities(routes, observations) {
       const other = route.a === airport ? route.b : route.a;
       return { airport: other, route, fromQuote: lowest(`${airport}→${other}`), toQuote: lowest(`${other}→${airport}`) };
     }).sort((a, b) => a.airport.localeCompare(b.airport));
-    return { airport, destinations, currentCount: destinations.filter(item => item.route.status === 'active').length,
+    return { airport, destinations, totalCount: destinations.length, currentCount: destinations.filter(item => item.route.status === 'active').length,
       seasonalCount: destinations.filter(item => item.route.status === 'seasonal').length,
       lowestOutgoing: destinations.reduce((best, item) => item.fromQuote && (!best || Number(item.fromQuote.amount) < Number(best.amount)) ? item.fromQuote : best, null) };
   });
