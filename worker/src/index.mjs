@@ -11,7 +11,10 @@ function htmlEscape(value){return String(value).replace(/[&<>"']/g,char=>({'&':'
 function randomToken(){const bytes=crypto.getRandomValues(new Uint8Array(32));return Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');}
 async function hash(value){const digest=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value));return Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,'0')).join('');}
 function site(env){const url=new URL(env.SITE_URL);if(url.protocol!=='https:')throw error('SITE_URL must use HTTPS',503);return url;}
-function configReady(env){return Boolean(env.DB&&env.RESEND_API_KEY&&env.MAIL_FROM&&env.SITE_URL);}
+function configReady(env){return Boolean(env.DB&&env.RESEND_API_KEY&&env.MAIL_FROM&&env.SITE_URL&&env.ADMIN_EMAIL);}
+function isAdmin(user,env){return user.email.toLowerCase()===String(env.ADMIN_EMAIL||'').trim().toLowerCase();}
+function requireAdmin(user,env){if(!isAdmin(user,env))throw error('Admin access required',403);}
+function validEmail(value){const email=String(value||'').trim().toLowerCase();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||email.length>254)throw error('Invalid email');return email;}
 async function sendMail(env,{to,subject,text,attachment,key}){
   const payload={from:env.MAIL_FROM,to:[to],subject,text};
   if(attachment)payload.attachments=[{filename:attachment.filename,content:btoa(attachment.content)}];
@@ -38,7 +41,7 @@ function validateSelection(payload){
 async function userFromRequest(request,env){
   const token=request.headers.get('Authorization')?.match(/^Bearer ([a-f0-9]{64})$/)?.[1];
   if(!token)throw error('Unauthorized',401);
-  const row=await env.DB.prepare('SELECT users.id,users.email FROM sessions JOIN users ON users.id=sessions.user_id WHERE sessions.hash=? AND sessions.expires_at>?').bind(await hash(token),new Date().toISOString()).first();
+  const row=await env.DB.prepare('SELECT users.id,users.email FROM sessions JOIN users ON users.id=sessions.user_id WHERE sessions.hash=? AND sessions.expires_at>? AND users.revoked_at IS NULL').bind(await hash(token),new Date().toISOString()).first();
   if(!row)throw error('Unauthorized',401);
   return row;
 }
@@ -54,8 +57,9 @@ async function sendInvite(env,user,row,method='REQUEST'){
   return sendMail(env,{to:user.email,subject:`Frontier GoWild reminder ${action}: ${row.origin} → ${row.destination}`,text:`Travel date: ${row.travel_date}\nSuggested check: ${when} (${row.time_zone})\n\nThis is a suggested time to check Frontier, not a guaranteed inventory release.\nOpen Frontier: https://www.flyfrontier.com/\nManage your reminder: ${site(env).href}`,attachment:{filename:`frontier-gowild-${row.id}.ics`,content:ics(row,method)},key:`invite-${row.id}-${row.sequence}-${method}`});
 }
 async function authStart(request,env){
-  const body=await readJson(request),email=String(body.email||'').trim().toLowerCase();
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||email.length>254)throw error('Invalid email');
+  const body=await readJson(request),email=validEmail(body.email);
+  const account=await env.DB.prepare('SELECT revoked_at FROM users WHERE email=?').bind(email).first();
+  if(!isAdmin({email},env)&&(!account||account.revoked_at))return {ok:true};
   const recent=await env.DB.prepare('SELECT COUNT(*) AS n FROM login_codes WHERE email=? AND created_at>?').bind(email,new Date(Date.now()-3600000).toISOString()).first();
   if(recent.n>=3)return {ok:true};
   const token=randomToken(),now=new Date().toISOString(),expires=new Date(Date.now()+15*60000).toISOString();
@@ -71,12 +75,73 @@ async function authVerify(request,env){
   const token=new URL(request.url).searchParams.get('token');if(!/^[a-f0-9]{64}$/.test(token||''))throw error('Invalid login link',401);
   const tokenHash=await hash(token),row=await env.DB.prepare('SELECT email FROM login_codes WHERE hash=? AND expires_at>?').bind(tokenHash,new Date().toISOString()).first();
   if(!row)throw error('Login link expired or already used',401);
+  const existing=await env.DB.prepare('SELECT id,revoked_at FROM users WHERE email=?').bind(row.email).first();
+  if(!isAdmin(row,env)&&(!existing||existing.revoked_at))throw error('Account access unavailable',403);
   await env.DB.prepare('DELETE FROM login_codes WHERE hash=?').bind(tokenHash).run();
   const now=new Date().toISOString();await env.DB.prepare('INSERT OR IGNORE INTO users(id,email,created_at) VALUES(?,?,?)').bind(crypto.randomUUID(),row.email,now).run();
   const user=await env.DB.prepare('SELECT id,email FROM users WHERE email=?').bind(row.email).first();
+  await env.DB.prepare('UPDATE users SET last_signed_in_at=? WHERE id=?').bind(now,user.id).run();
   const session=randomToken();await env.DB.prepare('INSERT INTO sessions(hash,user_id,expires_at,created_at) VALUES(?,?,?,?)').bind(await hash(session),user.id,new Date(Date.now()+30*DAY).toISOString(),now).run();
   const redirect=site(env);redirect.hash=new URLSearchParams({session,email:row.email}).toString();
   return Response.redirect(redirect.href,302);
+}
+async function acceptInvitation(request,env){
+  const token=new URL(request.url).searchParams.get('token');
+  if(!/^[a-f0-9]{64}$/.test(token||''))throw error('Invalid invitation',401);
+  const tokenHash=await hash(token),now=new Date().toISOString();
+  const invite=await env.DB.prepare('SELECT id,email FROM invitations WHERE token_hash=? AND accepted_at IS NULL AND revoked_at IS NULL AND expires_at>?').bind(tokenHash,now).first();
+  if(!invite)throw error('Invitation expired or already used',401);
+  const existing=await env.DB.prepare('SELECT id,revoked_at FROM users WHERE email=?').bind(invite.email).first();
+  if(existing?.revoked_at)throw error('Account access has been revoked',403);
+  const claim=await env.DB.prepare('UPDATE invitations SET accepted_at=? WHERE id=? AND accepted_at IS NULL AND revoked_at IS NULL AND expires_at>?').bind(now,invite.id,now).run();
+  if(!claim.meta.changes)throw error('Invitation expired or already used',401);
+  await env.DB.prepare('INSERT OR IGNORE INTO users(id,email,created_at) VALUES(?,?,?)').bind(crypto.randomUUID(),invite.email,now).run();
+  const user=await env.DB.prepare('SELECT id FROM users WHERE email=?').bind(invite.email).first();
+  await env.DB.prepare('UPDATE users SET last_signed_in_at=? WHERE id=?').bind(now,user.id).run();
+  const session=randomToken();
+  await env.DB.prepare('INSERT INTO sessions(hash,user_id,expires_at,created_at) VALUES(?,?,?,?)').bind(await hash(session),user.id,new Date(Date.now()+30*DAY).toISOString(),now).run();
+  const redirect=site(env);redirect.hash=new URLSearchParams({session,email:invite.email}).toString();
+  return Response.redirect(redirect.href,302);
+}
+async function adminOverview(env){
+  const users=await env.DB.prepare("SELECT users.id,users.email,users.created_at AS createdAt,users.last_signed_in_at AS lastSignedInAt,users.revoked_at AS revokedAt,COUNT(reminders.id) AS reminderCount,SUM(CASE WHEN reminders.status='active' THEN 1 ELSE 0 END) AS activeReminderCount FROM users LEFT JOIN reminders ON reminders.user_id=users.id GROUP BY users.id ORDER BY users.created_at DESC LIMIT 200").all();
+  const invitations=await env.DB.prepare('SELECT id,email,created_at AS createdAt,expires_at AS expiresAt,accepted_at AS acceptedAt,revoked_at AS revokedAt FROM invitations ORDER BY created_at DESC LIMIT 100').all();
+  return {users:users.results,invitations:invitations.results};
+}
+async function adminInvite(request,env,user){
+  const body=await readJson(request),email=validEmail(body.email),now=new Date().toISOString();
+  if(isAdmin({email},env))throw error('Admin account already has access',409);
+  const existing=await env.DB.prepare('SELECT revoked_at FROM users WHERE email=?').bind(email).first();
+  if(existing)throw error(existing.revoked_at?'Restore this account first':'Account already has access',409);
+  const pending=await env.DB.prepare('SELECT id FROM invitations WHERE email=? AND accepted_at IS NULL AND revoked_at IS NULL AND expires_at>?').bind(email,now).first();
+  if(pending)throw error('A current invitation already exists',409);
+  const id=crypto.randomUUID(),token=randomToken(),tokenHash=await hash(token),expires=new Date(Date.now()+7*DAY).toISOString();
+  await env.DB.prepare('INSERT INTO invitations(id,token_hash,email,invited_by,created_at,expires_at) VALUES(?,?,?,?,?,?)').bind(id,tokenHash,email,user.id,now,expires).run();
+  const link=new URL(request.url);link.pathname='/invitations/accept';link.search='';link.searchParams.set('token',token);
+  try{await sendMail(env,{to:email,subject:'Invitation to Frontier GoWild Flight Radar',text:`You have been invited to Frontier GoWild Flight Radar. Open this one-time link within 7 days to activate your account:\n${link.href}\n\nIf you did not expect this invitation, ignore this email.`,key:`account-invite-${id}`});}
+  catch(err){await env.DB.prepare('DELETE FROM invitations WHERE id=?').bind(id).run();throw err;}
+  return {id,email,expiresAt:expires};
+}
+async function adminSetAccess(env,id,action){
+  const target=await env.DB.prepare('SELECT id,email,revoked_at FROM users WHERE id=?').bind(id).first();
+  if(!target)throw error('Account not found',404);
+  if(isAdmin(target,env))throw error('Admin access cannot be changed here',403);
+  const now=new Date().toISOString();
+  if(action==='revoke'){
+    await env.DB.prepare('UPDATE users SET revoked_at=? WHERE id=? AND revoked_at IS NULL').bind(now,id).run();
+    await env.DB.prepare('DELETE FROM sessions WHERE user_id=?').bind(id).run();
+    await env.DB.prepare('DELETE FROM login_codes WHERE email=?').bind(target.email).run();
+    await env.DB.prepare("UPDATE reminders SET status='cancelled',sequence=sequence+1,updated_at=? WHERE user_id=? AND status IN ('active','sending','send_failed')").bind(now,id).run();
+    return {id,status:'revoked'};
+  }
+  await env.DB.prepare('UPDATE users SET revoked_at=NULL WHERE id=?').bind(id).run();
+  return {id,status:'active'};
+}
+async function adminCancelInvitation(env,id){
+  const now=new Date().toISOString();
+  const result=await env.DB.prepare('UPDATE invitations SET revoked_at=? WHERE id=? AND accepted_at IS NULL AND revoked_at IS NULL').bind(now,id).run();
+  if(!result.meta.changes)throw error('Pending invitation not found',404);
+  return {id,status:'revoked'};
 }
 async function listReminders(env,user){const rows=await env.DB.prepare('SELECT id,origin,destination,travel_date AS travelDate,remind_at AS remindAt,time_zone AS timeZone,status,estimate_low AS estimateLow,estimate_high AS estimateHigh FROM reminders WHERE user_id=? ORDER BY created_at DESC LIMIT 100').bind(user.id).all();return {reminders:rows.results};}
 async function createReminder(request,env,user){
@@ -112,7 +177,7 @@ async function retryInvite(env,user,id){const row=await env.DB.prepare('SELECT *
 async function runDue(env){
   if(!configReady(env))return;
   const now=new Date().toISOString(),stale=new Date(Date.now()-15*60000).toISOString();
-  const result=await env.DB.prepare("SELECT reminders.*,users.email FROM reminders JOIN users ON users.id=reminders.user_id WHERE reminders.status='active' AND reminders.remind_at<=? AND reminders.notified_at IS NULL AND (reminders.notify_claimed_at IS NULL OR reminders.notify_claimed_at<?) AND reminders.notify_attempts<5 LIMIT 30").bind(now,stale).all();
+  const result=await env.DB.prepare("SELECT reminders.*,users.email FROM reminders JOIN users ON users.id=reminders.user_id WHERE users.revoked_at IS NULL AND reminders.status='active' AND reminders.remind_at<=? AND reminders.notified_at IS NULL AND (reminders.notify_claimed_at IS NULL OR reminders.notify_claimed_at<?) AND reminders.notify_attempts<5 LIMIT 30").bind(now,stale).all();
   for(const row of result.results){
     const claim=await env.DB.prepare("UPDATE reminders SET notify_claimed_at=?,notify_attempts=notify_attempts+1 WHERE id=? AND status='active' AND notified_at IS NULL AND (notify_claimed_at IS NULL OR notify_claimed_at<?)").bind(now,row.id,stale).run();
     if(!claim.meta.changes)continue;
@@ -133,7 +198,18 @@ export default {
       if(!configReady(env))throw error('Email service is not configured',503);
       if(path==='/auth/start'&&request.method==='POST')return reply(await authStart(request,env),200,allowed);
       if(path==='/auth/verify'&&request.method==='GET')return await authVerify(request,env);
+      if(path==='/invitations/accept'&&request.method==='GET')return await acceptInvitation(request,env);
       const user=await userFromRequest(request,env);
+      if(path==='/me'&&request.method==='GET')return reply({email:user.email,isAdmin:isAdmin(user,env)},200,allowed);
+      if(path.startsWith('/admin/')){
+        requireAdmin(user,env);
+        if(path==='/admin/overview'&&request.method==='GET')return reply(await adminOverview(env),200,allowed);
+        if(path==='/admin/invitations'&&request.method==='POST')return reply(await adminInvite(request,env,user),201,allowed);
+        const inviteMatch=path.match(/^\/admin\/invitations\/([a-f0-9-]{36})\/revoke$/);
+        if(inviteMatch&&request.method==='POST')return reply(await adminCancelInvitation(env,inviteMatch[1]),200,allowed);
+        const userMatch=path.match(/^\/admin\/users\/([a-f0-9-]{36})\/(revoke|restore)$/);
+        if(userMatch&&request.method==='POST')return reply(await adminSetAccess(env,userMatch[1],userMatch[2]),200,allowed);
+      }
       if(path==='/reminders'&&request.method==='GET')return reply(await listReminders(env,user),200,allowed);
       if(path==='/reminders'&&request.method==='POST')return reply(await createReminder(request,env,user),201,allowed);
       const match=path.match(/^\/reminders\/([a-f0-9-]{36})(?:\/(retry))?$/);
