@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { bookingReminder, estimateFare, recommend, publicFareHistory, airportOpportunities } from '../dist/engine.mjs';
+import { bookingReminder, bookingWindowDays, estimateFare, recommend, publicFareHistory, airportOpportunities } from '../dist/engine.mjs';
+import routesData from '../dist/data/routes.json' with { type: 'json' };
 
 const routes=[{a:'SJC',b:'LAS',days:[1,0,0,1,1,0,1]},{a:'SFO',b:'LAS',days:[1,1,1,1,1,1,1]}];
 const observations=[{route:'SFO→LAS',amount:23,currency:'USD',travelDate:'2026-11-18',observedAt:'2026-09-28T12:00:00Z',nonstop:true,fareType:'Discount Den',source:'https://flights.flyfrontier.com/en/flights-from-san-francisco'}];
@@ -9,6 +10,20 @@ const now=new Date('2026-09-29T12:00:00Z');
 test('reminder uses origin local midnight across daylight saving time',()=>{
   assert.equal(bookingReminder('2026-11-02','SFO',0).at,'2026-11-01T07:00:00.000Z');
   assert.equal(bookingReminder('2026-11-02','DEN',8).at,'2026-11-01T15:00:00.000Z');
+});
+test('international travel opens a ten-day booking check in the origin time zone',()=>{
+  assert.equal(bookingWindowDays('MCO','SJO'),10);
+  assert.equal(bookingWindowDays('SJO','MCO'),10);
+  assert.equal(bookingWindowDays('MCO','LAS'),1);
+  assert.equal(bookingReminder('2026-10-24','MCO',0,'SJO').at,'2026-10-14T04:00:00.000Z');
+  assert.equal(bookingReminder('2026-10-24','SJO',0,'MCO').at,'2026-10-14T06:00:00.000Z');
+});
+test('new nonstop coverage distinguishes seasonal dates from unknown weekdays',()=>{
+  const routes=routesData.routes;
+  assert.equal(recommend({origin:'MCO',destination:'CUN',from:'2026-10-01',to:'2026-12-20'},routes,[],now).status,'season_not_yet_in_window');
+  assert.equal(recommend({origin:'MCO',destination:'LGA',from:'2026-12-01',to:'2026-12-15'},routes,[],now).status,'schedule_unverified');
+  assert.equal(recommend({origin:'MCO',destination:'SJO',from:'2026-10-24',to:'2026-10-24'},routes,[],now).options[0].reminder.localDate,'2026-10-14');
+  assert.equal(recommend({origin:'SAN',destination:'SAP',from:'2026-10-24',to:'2026-10-24'},routes,[],now).status,'no_verified_nonstop');
 });
 test('filters non-operating and GoWild blackout dates',()=>{
   const result=recommend({origin:'SJC',destination:'LAS',from:'2026-10-07',to:'2026-10-12',hour:0},routes,[],now);

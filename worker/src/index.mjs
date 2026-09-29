@@ -1,12 +1,9 @@
 import { AIRPORTS, TIME_ZONES, bookingReminder, recommend } from '../../dist/engine.mjs';
+import routesData from '../../dist/data/routes.json' with { type: 'json' };
 
 const HOUR_CHOICES = [0, 8, 12, 18];
 const DAY = 86400000;
-const routePairs = [
-  ['SJC','LAS'],['SJC','LAX'],['SFO','LAS'],['SFO','LAX'],['SFO','DEN'],['SFO','SAN'],
-  ['SLC','DEN'],['SLC','LAX'],['SLC','LAS'],['LAX','LAS'],['LAX','DEN'],['SAN','LAS'],['SAN','DEN'],['LAS','DEN']
-];
-const routeRows = routePairs.map(([a,b]) => ({ a, b, days: a === 'SJC' ? [1,0,0,1,1,0,1] : [1,1,1,1,1,1,1] }));
+const routeRows = routesData.routes;
 
 function reply(data,status=200,origin='') { return new Response(JSON.stringify(data), { status, headers: { 'Content-Type':'application/json; charset=utf-8','Access-Control-Allow-Origin':origin,'Access-Control-Allow-Headers':'Content-Type, Authorization','Access-Control-Allow-Methods':'GET, POST, PATCH, OPTIONS','Vary':'Origin','Cache-Control':'no-store' } }); }
 function error(message,status=400) { const e=new Error(message);e.status=status;return e; }
@@ -32,7 +29,7 @@ function validateSelection(payload){
   for(const hour of HOUR_CHOICES){
     try{const result=recommend({origin,destination,from:travelDate,to:travelDate,hour},routeRows,[]);if(result.options[0]?.reminder.at===remindAt){valid=true;break;}}catch{}
   }
-  if(!valid)throw error('Reminder must match a verified future nonstop date and day-before local time');
+  if(!valid)throw error('Reminder must match a verified future nonstop date and the applicable local booking window');
   const estimate=payload.estimate;
   const low=estimate&&Number.isFinite(Number(estimate.low))&&Number(estimate.low)>=0&&Number(estimate.low)<1000?Math.round(Number(estimate.low)):null;
   const high=estimate&&Number.isFinite(Number(estimate.high))&&Number(estimate.high)>=low&&Number(estimate.high)<1000?Math.round(Number(estimate.high)):null;
@@ -103,7 +100,7 @@ async function updateReminder(request,env,user,id){
   }
   if(body.remindAt){
     if(row.status==='booked'||row.status==='cancelled')throw error('This reminder is closed');
-    const newAt=String(body.remindAt);if(!HOUR_CHOICES.some(hour=>bookingReminder(row.travel_date,row.origin,hour).at===newAt)||Date.parse(newAt)<=Date.now())throw error('Invalid reminder time');
+    const newAt=String(body.remindAt);if(!HOUR_CHOICES.some(hour=>bookingReminder(row.travel_date,row.origin,hour,row.destination).at===newAt)||Date.parse(newAt)<=Date.now())throw error('Invalid reminder time');
     await env.DB.prepare('UPDATE reminders SET remind_at=?,status=?,sequence=sequence+1,notified_at=NULL,notify_claimed_at=NULL,updated_at=? WHERE id=?').bind(newAt,'sending',now,id).run();
     const updated=await env.DB.prepare('SELECT * FROM reminders WHERE id=?').bind(id).first();
     try{await sendInvite(env,user,updated);await env.DB.prepare('UPDATE reminders SET status=? WHERE id=?').bind('active',id).run();return{id,status:'active'};}

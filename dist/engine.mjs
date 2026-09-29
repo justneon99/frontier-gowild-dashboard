@@ -1,5 +1,7 @@
-export const AIRPORTS = ['SJC', 'SFO', 'SLC', 'LAX', 'SAN', 'LAS', 'DEN'];
-export const TIME_ZONES = { SJC: 'America/Los_Angeles', SFO: 'America/Los_Angeles', SLC: 'America/Denver', LAX: 'America/Los_Angeles', SAN: 'America/Los_Angeles', LAS: 'America/Los_Angeles', DEN: 'America/Denver' };
+export const AIRPORTS = ['SJC', 'SFO', 'SLC', 'LAX', 'SAN', 'LAS', 'DEN', 'MCO', 'CLT', 'CUN', 'SJO', 'GUA', 'SAL', 'SAP', 'EWR', 'LGA'];
+export const TIME_ZONES = { SJC: 'America/Los_Angeles', SFO: 'America/Los_Angeles', SLC: 'America/Denver', LAX: 'America/Los_Angeles', SAN: 'America/Los_Angeles', LAS: 'America/Los_Angeles', DEN: 'America/Denver', MCO: 'America/New_York', CLT: 'America/New_York', CUN: 'America/Cancun', SJO: 'America/Costa_Rica', GUA: 'America/Guatemala', SAL: 'America/El_Salvador', SAP: 'America/Tegucigalpa', EWR: 'America/New_York', LGA: 'America/New_York' };
+const INTERNATIONAL_AIRPORTS = new Set(['CUN', 'SJO', 'GUA', 'SAL', 'SAP']);
+export const bookingWindowDays = (origin, destination) => INTERNATIONAL_AIRPORTS.has(origin) || INTERNATIONAL_AIRPORTS.has(destination) ? 10 : 1;
 
 // Source: https://www.flyfrontier.com/deals/gowild-pass/ (reviewed Sep 29, 2026).
 const BLACKOUTS = new Set([
@@ -17,8 +19,8 @@ export function findRoute(routes, origin, destination) {
   return routes.find(route => (route.a === origin && route.b === destination) || (route.a === destination && route.b === origin));
 }
 
-export function bookingReminder(date, origin, hour = 0) {
-  const previous = new Date(utcDate(date).getTime() - DAY);
+export function bookingReminder(date, origin, hour = 0, destination = origin) {
+  const previous = new Date(utcDate(date).getTime() - bookingWindowDays(origin, destination) * DAY);
   const localDate = isoDate(previous);
   const zone = TIME_ZONES[origin];
   if (!zone || !Number.isInteger(hour) || hour < 0 || hour > 23) throw new Error('Invalid reminder time');
@@ -79,13 +81,15 @@ export function recommend({ origin, destination, from, to, budget, hour = 0 }, r
   if (!route) return { status: 'no_verified_nonstop', options: [] };
   const start = utcDate(from), end = utcDate(to), today = utcDate(isoDate(now));
   if (!Number.isFinite(start.getTime()) || !Number.isFinite(end.getTime()) || start > end || start < today || end > new Date(today.getTime() + 90 * DAY)) throw new Error('Choose a date range within the next 90 days');
+  if (route.starts && route.starts > isoDate(end)) return { status: 'season_not_yet_in_window', options: [], route };
+  if (route.days.every(day => day === null)) return { status: 'schedule_unverified', options: [], route };
   const options = [];
   for (let date = start; date <= end; date = new Date(date.getTime() + DAY)) {
     const travelDate = isoDate(date);
     if (BLACKOUTS.has(travelDate) || route.starts && travelDate < route.starts) continue;
     const weekday = (date.getUTCDay() + 6) % 7;
     if (route.days[weekday] !== 1) continue;
-    const reminder = bookingReminder(travelDate, origin, Number(hour));
+    const reminder = bookingReminder(travelDate, origin, Number(hour), destination);
     if (Date.parse(reminder.at) <= now.getTime()) continue;
     const estimate = estimateFare(observations, origin, destination, travelDate, now);
     const withinBudget = Number.isFinite(Number(budget)) && budget !== '' && estimate.kind === 'estimate' ? estimate.low <= Number(budget) : null;

@@ -2,9 +2,9 @@
 
 Website: <https://justneon99.github.io/frontier-gowild-dashboard/>
 
-The home page is a trip-planning app for the seven supported airports. It suggests dates from verified Frontier nonstop route patterns, filters published GoWild blackout dates, infers an indicative public fare range from recent observations, and calculates a booking-check reminder in the departure airport's local time. The prior dashboard remains at `dist/legacy.html`.
+The home page is a trip-planning app for 16 supported airports: SJC, SFO, SLC, LAX, SAN, LAS, DEN, MCO, CLT, CUN, SJO, GUA, SAL, SAP, EWR, and LGA. It suggests dates from verified Frontier nonstop route patterns, filters published GoWild blackout dates, infers an indicative public fare range from recent observations, and calculates a booking-check reminder in the departure airport's local time. Domestic reminders are one day before departure; international reminders are 10 days before departure. The prior dashboard remains at `dist/legacy.html`.
 
-The estimate is intentionally labeled as uncertain: existing observations are concentrated on fares below $100, and a fare observed for one travel date is not a quote for another date. Public Standard and Discount Den fares never represent authenticated GoWild inventory. The current schedule file is representative, not a live flight search.
+The estimate is intentionally labeled as uncertain: existing observations are concentrated on fares below $100, and a fare observed for one travel date is not a quote for another date. Public Standard and Discount Den fares never represent authenticated GoWild inventory. The current schedule file is representative, not a live flight search. Newly added airports have schedule coverage but no verified public fare observations yet; they remain explicitly unverified until the next price refresh.
 
 ## Local checks
 

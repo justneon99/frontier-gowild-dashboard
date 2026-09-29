@@ -1,21 +1,452 @@
 {
-  "updatedAt": "2026-09-28",
-  "weekdays": "Monday first; representative schedule only, confirm travel date on Frontier",
+  "updatedAt": "2026-09-29",
+  "weekdays": "Monday first; representative Frontier schedule only. Seasonal routes with unknown weekdays are not offered as recommended dates; confirm exact date on Frontier.",
   "routes": [
-    {"a":"SJC","b":"LAS","days":[1,0,0,1,1,0,1],"status":"active","source":"https://www.flightsfrom.com/SJC-LAS"},
-    {"a":"SJC","b":"LAX","days":[1,0,0,1,1,0,1],"status":"active","source":"https://www.directflights.com/SJC-LAX"},
-    {"a":"SFO","b":"LAS","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/SFO-LAS"},
-    {"a":"SFO","b":"LAX","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/SFO-LAX"},
-    {"a":"SFO","b":"DEN","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/SFO-DEN"},
-    {"a":"SFO","b":"SAN","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/SFO-SAN"},
-    {"a":"SFO","b":"SLC","days":[null,null,null,null,null,null,null],"status":"seasonal","starts":"2026-11-21","source":"https://www.flightsfrom.com/SFO-SLC"},
-    {"a":"SLC","b":"DEN","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/SLC-DEN"},
-    {"a":"SLC","b":"LAX","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/SLC-LAX"},
-    {"a":"SLC","b":"LAS","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/SLC-LAS"},
-    {"a":"LAX","b":"LAS","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/LAX-LAS"},
-    {"a":"LAX","b":"DEN","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/LAX-DEN"},
-    {"a":"SAN","b":"LAS","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/SAN-LAS"},
-    {"a":"SAN","b":"DEN","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/SAN-DEN"},
-    {"a":"LAS","b":"DEN","days":[1,1,1,1,1,1,1],"status":"active","source":"https://www.flightsfrom.com/DEN-LAS"}
+    {
+      "a": "SJC",
+      "b": "LAS",
+      "days": [
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/SJC-LAS"
+    },
+    {
+      "a": "SJC",
+      "b": "LAX",
+      "days": [
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.directflights.com/SJC-LAX"
+    },
+    {
+      "a": "SFO",
+      "b": "LAS",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/SFO-LAS"
+    },
+    {
+      "a": "SFO",
+      "b": "LAX",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/SFO-LAX"
+    },
+    {
+      "a": "SFO",
+      "b": "DEN",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/SFO-DEN"
+    },
+    {
+      "a": "SFO",
+      "b": "SAN",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/SFO-SAN"
+    },
+    {
+      "a": "SFO",
+      "b": "SLC",
+      "days": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "status": "seasonal",
+      "starts": "2026-11-21",
+      "source": "https://www.flightsfrom.com/SFO-SLC"
+    },
+    {
+      "a": "SLC",
+      "b": "DEN",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/SLC-DEN"
+    },
+    {
+      "a": "SLC",
+      "b": "LAX",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/SLC-LAX"
+    },
+    {
+      "a": "SLC",
+      "b": "LAS",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/SLC-LAS"
+    },
+    {
+      "a": "LAX",
+      "b": "LAS",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/LAX-LAS"
+    },
+    {
+      "a": "LAX",
+      "b": "DEN",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/LAX-DEN"
+    },
+    {
+      "a": "SAN",
+      "b": "LAS",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/SAN-LAS"
+    },
+    {
+      "a": "SAN",
+      "b": "DEN",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/SAN-DEN"
+    },
+    {
+      "a": "LAS",
+      "b": "DEN",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/DEN-LAS"
+    },
+    {
+      "a": "MCO",
+      "b": "LAS",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/MCO-LAS"
+    },
+    {
+      "a": "MCO",
+      "b": "LAX",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/MCO-LAX"
+    },
+    {
+      "a": "MCO",
+      "b": "DEN",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/MCO-DEN"
+    },
+    {
+      "a": "MCO",
+      "b": "CLT",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/MCO-CLT"
+    },
+    {
+      "a": "MCO",
+      "b": "EWR",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/MCO-EWR"
+    },
+    {
+      "a": "MCO",
+      "b": "LGA",
+      "days": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "status": "seasonal",
+      "source": "https://www.flightsfrom.com/MCO-LGA",
+      "sampleWindow": "announced future service; weekdays unverified",
+      "starts": "2026-12-01"
+    },
+    {
+      "a": "MCO",
+      "b": "CUN",
+      "days": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "status": "seasonal",
+      "source": "https://www.flightsfrom.com/MCO-CUN",
+      "sampleWindow": "announced future service; weekdays unverified",
+      "starts": "2027-03-06"
+    },
+    {
+      "a": "MCO",
+      "b": "SJO",
+      "days": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/MCO-SJO"
+    },
+    {
+      "a": "MCO",
+      "b": "GUA",
+      "days": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "status": "seasonal",
+      "source": "https://www.flightsfrom.com/MCO-GUA",
+      "sampleWindow": "2026-10-10 to 2026-10-18",
+      "starts": "2026-10-10"
+    },
+    {
+      "a": "MCO",
+      "b": "SAL",
+      "days": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "status": "seasonal",
+      "source": "https://www.flightsfrom.com/MCO-SAL",
+      "sampleWindow": "announced future service; weekdays unverified",
+      "starts": "2026-12-19"
+    },
+    {
+      "a": "MCO",
+      "b": "SAP",
+      "days": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "status": "active",
+      "source": "https://www.directflights.com/MCO-SAP"
+    },
+    {
+      "a": "CLT",
+      "b": "LGA",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/CLT-LGA"
+    },
+    {
+      "a": "CLT",
+      "b": "DEN",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/CLT-DEN"
+    },
+    {
+      "a": "DEN",
+      "b": "CUN",
+      "days": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "status": "seasonal",
+      "source": "https://www.flightsfrom.com/DEN-CUN",
+      "sampleWindow": "announced future service; weekdays unverified",
+      "starts": "2027-03-05"
+    }
   ]
 }

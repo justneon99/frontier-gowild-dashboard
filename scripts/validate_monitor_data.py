@@ -9,7 +9,7 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "dist" / "data"
-AIRPORTS = {"SJC", "SFO", "SLC", "LAX", "SAN", "LAS", "DEN"}
+AIRPORTS = {"SJC", "SFO", "SLC", "LAX", "SAN", "LAS", "DEN", "MCO", "CLT", "CUN", "SJO", "GUA", "SAL", "SAP", "EWR", "LGA"}
 
 
 def load(name):
@@ -29,8 +29,25 @@ def frontier_url(value):
 
 
 def main():
+    routes = load("routes.json")
     live = load("gowild-availability.json")
     history = load("fare-history.json")
+    assert isinstance(routes["routes"], list)
+    pairs = set()
+    for route in routes["routes"]:
+        a, b = route["a"], route["b"]
+        assert a in AIRPORTS and b in AIRPORTS and a != b
+        pair = tuple(sorted((a, b)))
+        assert pair not in pairs
+        pairs.add(pair)
+        assert route["status"] in {"active", "seasonal"}
+        assert len(route["days"]) == 7 and all(day in {0, 1, None} for day in route["days"])
+        if route["status"] == "seasonal":
+            assert route.get("starts")
+            datetime.fromisoformat(route["starts"])
+        parsed = urlparse(route["source"])
+        assert parsed.scheme == "https" and parsed.hostname
+    assert len(pairs) == len(routes["routes"])
     assert live["schemaVersion"] == 1
     assert live["status"] in {"login_required", "ready", "checked", "available", "disabled", "error"}
     assert isinstance(live["authenticated"], bool)
@@ -52,6 +69,7 @@ def main():
     for item in history["observations"]:
         origin, destination = item["route"].split("→")
         assert origin in AIRPORTS and destination in AIRPORTS and origin != destination
+        assert tuple(sorted((origin, destination))) in pairs
         assert item["nonstop"] is True
         assert item["currency"] == "USD"
         assert 0 <= float(item["amount"]) < 100
