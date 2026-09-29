@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { bookingReminder, estimateFare, recommend, publicFareHistory } from '../dist/engine.mjs';
+import { bookingReminder, estimateFare, recommend, publicFareHistory, airportOpportunities } from '../dist/engine.mjs';
 
 const routes=[{a:'SJC',b:'LAS',days:[1,0,0,1,1,0,1]},{a:'SFO',b:'LAS',days:[1,1,1,1,1,1,1]}];
 const observations=[{route:'SFO→LAS',amount:23,currency:'USD',travelDate:'2026-11-18',observedAt:'2026-09-28T12:00:00Z',nonstop:true,fareType:'Discount Den',source:'https://flights.flyfrontier.com/en/flights-from-san-francisco'}];
@@ -35,4 +35,17 @@ test('public fare history separates fresh and historical observations without ch
   const all=publicFareHistory(data,{origin:'SFO',destination:'LAS',includeHistorical:true});
   assert.deepEqual(all.days.map(day=>day.lowest),[19,23]);
   assert.equal(all.rows[1].observedAt,'2026-09-23T12:00:00-07:00');
+});
+test('airport opportunities use nonstop routes and fresh fares in the correct direction',()=>{
+  const schedule=[{a:'SFO',b:'LAS',status:'active'},{a:'SFO',b:'SLC',status:'seasonal'}];
+  const fares=[
+    {route:'SFO→LAS',amount:23,currency:'USD',nonstop:true,observedAt:'2026-09-28T12:00:00Z',refreshStatus:'fresh'},
+    {route:'LAS→SFO',amount:19,currency:'USD',nonstop:true,observedAt:'2026-09-23T12:00:00Z',refreshStatus:'stale'},
+    {route:'SFO→SLC',amount:30,currency:'USD',nonstop:false,observedAt:'2026-09-28T12:00:00Z',refreshStatus:'fresh'}
+  ];
+  const sfo=airportOpportunities(schedule,fares).find(item=>item.airport==='SFO');
+  assert.equal(sfo.currentCount,1);assert.equal(sfo.seasonalCount,1);
+  assert.equal(sfo.lowestOutgoing.amount,23);
+  assert.equal(sfo.destinations.find(item=>item.airport==='LAS').toQuote,null);
+  assert.equal(sfo.destinations.find(item=>item.airport==='SLC').fromQuote,null);
 });

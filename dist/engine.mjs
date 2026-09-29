@@ -115,3 +115,17 @@ export function publicFareHistory(observations, { origin = 'all', destination = 
   }
   return { rows, days: [...byDay.values()].sort((a, b) => a.day.localeCompare(b.day)) };
 }
+
+export function airportOpportunities(routes, observations) {
+  const current = publicFareHistory(observations).rows;
+  const lowest = direction => current.filter(row => row.route === direction).reduce((best, row) => !best || Number(row.amount) < Number(best.amount) ? row : best, null);
+  return AIRPORTS.map(airport => {
+    const destinations = routes.filter(route => route.a === airport || route.b === airport).map(route => {
+      const other = route.a === airport ? route.b : route.a;
+      return { airport: other, route, fromQuote: lowest(`${airport}→${other}`), toQuote: lowest(`${other}→${airport}`) };
+    }).sort((a, b) => a.airport.localeCompare(b.airport));
+    return { airport, destinations, currentCount: destinations.filter(item => item.route.status === 'active').length,
+      seasonalCount: destinations.filter(item => item.route.status === 'seasonal').length,
+      lowestOutgoing: destinations.reduce((best, item) => item.fromQuote && (!best || Number(item.fromQuote.amount) < Number(best.amount)) ? item.fromQuote : best, null) };
+  });
+}
