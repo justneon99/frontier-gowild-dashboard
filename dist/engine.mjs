@@ -97,3 +97,21 @@ export function recommend({ origin, destination, from, to, budget, hour = 0 }, r
   for(const option of options){if(chosen.every(other=>Math.abs(Date.parse(other.travelDate)-Date.parse(option.travelDate))>=3*DAY))chosen.push(option);if(chosen.length===3)break;}
   return { status: options.length ? 'ok' : 'no_matching_dates', options: chosen, route };
 }
+
+export function publicFareHistory(observations, { origin = 'all', destination = 'all', includeHistorical = false } = {}) {
+  const rows = observations.filter(row => row.nonstop === true && row.currency === 'USD' && Number.isFinite(Number(row.amount)) && Number(row.amount) >= 0 && Number(row.amount) < 100 &&
+    (includeHistorical || row.refreshStatus === 'fresh') &&
+    (origin === 'all' || row.route?.split('→')[0] === origin) &&
+    (destination === 'all' || row.route?.split('→')[1] === destination) &&
+    Number.isFinite(Date.parse(row.observedAt)));
+  rows.sort((a, b) => b.observedAt.localeCompare(a.observedAt) || a.amount - b.amount);
+  const byDay = new Map();
+  for (const row of rows) {
+    const day = row.observedAt.slice(0, 10);
+    const entry = byDay.get(day) || { day, lowest: Infinity, count: 0 };
+    entry.lowest = Math.min(entry.lowest, Number(row.amount));
+    entry.count++;
+    byDay.set(day, entry);
+  }
+  return { rows, days: [...byDay.values()].sort((a, b) => a.day.localeCompare(b.day)) };
+}

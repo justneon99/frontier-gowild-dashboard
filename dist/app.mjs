@@ -1,4 +1,4 @@
-import { AIRPORTS, TIME_ZONES, recommend } from './engine.mjs';
+import { AIRPORTS, TIME_ZONES, recommend, publicFareHistory } from './engine.mjs';
 
 const $ = selector => document.querySelector(selector);
 const elements = { origin: $('#origin'), destination: $('#destination'), from: $('#from'), to: $('#to'), budget: $('#budget'), hour: $('#hour') };
@@ -11,12 +11,24 @@ const t = key => dict[state.lang][key];
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 function toast(message) { const el=$('#toast'); el.textContent=message; el.classList.add('show'); clearTimeout(toast.timer); toast.timer=setTimeout(()=>el.classList.remove('show'),3500); }
 function formatDate(date, options={}) { return new Date(`${date}T12:00:00Z`).toLocaleDateString(state.lang==='zh'?'zh-CN':'en-US',{timeZone:'UTC',year:'numeric',month:'short',day:'numeric',weekday:'short',...options}); }
-function formatObserved(value) { return new Date(value).toLocaleString(state.lang==='zh'?'zh-CN':'en-US',{year:'numeric',month:'short',day:'numeric',timeZone:'America/Los_Angeles'}); }
+function formatObserved(value) { return new Date(value).toLocaleString(state.lang==='zh'?'zh-CN':'en-US',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'America/Los_Angeles',timeZoneName:'short'}); }
 function input() { return Object.fromEntries(Object.entries(elements).map(([key,element])=>[key,element.value])); }
 function setLanguage(lang) {
   state.lang=lang; localStorage.setItem('frontier-language',lang); document.documentElement.lang=lang==='zh'?'zh-CN':'en';
   document.querySelectorAll('[data-zh]').forEach(el=>{ const value=el.dataset[lang]; if(el.tagName==='H1')el.innerHTML=value; else el.textContent=value; });
-  $('#lang').textContent=lang==='zh'?'English':'中文'; renderStatus(); if(state.result)renderResults(); renderTrips();
+  $('#lang').textContent=lang==='zh'?'English':'中文'; renderStatus(); if(state.result)renderResults(); renderHistory(); renderTrips();
+}
+function renderHistory() {
+  const origin=$('#history-origin'),destination=$('#history-destination');
+  for(const select of [origin,destination]){const value=select.value||'all';select.innerHTML=`<option value="all">${state.lang==='zh'?'所有机场':'All airports'}</option>`+AIRPORTS.map(code=>`<option value="${code}">${code}</option>`).join('');select.value=value;}
+  const {rows,days}=publicFareHistory(state.observations,{origin:origin.value,destination:destination.value,includeHistorical:$('#history-window').value==='all'});
+  const zh=state.lang==='zh';
+  $('#history-updated').textContent=state.updatedAt?`${zh?'数据更新':'Data updated'}: ${state.updatedAt.slice(0,10)}`:'';
+  const low=rows.length?Math.min(...rows.map(row=>Number(row.amount))):null;
+  $('#history-stats').innerHTML=`<div><b>${rows.length}</b><span>${zh?'条符合筛选的报价':'matching quotes'}</span></div><div><b>${low===null?'—':'$'+low}</b><span>${zh?'样本最低价':'lowest sample'}</span></div><div><b>${days.length}</b><span>${zh?'个观察日':'observation days'}</span></div>`;
+  const max=Math.max(100,...days.map(day=>day.lowest));
+  $('#history-chart').innerHTML=days.length?days.map(day=>`<div class="history-bar"><span class="history-bar-value">$${day.lowest}</span><div class="history-bar-track"><div style="height:${Math.max(12,Math.round(day.lowest/max*100))}%"></div></div><span>${esc(day.day)}</span><small>${day.count} ${zh?'条':'quotes'}</small></div>`).join(''):`<p class="muted">${zh?'此筛选条件下没有已核实的公开报价。':'No verified public quote matches these filters.'}</p>`;
+  $('#history-body').innerHTML=rows.length?rows.map(row=>`<tr><td><b>${esc(row.route)}</b></td><td class="history-amount">$${Number(row.amount)}</td><td>${esc(row.fareType)}</td><td>${esc(row.travelDate)}</td><td>${esc(formatObserved(row.observedAt))}</td><td><span class="history-status ${row.refreshStatus==='fresh'?'fresh':'stale'}">${row.refreshStatus==='fresh'?(zh?'本轮核实':'This round'):(zh?'历史·未复核':'Historical · not rechecked')}</span></td><td><a href="${esc(row.source)}" target="_blank" rel="noreferrer">Frontier ↗</a></td></tr>`).join(''):`<tr><td colspan="7" class="history-empty">${zh?'此筛选条件下没有已核实的公开报价。':'No verified public quote matches these filters.'}</td></tr>`;
 }
 function renderStatus(){const box=$('#backend-status');box.textContent=state.apiReady?t('backendReady'):t('backendOff');box.classList.toggle('offline',!state.apiReady);$('#email-form').hidden=!state.apiReady||!!state.session;$('#session-area').hidden=!state.apiReady||!state.session;$('#user-email').textContent=state.email;}
 function renderResults() {
@@ -54,6 +66,7 @@ async function init(){
 $('#planner-form').addEventListener('submit',event=>{event.preventDefault();try{state.result=recommend(input(),state.routes,state.observations);renderResults();}catch(error){toast(t('invalid'));}});
 $('#swap').addEventListener('click',()=>{[elements.origin.value,elements.destination.value]=[elements.destination.value,elements.origin.value];});
 $('#lang').addEventListener('click',()=>setLanguage(state.lang==='zh'?'en':'zh'));
+for(const id of ['history-origin','history-destination','history-window']){$(`#${id}`).addEventListener('change',renderHistory);}
 $('#result-cards').addEventListener('click',event=>{const button=event.target.closest('[data-action="remind"]');if(button)createReminder(state.result.options[Number(button.dataset.index)]);});
 $('#email-form').addEventListener('submit',async event=>{event.preventDefault();try{await api('/auth/start',{method:'POST',body:JSON.stringify({email:$('#email').value.trim()})});$('#auth-message').textContent=t('emailSent');}catch(error){$('#auth-message').textContent=t('emailError')+' '+error.message;}});
 $('#sign-out').addEventListener('click',()=>{state.session='';state.email='';sessionStorage.removeItem('frontier-session');sessionStorage.removeItem('frontier-email');renderStatus();});
