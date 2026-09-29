@@ -30,7 +30,7 @@ function validateSelection(payload){
   if(payload.timeZone&&payload.timeZone!==TIME_ZONES[origin])throw error('Invalid time zone');
   let valid=false;
   for(const hour of HOUR_CHOICES){
-    try{const result=recommend({origin,destination,from:travelDate,to:travelDate,hour},routeRows,[]);if(result.options[0]?.reminder.at===remindAt){valid=true;break;}}catch{}
+    try{const result=recommend({origin,destination,from:travelDate,to:travelDate,hour},routeRows,[]);const option=result.options[0];if(option?.gowildEligible&&option.bookingStatus==='scheduled'&&option.reminder.at===remindAt){valid=true;break;}}catch{}
   }
   if(!valid)throw error('Reminder must match a verified future nonstop date and the applicable local booking window');
   const estimate=payload.estimate;

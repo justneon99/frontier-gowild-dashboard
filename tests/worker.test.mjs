@@ -18,7 +18,8 @@ test('CORS allows the product origin and rejects other sites',async()=>{
   const denied=await worker.fetch(new Request('https://example.workers.dev/health',{headers:{Origin:'https://other.example'}}),env);
   assert.equal(denied.status,403);
 });
-test('admin invitation, account visibility, and revocation are server-enforced',async()=>{
+test('admin access and reminder restrictions are server-enforced',async(t)=>{
+  t.mock.timers.enable({apis:['Date'],now:new Date('2026-09-29T12:00:00Z')});
   const db=new DatabaseSync(':memory:');
   db.exec(readFileSync(new URL('../worker/schema.sql',import.meta.url),'utf8'));
   const DB={prepare(sql){const statement=db.prepare(sql);return{all:async()=>({results:statement.all()}),bind(...values){return{first:async()=>statement.get(...values),all:async()=>({results:statement.all(...values)}),run:async()=>({meta:{changes:statement.run(...values).changes}})};}}}};
@@ -62,5 +63,9 @@ test('admin invitation, account visibility, and revocation are server-enforced',
     const pendingLink=sent.at(-1).text.match(/https:\/\/\S+\/invitations\/accept\?token=[a-f0-9]+/)[0];
     assert.equal((await call(`/admin/invitations/${pending.id}/revoke`,'POST',null,adminToken)).status,200);
     assert.equal((await call(new URL(pendingLink).pathname+new URL(pendingLink).search)).status,401,'canceled invitation cannot be accepted');
+    const reminder={origin:'SFO',destination:'LAS',timeZone:'America/Los_Angeles'};
+    assert.equal((await call('/reminders','POST',{...reminder,travelDate:'2026-10-08',remindAt:'2026-10-07T07:00:00.000Z'},adminToken)).status,400,'blackout dates cannot create GoWild reminders');
+    assert.equal((await call('/reminders','POST',{...reminder,travelDate:'2026-09-30',remindAt:'2026-09-29T07:00:00.000Z'},adminToken)).status,400,'past reminders cannot be created');
+    assert.equal((await call('/reminders','POST',{...reminder,travelDate:'2026-10-01',remindAt:'2026-09-30T07:00:00.000Z'},adminToken)).status,201,'future eligible reminders still work');
   }finally{globalThis.fetch=originalFetch;db.close();}
 });

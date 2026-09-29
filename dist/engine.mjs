@@ -13,6 +13,10 @@ const BLACKOUTS = new Set([
 const DAY = 86400000;
 const utcDate = date => new Date(`${date}T12:00:00Z`);
 const isoDate = date => date.toISOString().slice(0, 10);
+export function airportDate(now, origin) {
+  const parts = Object.fromEntries(new Intl.DateTimeFormat('en-US', {timeZone: TIME_ZONES[origin], year:'numeric', month:'2-digit', day:'2-digit'}).formatToParts(now).map(part=>[part.type,part.value]));
+  return `${parts.year}-${parts.month}-${parts.day}`;
+}
 const roundFive = number => Math.max(5, Math.round(number / 5) * 5);
 
 export function findRoute(routes, origin, destination) {
@@ -79,28 +83,26 @@ export function recommend({ origin, destination, from, to, budget, hour = 0 }, r
   if (!AIRPORTS.includes(origin) || !AIRPORTS.includes(destination) || origin === destination) throw new Error('Choose two different supported airports');
   const route = findRoute(routes, origin, destination);
   if (!route) return { status: 'no_verified_nonstop', options: [] };
-  const start = utcDate(from), end = utcDate(to), today = utcDate(isoDate(now));
+  const start = utcDate(from), end = utcDate(to), today = utcDate(airportDate(now, origin));
   if (!Number.isFinite(start.getTime()) || !Number.isFinite(end.getTime()) || start > end || start < today || end > new Date(today.getTime() + 90 * DAY)) throw new Error('Choose a date range within the next 90 days');
   if (route.starts && route.starts > isoDate(end)) return { status: 'season_not_yet_in_window', options: [], route };
   if (route.days.every(day => day === null)) return { status: 'schedule_unverified', options: [], route };
   const options = [];
   for (let date = start; date <= end; date = new Date(date.getTime() + DAY)) {
     const travelDate = isoDate(date);
-    if (BLACKOUTS.has(travelDate) || route.starts && travelDate < route.starts) continue;
+    if (route.starts && travelDate < route.starts) continue;
     const weekday = (date.getUTCDay() + 6) % 7;
     if (route.days[weekday] !== 1) continue;
     const reminder = bookingReminder(travelDate, origin, Number(hour), destination);
-    if (Date.parse(reminder.at) <= now.getTime()) continue;
+    const gowildEligible = !BLACKOUTS.has(travelDate);
+    const bookingStatus = !gowildEligible ? 'blackout' : Date.parse(reminder.at) <= now.getTime() ? 'check_now' : 'scheduled';
     const estimate = estimateFare(observations, origin, destination, travelDate, now);
     const withinBudget = Number.isFinite(Number(budget)) && budget !== '' && estimate.kind === 'estimate' ? estimate.low <= Number(budget) : null;
-    options.push({ origin, destination, travelDate, reminder, estimate, withinBudget, routeSource: route.source,
-      score: (estimate.kind === 'estimate' ? estimate.high + estimate.referenceGapDays * .1 : 140) + (withinBudget === false ? 30 : 0) });
+    options.push({ origin, destination, travelDate, reminder, estimate, withinBudget, gowildEligible, bookingStatus, routeSource: route.source });
   }
-  options.sort((a, b) => a.score - b.score || a.travelDate.localeCompare(b.travelDate));
-  const chosen=[];
-  for(const option of options){if(chosen.every(other=>Math.abs(Date.parse(other.travelDate)-Date.parse(option.travelDate))>=3*DAY))chosen.push(option);if(chosen.length===3)break;}
-  chosen.sort((a,b)=>a.travelDate.localeCompare(b.travelDate));
-  return { status: options.length ? 'ok' : 'no_matching_dates', options: chosen, route };
+  // Schedule coverage determines which dates appear. Fare samples, budget and
+  // elapsed reminder times must never remove an operating date.
+  return { status: options.length ? 'ok' : 'no_matching_dates', options, route };
 }
 
 export function publicFareHistory(observations, { origin = 'all', destination = 'all', includeHistorical = false } = {}) {
