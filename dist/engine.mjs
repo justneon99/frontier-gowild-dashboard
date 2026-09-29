@@ -99,6 +99,7 @@ export function recommend({ origin, destination, from, to, budget, hour = 0 }, r
   options.sort((a, b) => a.score - b.score || a.travelDate.localeCompare(b.travelDate));
   const chosen=[];
   for(const option of options){if(chosen.every(other=>Math.abs(Date.parse(other.travelDate)-Date.parse(option.travelDate))>=3*DAY))chosen.push(option);if(chosen.length===3)break;}
+  chosen.sort((a,b)=>a.travelDate.localeCompare(b.travelDate));
   return { status: options.length ? 'ok' : 'no_matching_dates', options: chosen, route };
 }
 

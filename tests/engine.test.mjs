@@ -43,6 +43,12 @@ test('estimates only from valid recent observations and labels sparse evidence',
   assert.equal(estimate.kind,'estimate');assert.equal(estimate.confidence,'low');assert.equal(estimate.reference.amount,23);
   assert.equal(estimateFare(observations,'SFO','DEN','2026-11-18',now).kind,'insufficient');
 });
+test('promising dates display in travel-date order after candidate selection',()=>{
+  const result=recommend({origin:'SFO',destination:'LAS',from:'2026-10-24',to:'2026-11-18'},routes,observations,now);
+  const dates=result.options.map(option=>option.travelDate);
+  assert.equal(dates.length,3);
+  assert.deepEqual(dates,[...dates].sort());
+});
 test('does not infer an unsupported nonstop',()=>{
   assert.equal(recommend({origin:'SAN',destination:'SJC',from:'2026-11-10',to:'2026-11-20',hour:8},routes,observations,now).status,'no_verified_nonstop');
 });
