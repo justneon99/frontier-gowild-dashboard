@@ -1,10 +1,10 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "frontier-gowild-reminders",
+  "name": "frontier-gowild-accounts",
   "main": "src/index.mjs",
   "compatibility_date": "2026-09-29",
   "vars": { "SITE_URL": "https://justneon99.github.io/frontier-gowild-dashboard/", "ADMIN_EMAIL": "howardyangemail@gmail.com", "GOOGLE_CLIENT_ID": "643680026377-51sl2pgif7mrrh3rn9iovtb0etkoeunn.apps.googleusercontent.com" },
   "d1_databases": [
-    { "binding": "DB", "database_name": "frontier-gowild-reminders", "database_id": "REPLACE_WITH_CLOUDFLARE_D1_DATABASE_ID" }
+    { "binding": "DB", "database_name": "frontier-gowild-accounts", "database_id": "e59425d3-2e16-4aa2-bee6-dc5426ee880e" }
   ]
 }

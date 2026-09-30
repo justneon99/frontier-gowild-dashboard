@@ -17,7 +17,7 @@ python3 /Users/haoday/.codex/skills/frontier-airport-expander/scripts/validate_d
 python3 -m http.server 8765 --directory dist
 ```
 
-`dist/config.json` has empty `apiBase` and `googleClientId` values until the account service is deployed. The public trip planner always downloads an `.ics` calendar file; importing it into a calendar app is the user's action. No email reminders are sent.
+`dist/config.json` points to the deployed Cloudflare account service and includes the public Google Web Client ID. The public trip planner always downloads an `.ics` calendar file; importing it into a calendar app is the user's action. No email reminders are sent.
 
 ## Google sign-in and Admin access (no custom domain)
 
@@ -26,11 +26,11 @@ The separate Admin page at `dist/admin.html` uses Google Identity Services. The 
 To activate Admin:
 
 1. Create a Google OAuth **Web application** client ID, add `https://justneon99.github.io` as an authorized JavaScript origin, and use the client ID as `GOOGLE_CLIENT_ID` in `worker/wrangler.jsonc` and `googleClientId` in `dist/config.json`. Do not add a client secret to the repository.
-2. Sign in to Cloudflare using Wrangler, create a D1 database, replace `REPLACE_WITH_CLOUDFLARE_D1_DATABASE_ID` in `worker/wrangler.jsonc`, and apply `worker/schema.sql` to a new database. For an existing database that already has Admin tables, apply `worker/migrations/002_google_signin.sql` instead.
+2. Sign in to Cloudflare using Wrangler, create a D1 database, set its ID in `worker/wrangler.jsonc`, and apply `worker/schema.sql` to a new database. For an existing database that already has Admin tables, apply `worker/migrations/002_google_signin.sql` instead.
 3. Deploy the Worker to its `workers.dev` HTTPS URL, set that URL as `apiBase` in `dist/config.json`, and publish the static site.
 4. Test admin Google sign-in, an invitation accepted with the same email, a different-email rejection, and revocation. Calendar alerts depend on the recipient importing the downloaded `.ics` file and allowing notifications in their calendar app.
 
-Until step 3 is complete, the Admin page clearly shows that Google sign-in and account storage still need setup. `worker/wrangler.jsonc` contains placeholders intentionally; the backend is not live yet. The old Resend/email-reminder endpoints and cron are disabled.
+The Cloudflare account service is deployed at `https://frontier-gowild-accounts.howardyangemail.workers.dev`. The Admin page calls this API after Google sign-in. The Google OAuth client must allow `https://justneon99.github.io` as a JavaScript origin; the owner must complete an interactive sign-in to verify the full flow. The old Resend/email-reminder endpoints and cron are disabled.
 
 Implementation references: [Google Web client setup](https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid), [Google ID token verification](https://developers.google.com/identity/gsi/web/guides/verify-google-id-token), [Google sign-in button](https://developers.google.com/identity/gsi/web/guides/display-button), [Cloudflare D1](https://developers.cloudflare.com/d1/worker-api/).
 
