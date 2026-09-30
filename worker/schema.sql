@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS users (
   id TEXT PRIMARY KEY,
   email TEXT NOT NULL UNIQUE,
+  google_sub TEXT UNIQUE,
   created_at TEXT NOT NULL,
   last_signed_in_at TEXT,
   revoked_at TEXT

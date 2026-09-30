@@ -3,8 +3,7 @@
   "name": "frontier-gowild-reminders",
   "main": "src/index.mjs",
   "compatibility_date": "2026-09-29",
-  "triggers": { "crons": ["*/5 * * * *"] },
-  "vars": { "SITE_URL": "https://justneon99.github.io/frontier-gowild-dashboard/", "ADMIN_EMAIL": "howardyangemail@gmail.com" },
+  "vars": { "SITE_URL": "https://justneon99.github.io/frontier-gowild-dashboard/", "ADMIN_EMAIL": "howardyangemail@gmail.com", "GOOGLE_CLIENT_ID": "REPLACE_WITH_GOOGLE_WEB_CLIENT_ID" },
   "d1_databases": [
     { "binding": "DB", "database_name": "frontier-gowild-reminders", "database_id": "REPLACE_WITH_CLOUDFLARE_D1_DATABASE_ID" }
   ]

@@ -17,24 +17,22 @@ python3 /Users/haoday/.codex/skills/frontier-airport-expander/scripts/validate_d
 python3 -m http.server 8765 --directory dist
 ```
 
-`dist/config.json` has an empty `apiBase` until the mail backend is deployed. The website then offers `.ics` download and clearly marks email reminders unavailable. Do not insert API keys or email credentials into any file under `dist/` or Git.
+`dist/config.json` has empty `apiBase` and `googleClientId` values until the account service is deployed. The public trip planner always downloads an `.ics` calendar file; importing it into a calendar app is the user's action. No email reminders are sent.
 
-## Email and calendar backend
+## Google sign-in and Admin access (no custom domain)
 
-`worker/src/index.mjs` contains a Cloudflare Worker using D1, Resend, and a five-minute cron. It supports email-link registration/sign-in, saved reminders, `.ics` invitations, updates/cancellations, and a due-time email. The user must accept the calendar invitation in their calendar app; the website cannot force a calendar notification. The server stores only verified email addresses, session hashes, and trip/reminder metadata. Frontier login and payment details are not involved.
+The separate Admin page at `dist/admin.html` uses Google Identity Services. The Cloudflare Worker verifies the Google ID token signature and claims, then stores an opaque 30-day session hash in D1. Admin access is enforced by the Worker for `howardyangemail@gmail.com`. The admin can view accounts and invitations, create a one-time invitation link bound to a specified Google email, cancel an invitation, and revoke or restore account access. A link expires after seven days and is displayed only when created; the admin copies and shares it manually. No email service or sending domain is required. Revocation invalidates active sessions. The public trip planner and calendar downloads remain available without sign-in.
 
-The separate Admin page at `dist/admin.html` is available only after the verified owner signs in as `howardyangemail@gmail.com`. The Worker, not the browser, checks `ADMIN_EMAIL` on every admin request. Admin can email a single-use, seven-day account invitation, view account creation and last sign-in times plus reminder counts, cancel pending invitations, revoke access, and restore a revoked account. New accounts require an invitation; the owner account bootstraps through its verified email sign-in link. Revocation invalidates sessions and login links and cancels future email reminders. It does not remove calendar entries previously accepted by the recipient or delete historical account data.
+To activate Admin:
 
-To activate it, a Cloudflare account and a Resend sending domain are required:
+1. Create a Google OAuth **Web application** client ID, add `https://justneon99.github.io` as an authorized JavaScript origin, and use the client ID as `GOOGLE_CLIENT_ID` in `worker/wrangler.jsonc` and `googleClientId` in `dist/config.json`. Do not add a client secret to the repository.
+2. Sign in to Cloudflare using Wrangler, create a D1 database, replace `REPLACE_WITH_CLOUDFLARE_D1_DATABASE_ID` in `worker/wrangler.jsonc`, and apply `worker/schema.sql` to a new database. For an existing database that already has Admin tables, apply `worker/migrations/002_google_signin.sql` instead.
+3. Deploy the Worker to its `workers.dev` HTTPS URL, set that URL as `apiBase` in `dist/config.json`, and publish the static site.
+4. Test admin Google sign-in, an invitation accepted with the same email, a different-email rejection, and revocation. Calendar alerts depend on the recipient importing the downloaded `.ics` file and allowing notifications in their calendar app.
 
-1. Sign in with Wrangler (`npx wrangler login`) and create D1 (`npx wrangler d1 create frontier-gowild-reminders`). Put the returned database ID in `worker/wrangler.jsonc`.
-2. Apply `worker/schema.sql` to a new D1 database. For an existing database created before Admin, apply `worker/migrations/001_admin_access.sql` instead. Configure `RESEND_API_KEY` and `MAIL_FROM` as Worker secrets; `MAIL_FROM` must use a verified sending domain. Confirm `ADMIN_EMAIL` in `worker/wrangler.jsonc` before deployment.
-3. Deploy the Worker, set its `workers.dev` HTTPS URL as `apiBase` in `dist/config.json`, and publish the static site. Never commit Worker secrets.
-4. Test the owner login and an invited account end to end: accept the account invitation, save a trip, accept the emailed `.ics`, change/cancel it, revoke access, and verify the due-time email. Check Gmail, Apple Calendar, and Outlook handling before treating all three as supported.
+Until step 3 is complete, the Admin page clearly shows that Google sign-in and account storage still need setup. `worker/wrangler.jsonc` contains placeholders intentionally; the backend is not live yet. The old Resend/email-reminder endpoints and cron are disabled.
 
-The Worker rejects unsupported routes, expired windows, invalid reminder times, unverified sessions, and other website origins. Login links expire after 15 minutes. Sessions expire after 30 days. Email requests use provider idempotency keys. `worker/wrangler.jsonc` intentionally contains a database ID placeholder, so backend deployment is not complete until it is replaced.
-
-Source for booking windows and blackout dates: [Frontier GoWild official page](https://www.flyfrontier.com/deals/gowild-pass/). Service implementation references: [Cloudflare Workers Cron Triggers](https://developers.cloudflare.com/workers/configuration/cron-triggers/), [Cloudflare D1](https://developers.cloudflare.com/d1/worker-api/), [Resend Send Email](https://resend.com/docs/api-reference/emails/send-email).
+Implementation references: [Google Web client setup](https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid), [Google ID token verification](https://developers.google.com/identity/gsi/web/guides/verify-google-id-token), [Google sign-in button](https://developers.google.com/identity/gsi/web/guides/display-button), [Cloudflare D1](https://developers.cloudflare.com/d1/worker-api/).
 
 Airport opportunity totals combine current and planned nonstop service, counting each destination once. SFO–SLC keeps one bidirectional route with a dated schedule-source note; public fare offers alone do not verify earlier Frontier nonstop dates.
 
