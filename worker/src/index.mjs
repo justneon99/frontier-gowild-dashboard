@@ -1,3 +1,4 @@
+import { normalizeTask, evaluateCheck } from './booking.mjs';
 const DAY = 86_400_000;
 const json = (data, status, origin) => new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': origin, 'Access-Control-Allow-Headers': 'Content-Type, Authorization', 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', 'Cache-Control': 'no-store', 'Vary': 'Origin' } });
 const fail = (message, status = 400) => Object.assign(new Error(message), { status });
@@ -8,7 +9,7 @@ const adminEmail = env => String(env.ADMIN_EMAIL || '').trim().toLowerCase();
 const validEmail = value => { const email = String(value || '').trim().toLowerCase(); if (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw fail('Invalid email'); return email; };
 const site = env => { const url = new URL(env.SITE_URL); if (url.protocol !== 'https:') throw fail('SITE_URL must use HTTPS', 503); return url; };
 const ready = env => Boolean(env.DB && env.GOOGLE_CLIENT_ID && !String(env.GOOGLE_CLIENT_ID).startsWith('REPLACE_') && env.ADMIN_EMAIL && env.SITE_URL);
-const body = async request => { try { return await request.json(); } catch { throw fail('Invalid JSON'); } };
+const body = async request => { try { const data = await request.json(); if (!data || typeof data !== 'object' || Array.isArray(data)) throw new Error(); return data; } catch { throw fail('Invalid JSON object'); } };
 const decode = value => { const base64 = value.replace(/-/g, '+').replace(/_/g, '/'); return Uint8Array.from(atob(base64.padEnd(Math.ceil(base64.length / 4) * 4, '=')), c => c.charCodeAt(0)); };
 
 // Google publishes signing keys at this endpoint. Verify cryptography and every required claim server-side.
@@ -96,6 +97,39 @@ async function revokeInvitation(env, id) {
   if (!result.meta.changes) throw fail('Pending invitation not found', 404);
   return { id, status: 'revoked' };
 }
+const taskId = path => path.match(/^\/personal\/tasks\/([a-f0-9-]{36})(?:\/(checks|cancel))?$/)?.slice(1);
+async function getTask(env, id, userId) {
+  const row = await env.DB.prepare('SELECT id,origin,destination,travel_date AS travelDate,earliest_time AS earliestTime,latest_time AS latestTime,max_total_cents AS maxTotalCents,status,created_at AS createdAt,updated_at AS updatedAt,cancelled_at AS cancelledAt FROM booking_tasks WHERE id=? AND owner_id=?').bind(id, userId).first();
+  if (!row) throw fail('Task not found', 404);
+  return row;
+}
+async function listTasks(env, userId) {
+  const rows = await env.DB.prepare('SELECT id,origin,destination,travel_date AS travelDate,earliest_time AS earliestTime,latest_time AS latestTime,max_total_cents AS maxTotalCents,status,created_at AS createdAt,updated_at AS updatedAt,cancelled_at AS cancelledAt FROM booking_tasks WHERE owner_id=? ORDER BY created_at DESC LIMIT 50').bind(userId).all();
+  return rows.results;
+}
+async function createTask(request, env, user) {
+  const value = normalizeTask(await body(request)), date = now(), id = crypto.randomUUID();
+  await env.DB.prepare('INSERT INTO booking_tasks(id,owner_id,origin,destination,travel_date,earliest_time,latest_time,max_total_cents,status,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,?)').bind(id, user.id, value.origin, value.destination, value.travelDate, value.earliestTime, value.latestTime, value.maxTotalCents, 'planned', date, date).run();
+  return getTask(env, id, user.id);
+}
+async function recordCheck(request, env, user, id) {
+  const task = await getTask(env, id, user.id);
+  if (task.cancelledAt) throw fail('Task has been cancelled', 409);
+  const value = evaluateCheck(task, await body(request)), date = now();
+  await env.DB.prepare('INSERT INTO booking_checks(id,task_id,checked_at,result,reasons_json,flight_number,departure_time,arrival_time,total_cents,evidence_url,checkpoint) VALUES(?,?,?,?,?,?,?,?,?,?,?)').bind(crypto.randomUUID(), id, date, value.result, JSON.stringify(value.reasons), value.flightNumber, value.departureTime, value.arrivalTime, value.totalCents, value.evidenceUrl, value.checkpoint).run();
+  await env.DB.prepare('UPDATE booking_tasks SET status=?,updated_at=? WHERE id=? AND owner_id=?').bind(value.result, date, id, user.id).run();
+  return { ...value, checkedAt: date, task: await getTask(env, id, user.id) };
+}
+async function checks(env, user, id) {
+  await getTask(env, id, user.id);
+  const rows = await env.DB.prepare('SELECT checked_at AS checkedAt,result,reasons_json AS reasonsJson,flight_number AS flightNumber,departure_time AS departureTime,arrival_time AS arrivalTime,total_cents AS totalCents,evidence_url AS evidenceUrl,checkpoint FROM booking_checks WHERE task_id=? ORDER BY checked_at DESC LIMIT 20').bind(id).all();
+  return rows.results.map(row => ({ ...row, reasons: JSON.parse(row.reasonsJson), reasonsJson: undefined }));
+}
+async function cancelTask(env, user, id) {
+  const task = await getTask(env, id, user.id);
+  if (!task.cancelledAt) await env.DB.prepare('UPDATE booking_tasks SET status=?,cancelled_at=?,updated_at=? WHERE id=? AND owner_id=?').bind('cancelled', now(), now(), id, user.id).run();
+  return getTask(env, id, user.id);
+}
 export default {
   async fetch(request, env) {
     const allowed = site(env).origin, origin = request.headers.get('Origin') || '';
@@ -108,6 +142,19 @@ export default {
       if (path === '/auth/google' && request.method === 'POST') return json(await googleSignIn(request, env), 200, allowed);
       const user = await accountFromRequest(request, env);
       if (path === '/me' && request.method === 'GET') return json({ email: user.email, isAdmin: user.email === adminEmail(env) }, 200, allowed);
+      if (path.startsWith('/personal/')) {
+        if (user.email !== adminEmail(env)) throw fail('Personal booking access required', 403);
+        if (path === '/personal/tasks' && request.method === 'GET') return json({ tasks: await listTasks(env, user.id) }, 200, allowed);
+        if (path === '/personal/tasks' && request.method === 'POST') return json(await createTask(request, env, user), 201, allowed);
+        const match = taskId(path);
+        if (match) {
+          const [id, action] = match;
+          if (!action && request.method === 'GET') return json(await getTask(env, id, user.id), 200, allowed);
+          if (action === 'checks' && request.method === 'GET') return json({ checks: await checks(env, user, id) }, 200, allowed);
+          if (action === 'checks' && request.method === 'POST') return json(await recordCheck(request, env, user, id), 201, allowed);
+          if (action === 'cancel' && request.method === 'POST') return json(await cancelTask(env, user, id), 200, allowed);
+        }
+      }
       if (path.startsWith('/admin/')) {
         if (user.email !== adminEmail(env)) throw fail('Admin access required', 403);
         if (path === '/admin/overview' && request.method === 'GET') return json(await overview(env), 200, allowed);

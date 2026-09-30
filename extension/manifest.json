@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "GoWild Radar Personal Monitor",
+  "version": "0.1.0",
+  "description": "Checks a prepared Frontier one-way result at a limited booking window and alerts on a possible GoWild nonstop fare. Never purchases.",
+  "permissions": ["alarms", "notifications", "storage", "tabs"],
+  "host_permissions": ["https://booking.flyfrontier.com/*", "https://justneon99.github.io/frontier-gowild-dashboard/*"],
+  "background": { "service_worker": "background.js", "type": "module" },
+  "content_scripts": [
+    { "matches": ["https://justneon99.github.io/frontier-gowild-dashboard/booking.html*"], "js": ["site-bridge.js"] },
+    { "matches": ["https://booking.flyfrontier.com/Flight/Select*"], "js": ["frontier-scan.js"] }
+  ],
+  "action": { "default_popup": "popup.html", "default_title": "GoWild Radar" },
+  "icons": { "128": "icon.png" }
+}

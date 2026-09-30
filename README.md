@@ -32,6 +32,19 @@ To activate Admin:
 
 The Cloudflare account service is deployed at `https://frontier-gowild-accounts.howardyangemail.workers.dev`. The Admin page calls this API after Google sign-in. The Google OAuth client must allow `https://justneon99.github.io` as a JavaScript origin; the owner must complete an interactive sign-in to verify the full flow. The old Resend/email-reminder endpoints and cron are disabled.
 
+## Personal GoWild booking-validation pilot
+
+`dist/booking.html` lets the administrator create a one-way task with an exact route, travel date, origin-local departure-time range, and strict USD total cap. The Cloudflare Worker stores task metadata and manual check history in D1, accessible only to the admin's Google session. No Frontier password, code, payment card, passenger identity, or email contents are stored. A check is marked **self-reported match** only when its entered details say it is a Frontier nonstop, GoWild passholder fare, one adult, one-way, no paid extras, under the cap, and at the pre-payment review page. This label is not a verified booking or price.
+
+The optional `extension/` is an unpacked Chrome Manifest V3 personal monitor. It reads only the booking task metadata from the administrator's `booking.html` page, and reads a matching `booking.flyfrontier.com/Flight/Select` tab already opened in Chrome. To use it:
+
+1. In Chrome, open `chrome://extensions`, enable Developer mode, select **Load unpacked**, and choose this repository's `extension/` directory. Review its permissions for the Radar page and Frontier booking results.
+2. In `booking.html`, create a task and click **Send to local monitor**. In Chrome, sign in to Frontier yourself, search the same **one-way, one adult** route and date, open the extension, and click **Bind current Frontier tab**.
+3. The extension checks the bound tab at origin-local midnight, then 1, 2, 4, 8, 16, 32, and 60 minutes later (domestic: one day before travel; international: ten days before). **Check now** performs one immediate scan. It requires Chrome and this computer to remain awake. If Frontier requires login or CAPTCHA, the monitor stops at that state and asks for user action. It never reads Gmail or enters an OTP.
+4. A matching **listed** GoWild nonstop candidate below the cap triggers a local Chrome notification and needs a human to inspect the final checkout total. The extension does not select a fare, add services, enter payment details, or submit a purchase. On the website, record the pre-payment review details to see which criteria matched. Stop the monitor from its popup when no longer needed.
+
+The Frontier result-page parser was matched against the official SJC–LAX one-way search layout on 2026-09-30. Frontier can change that layout, fare labels, and session behavior at any time; an unsupported or mismatched page is reported as such rather than treated as no seats. Search-result prices are candidates only, never proof of logged-in inventory or final total. The extension is source code in this repository; it is not distributed through the Chrome Web Store. This pilot intentionally has no automatic login, checkout, payment, cloud execution, or email notification.
+
 Implementation references: [Google Web client setup](https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid), [Google ID token verification](https://developers.google.com/identity/gsi/web/guides/verify-google-id-token), [Google sign-in button](https://developers.google.com/identity/gsi/web/guides/display-button), [Cloudflare D1](https://developers.cloudflare.com/d1/worker-api/).
 
 Airport opportunity totals combine current and planned nonstop service, counting each destination once. SFO–SLC keeps one bidirectional route with a dated schedule-source note; public fare offers alone do not verify earlier Frontier nonstop dates.

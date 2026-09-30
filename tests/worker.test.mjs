@@ -72,3 +72,34 @@ test('Google identity, invitation binding, one-time use, admin restrictions, rev
   assert.equal((await call('/auth/google', 'POST', { credential: await credential('second@example.com'), inviteToken: new URL(second.link).searchParams.get('invite') })).status, 403);
   assert.equal((await call('/reminders', 'GET', null, session)).status, 404);
 });
+
+test('personal booking tasks require admin and payment-review evidence remains user-reported', async t => {
+  const { credential, call } = await fixture(t);
+  const admin = await (await call('/auth/google', 'POST', { credential: await credential('howardyangemail@gmail.com') })).json();
+  const travelDate = new Date(Date.now() + 3 * 86_400_000).toISOString().slice(0, 10);
+  const taskInput = { origin: 'SJC', destination: 'LAX', travelDate, earliestTime: '18:00', latestTime: '23:59', maxTotalUSD: 50 };
+  assert.equal((await call('/personal/tasks', 'POST', { ...taskInput, destination: 'SJC' }, admin.session)).status, 400);
+  const created = await call('/personal/tasks', 'POST', taskInput, admin.session);
+  assert.equal(created.status, 201);
+  const task = await created.json();
+  assert.equal(task.status, 'planned');
+  assert.equal(task.maxTotalCents, 5000);
+  assert.equal((await (await call('/personal/tasks', 'GET', null, admin.session)).json()).tasks.length, 1);
+  const invited = await (await call('/admin/invitations', 'POST', { email: 'friend@example.com' }, admin.session)).json();
+  const friend = await (await call('/auth/google', 'POST', { credential: await credential('friend@example.com'), inviteToken: new URL(invited.link).searchParams.get('invite') })).json();
+  assert.equal((await call('/personal/tasks', 'GET', null, friend.session)).status, 403);
+  assert.equal((await call(`/personal/tasks/${task.id}`, 'GET', null, friend.session)).status, 403);
+  const observation = { origin: 'SJC', destination: 'LAX', travelDate, departureTime: '21:03', arrivalTime: '22:22', flightNumber: 'F9 2458', nonstop: true, oneWay: true, passengers: 1, fareType: 'GoWild', passholderValidated: true, totalUSD: 26, addOnsUSD: 0, checkpoint: 'search_or_checkout', evidenceUrl: 'https://booking.flyfrontier.com/Flight/Select' };
+  const early = await (await call(`/personal/tasks/${task.id}/checks`, 'POST', observation, admin.session)).json();
+  assert.equal(early.result, 'does_not_match');
+  assert.deepEqual(early.reasons, ['payment_review_not_reached']);
+  const ready = await (await call(`/personal/tasks/${task.id}/checks`, 'POST', { ...observation, checkpoint: 'payment_review' }, admin.session)).json();
+  assert.equal(ready.result, 'user_review_ready');
+  assert.equal(ready.task.status, 'user_review_ready');
+  const tooHigh = await (await call(`/personal/tasks/${task.id}/checks`, 'POST', { ...observation, checkpoint: 'payment_review', totalUSD: 50 }, admin.session)).json();
+  assert.deepEqual(tooHigh.reasons, ['total_not_below_cap']);
+  const history = await (await call(`/personal/tasks/${task.id}/checks`, 'GET', null, admin.session)).json();
+  assert.equal(history.checks.length, 3);
+  assert.equal((await call(`/personal/tasks/${task.id}/cancel`, 'POST', null, admin.session)).status, 200);
+  assert.equal((await call(`/personal/tasks/${task.id}/checks`, 'POST', observation, admin.session)).status, 409);
+});
