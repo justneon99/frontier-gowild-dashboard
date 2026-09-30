@@ -32,7 +32,12 @@ export function evaluateCheck(task, input) {
   const totalCents = cents(input.totalUSD);
   const addOnsCents = cents(input.addOnsUSD ?? 0);
   const flightNumber = String(input.flightNumber || '').trim().toUpperCase();
-  const evidenceUrl = String(input.evidenceUrl || '').trim();
+  const rawEvidenceUrl = String(input.evidenceUrl || '').trim();
+  let evidenceUrl = '';
+  if (rawEvidenceUrl) {
+    try { const source = new URL(rawEvidenceUrl); if (source.protocol !== 'https:' || !['flyfrontier.com', 'www.flyfrontier.com', 'booking.flyfrontier.com'].includes(source.hostname) || rawEvidenceUrl.length > 500) throw new Error(); evidenceUrl = `${source.origin}${source.pathname}`; }
+    catch { reasons.push('invalid_frontier_url'); }
+  }
   if (!/^F9\s?\d{1,4}$/.test(flightNumber)) reasons.push('flight_number_unconfirmed');
   if (input.origin !== task.origin || input.destination !== task.destination || input.travelDate !== task.travelDate) reasons.push('itinerary_mismatch');
   if (departureTime < task.earliestTime || departureTime > task.latestTime) reasons.push('departure_outside_window');
@@ -42,6 +47,5 @@ export function evaluateCheck(task, input) {
   if (addOnsCents !== 0) reasons.push('paid_addons');
   if (totalCents >= task.maxTotalCents) reasons.push('total_not_below_cap');
   if (input.checkpoint !== 'payment_review') reasons.push('payment_review_not_reached');
-  if (evidenceUrl && (!/^https:\/\/(?:booking\.)?flyfrontier\.com\//i.test(evidenceUrl) || evidenceUrl.length > 500)) reasons.push('invalid_frontier_url');
   return { result: reasons.length ? 'does_not_match' : 'user_review_ready', reasons, flightNumber: flightNumber.slice(0, 12), departureTime, arrivalTime, totalCents, evidenceUrl: evidenceUrl.slice(0, 500), checkpoint: input.checkpoint === 'payment_review' ? 'payment_review' : 'search_or_checkout' };
 }

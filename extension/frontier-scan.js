@@ -1,6 +1,14 @@
 const isoDate = value => { const match = String(value || '').match(/^(\d{1,2})\/(\d{1,2})\/(20\d{2})$/); return match ? `${match[3]}-${match[1].padStart(2, '0')}-${match[2].padStart(2, '0')}` : ''; };
 const to24 = value => { const match = String(value || '').trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i); if (!match) return ''; return `${String((Number(match[1]) % 12) + (match[3].toUpperCase() === 'PM' ? 12 : 0)).padStart(2, '0')}:${match[2]}`; };
 const text = (root, selector) => root.querySelector(selector)?.textContent?.trim() || '';
+function waitForResults() {
+  if (document.querySelector('.greenBarLeftContentWrapper') && document.querySelector('.ibe-depart-section .navItem.gw')) return Promise.resolve(true);
+  return new Promise(resolve => {
+    const observer = new MutationObserver(() => { if (document.querySelector('.greenBarLeftContentWrapper') && document.querySelector('.ibe-depart-section .navItem.gw')) { observer.disconnect(); clearTimeout(timer); resolve(true); } });
+    const timer = setTimeout(() => { observer.disconnect(); resolve(false); }, 15000);
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+  });
+}
 function routeAndDate(task) {
   const header = document.querySelector('.greenBarLeftContentWrapper');
   const airports = header?.innerText?.match(/\b[A-Z]{3}\b/g) || [];
@@ -11,6 +19,7 @@ function routeAndDate(task) {
 }
 async function scan(task, validateOnly = false) {
   if (location.hostname !== 'booking.flyfrontier.com' || location.pathname !== '/Flight/Select') return { status: 'unsupported_page' };
+  if (!await waitForResults()) return { status: 'unsupported_page' };
   const itinerary = routeAndDate(task);
   if (!itinerary.matches) return { status: 'mismatch', itinerary };
   if (validateOnly) return { status: 'matched' };
@@ -28,7 +37,7 @@ async function scan(task, validateOnly = false) {
     if (origin !== task.origin || destination !== task.destination || departureTime < task.earliestTime || departureTime > task.latestTime) continue;
     let flightNumber = '';
     try { const details = JSON.parse(card.querySelector('.flight-number')?.getAttribute('data-det-json') || '[]'); if (details.length !== 1 || details[0].departureStation !== origin || details[0].arrivalStation !== destination || !String(details[0].sellKey || '').includes(task.travelDate.replace(/(\d{4})-(\d{2})-(\d{2})/, '$2/$3/$1'))) continue; flightNumber = `${details[0].carrierCode} ${details[0].flightNumber}`; } catch { continue; }
-    const fares = [...card.querySelectorAll('.ibe-flight-farebox-fare')].filter(el => !/Unavailable/i.test(el.innerText));
+    const fares = [...card.querySelectorAll('[name="ibe-farebox-fare"]')].filter(el => el.querySelector('input.js-fare') && !/Unavailable/i.test(el.innerText));
     const listedPrices = fares.map(el => Number(el.innerText.match(/\$\s*(\d+(?:\.\d{2})?)/)?.[1])).filter(Number.isFinite);
     if (listedPrices.length) candidates.push({ flightNumber, departureTime, arrivalTime: to24(text(card, '.ibe-flight-time-arrive .ibe-flight-select-time')), listedPrice: Math.min(...listedPrices) });
   }

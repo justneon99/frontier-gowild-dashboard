@@ -96,10 +96,12 @@ test('personal booking tasks require admin and payment-review evidence remains u
   const ready = await (await call(`/personal/tasks/${task.id}/checks`, 'POST', { ...observation, checkpoint: 'payment_review' }, admin.session)).json();
   assert.equal(ready.result, 'user_review_ready');
   assert.equal(ready.task.status, 'user_review_ready');
+  const stripped = await (await call(`/personal/tasks/${task.id}/checks`, 'POST', { ...observation, checkpoint: 'payment_review', evidenceUrl: 'https://booking.flyfrontier.com/Flight/Select?private=secret' }, admin.session)).json();
+  assert.equal(stripped.evidenceUrl, 'https://booking.flyfrontier.com/Flight/Select');
   const tooHigh = await (await call(`/personal/tasks/${task.id}/checks`, 'POST', { ...observation, checkpoint: 'payment_review', totalUSD: 50 }, admin.session)).json();
   assert.deepEqual(tooHigh.reasons, ['total_not_below_cap']);
   const history = await (await call(`/personal/tasks/${task.id}/checks`, 'GET', null, admin.session)).json();
-  assert.equal(history.checks.length, 3);
+  assert.equal(history.checks.length, 4);
   assert.equal((await call(`/personal/tasks/${task.id}/cancel`, 'POST', null, admin.session)).status, 200);
   assert.equal((await call(`/personal/tasks/${task.id}/checks`, 'POST', observation, admin.session)).status, 409);
 });

@@ -20,6 +20,10 @@ async function processResult(result, task) {
     await notify('GoWild Radar: search changed', 'Open the matching one-way Frontier search for your task and bind the tab again.');
     await chrome.storage.local.set({ lastNoticeKey: 'mismatch' });
   }
+  if (result.status === 'unsupported_page' && lastNoticeKey !== 'unsupported_page') {
+    await notify('GoWild Radar: check needs attention', 'Frontier did not show a readable flight-results page. Open the bound tab and resolve any sign-in, challenge, or site change.');
+    await chrome.storage.local.set({ lastNoticeKey: 'unsupported_page' });
+  }
   if (result.status === 'candidate') {
     const candidate = result.candidates.filter(flight => flight.listedPrice * 100 < task.maxTotalCents).sort((a,b) => a.listedPrice - b.listedPrice)[0];
     if (candidate) {
@@ -76,6 +80,14 @@ chrome.alarms.onAlarm.addListener(async alarm => {
   if (!alarm.name.startsWith('gowild-')) return;
   const { task, boundTabId } = await storage();
   if (!task || !boundTabId) return;
-  try { await chrome.tabs.reload(boundTabId); }
+  try {
+    const tab = await chrome.tabs.get(boundTabId);
+    if (!tab.url?.startsWith('https://booking.flyfrontier.com/Flight/Select')) {
+      await chrome.alarms.clearAll();
+      await chrome.storage.local.set({ lastResult: { status: 'paused_after_results', checkedAt: new Date().toISOString() } });
+      return;
+    }
+    await chrome.tabs.reload(boundTabId);
+  }
   catch { await chrome.storage.local.set({ lastResult: { status: 'tab_closed', checkedAt: new Date().toISOString() } }); await notify('GoWild Radar: tab closed', 'Reopen and bind a matching Frontier result tab to continue the remaining checks.'); }
 });
