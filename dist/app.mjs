@@ -29,6 +29,12 @@ function renderPlannerAirports() {
 function toast(message) { const el=$('#toast'); el.textContent=message; el.classList.add('show'); clearTimeout(toast.timer); toast.timer=setTimeout(()=>el.classList.remove('show'),3500); }
 function formatDate(date, options={}) { return new Date(`${date}T12:00:00Z`).toLocaleDateString(state.lang==='zh'?'zh-CN':'en-US',{timeZone:'UTC',year:'numeric',month:'short',day:'numeric',weekday:'short',...options}); }
 function formatObserved(value) { return new Date(value).toLocaleString(state.lang==='zh'?'zh-CN':'en-US',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',timeZone:'America/Los_Angeles',timeZoneName:'short'}); }
+function syncOriginDates(){
+  const today=airportDate(new Date(),elements.origin.value);
+  elements.from.min=today;elements.to.min=today;
+  if(elements.from.value&&elements.from.value<today)elements.from.value=today;
+  if(elements.to.value&&elements.to.value<elements.from.value)elements.to.value=elements.from.value;
+}
 function input() { return Object.fromEntries(Object.entries(elements).map(([key,element])=>[key,element.value])); }
 function setLanguage(lang) {
   state.lang=lang; localStorage.setItem('frontier-language',lang); document.documentElement.lang=lang==='zh'?'zh-CN':'en';
@@ -112,7 +118,7 @@ async function loadIdentity(){
 }
 async function init(){
   renderPlannerAirports();
-  elements.origin.value='SFO';elements.destination.value='LAS';const today=airportDate(new Date(),elements.origin.value),future=new Date(Date.parse(`${today}T12:00:00Z`)+21*86400000);elements.from.value=today;elements.to.value=future.toISOString().slice(0,10);
+  elements.origin.value='SFO';elements.destination.value='LAS';const today=airportDate(new Date(),elements.origin.value),future=new Date(Date.parse(`${today}T12:00:00Z`)+21*86400000);elements.from.value=today;elements.to.value=future.toISOString().slice(0,10);syncOriginDates();
   const fragment=new URLSearchParams(location.hash.slice(1));if(fragment.get('session')){state.session=fragment.get('session');state.email=fragment.get('email')||'';sessionStorage.setItem('frontier-session',state.session);sessionStorage.setItem('frontier-email',state.email);history.replaceState({},'',location.pathname+location.search);}
   try{const [routes,history,config]=await Promise.all([fetch('data/routes.json?v=20260929-atl-tpa-admin').then(r=>r.json()),fetch('data/fare-history.json').then(r=>r.json()),fetch('config.json').then(r=>r.json())]);state.routes=routes.routes;state.routesUpdatedAt=routes.updatedAt;state.observations=history.observations;state.fareCoverage=new Map((history.weeklyRefresh?.directions||[]).map(row=>[row.route,row.status]));state.updatedAt=history.updatedAt;$('#airport-count').textContent=AIRPORTS.length;$('#pair-count').textContent=state.routes.length;state.apiBase=(config.apiBase||'').replace(/\/$/,'');if(state.apiBase){await api('/health');state.apiReady=true;}}catch(error){if(!state.routes.length)toast(t('loadError'));}
   setLanguage(state.lang);if(state.session&&state.apiReady)await loadIdentity();if(state.session)renderTrips();
@@ -120,11 +126,12 @@ async function init(){
 }
 $('#dismiss-support').addEventListener('click',()=>{$('#support-after-calendar').hidden=true;});
 $('#planner-form').addEventListener('submit',event=>{event.preventDefault();try{state.result=recommend(input(),state.routes,state.observations);renderResults();}catch(error){toast(t('invalid'));}});
-$('#swap').addEventListener('click',()=>{[elements.origin.value,elements.destination.value]=[elements.destination.value,elements.origin.value];});
+elements.origin.addEventListener('change',syncOriginDates);
+$('#swap').addEventListener('click',()=>{[elements.origin.value,elements.destination.value]=[elements.destination.value,elements.origin.value];syncOriginDates();});
 $('#lang').addEventListener('click',()=>setLanguage(state.lang==='zh'?'en':'zh'));
 $('#routes-airport').addEventListener('change',renderRoutes);
 $('#airport-chart').addEventListener('click',event=>{const button=event.target.closest('[data-airport]');if(!button)return;state.selectedAirport=button.dataset.airport;renderOpportunities();});
-$('#opportunity-plan').addEventListener('click',()=>{const selected=airportOpportunities(state.routes,state.observations).find(item=>item.airport===state.selectedAirport);elements.origin.value=selected.airport;const destination=selected.destinations.find(item=>item.route.status==='active')||selected.destinations[0];if(destination)elements.destination.value=destination.airport;$('#planner').scrollIntoView({behavior:'smooth'});});
+$('#opportunity-plan').addEventListener('click',()=>{const selected=airportOpportunities(state.routes,state.observations).find(item=>item.airport===state.selectedAirport);elements.origin.value=selected.airport;const destination=selected.destinations.find(item=>item.route.status==='active')||selected.destinations[0];if(destination)elements.destination.value=destination.airport;syncOriginDates();$('#planner').scrollIntoView({behavior:'smooth'});});
 for(const id of ['history-origin','history-destination','history-window']){$(`#${id}`).addEventListener('change',renderHistory);}
 $('#result-cards').addEventListener('click',event=>{const button=event.target.closest('[data-action="remind"]');if(button)createReminder(state.result.options[Number(button.dataset.index)]);});
 $('#email-form').addEventListener('submit',async event=>{event.preventDefault();try{await api('/auth/start',{method:'POST',body:JSON.stringify({email:$('#email').value.trim()})});$('#auth-message').textContent=t('emailSent');}catch(error){$('#auth-message').textContent=t('emailError')+' '+error.message;}});
