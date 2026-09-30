@@ -101,3 +101,16 @@ test('airport opportunities use nonstop routes and fresh fares in the correct di
   assert.equal(sfo.destinations.find(item=>item.airport==='LAS').toQuote,null);
   assert.equal(sfo.destinations.find(item=>item.airport==='SLC').fromQuote,null);
 });
+
+test('ATL and TPA expansion keeps direct coverage, season dates, and Eastern reminders',()=>{
+  const routes=routesData.routes;
+  assert.equal(routes.length,45);
+  assert.equal(new Set(routes.map(r=>[r.a,r.b].sort().join('-'))).size,45);
+  for(const [origin,destination] of [['ATL','LAX'],['LAX','ATL'],['TPA','DEN'],['DEN','TPA'],['ATL','TPA']]){
+    assert.equal(recommend({origin,destination,from:'2026-10-24',to:'2026-10-24'},routes,[],now).status,'ok');
+  }
+  assert.equal(bookingReminder('2026-10-24','TPA',0,'DEN').timeZone,'America/New_York');
+  assert.equal(recommend({origin:'ATL',destination:'SJO',from:'2026-10-01',to:'2026-10-20'},routes,[],now).status,'season_not_yet_in_window');
+  assert.equal(recommend({origin:'ATL',destination:'CUN',from:'2026-10-13',to:'2026-10-13'},routes,[],now).status,'no_matching_dates');
+  for(const destination of ['LAS','EWR','LGA','LAX'])assert.equal(recommend({origin:'TPA',destination,from:'2026-10-24',to:'2026-10-24'},routes,[],now).status,'no_verified_nonstop');
+});

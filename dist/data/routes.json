@@ -509,6 +509,240 @@
       "status": "active",
       "source": "https://www.directflights.com/SEA-LAX",
       "sampleWindow": "2026-10-19 to 2026-10-25"
+    },
+    {
+      "a": "ATL",
+      "b": "SFO",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/ATL-SFO",
+      "reviewedAt": "2026-09-29",
+      "sampleWindow": "Published daily service; checked 2026-09-29",
+      "officialSource": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+    },
+    {
+      "a": "ATL",
+      "b": "LAX",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/ATL-LAX",
+      "reviewedAt": "2026-09-29",
+      "sampleWindow": "2026-10-12/2026-10-18",
+      "officialSource": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+    },
+    {
+      "a": "ATL",
+      "b": "LAS",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/ATL-LAS",
+      "reviewedAt": "2026-09-29",
+      "sampleWindow": "2026-10-05/2026-10-11",
+      "officialSource": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+    },
+    {
+      "a": "ATL",
+      "b": "DEN",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/ATL-DEN",
+      "reviewedAt": "2026-09-29",
+      "sampleWindow": "2026-10-05/2026-10-11",
+      "officialSource": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+    },
+    {
+      "a": "ATL",
+      "b": "MCO",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/ATL-MCO",
+      "reviewedAt": "2026-09-29",
+      "sampleWindow": "2026-10-12/2026-10-18",
+      "officialSource": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+    },
+    {
+      "a": "ATL",
+      "b": "LGA",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/ATL-LGA",
+      "reviewedAt": "2026-09-29",
+      "sampleWindow": "2026-10-05/2026-10-11",
+      "officialSource": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+    },
+    {
+      "a": "ATL",
+      "b": "EWR",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/ATL-EWR",
+      "reviewedAt": "2026-09-29",
+      "sampleWindow": "2026-10-05/2026-10-11",
+      "officialSource": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+    },
+    {
+      "a": "ATL",
+      "b": "CUN",
+      "days": [
+        1,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/ATL-CUN",
+      "reviewedAt": "2026-09-29",
+      "sampleWindow": "2026-10-12/2026-10-18",
+      "officialSource": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+    },
+    {
+      "a": "ATL",
+      "b": "TPA",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/ATL-TPA",
+      "reviewedAt": "2026-09-29",
+      "sampleWindow": "2026-10-05/2026-10-11",
+      "officialSource": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+    },
+    {
+      "a": "ATL",
+      "b": "SJO",
+      "days": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "status": "seasonal",
+      "starts": "2026-12-18",
+      "source": "https://www.flightsfrom.com/ATL-SJO",
+      "reviewedAt": "2026-09-29",
+      "officialSource": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+    },
+    {
+      "a": "ATL",
+      "b": "GUA",
+      "days": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "status": "seasonal",
+      "starts": "2026-12-01",
+      "source": "https://www.flightsfrom.com/ATL-GUA",
+      "reviewedAt": "2026-09-29",
+      "officialSource": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+    },
+    {
+      "a": "ATL",
+      "b": "SAL",
+      "days": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "status": "seasonal",
+      "starts": "2026-10-10",
+      "source": "https://www.flightsfrom.com/ATL-SAL",
+      "reviewedAt": "2026-09-29",
+      "officialSource": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+    },
+    {
+      "a": "TPA",
+      "b": "DEN",
+      "days": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "status": "active",
+      "source": "https://www.flightsfrom.com/TPA-DEN",
+      "reviewedAt": "2026-09-29",
+      "sampleWindow": "2026-10-12/2026-10-18",
+      "officialSource": "https://flights.flyfrontier.com/en/flights-from-tampa"
     }
   ]
 }
