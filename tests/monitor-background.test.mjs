@@ -5,6 +5,7 @@ test('background records task, binding, manual check, and a readable status snap
   const data = {};
   const alarms = new Map();
   let onMessage;
+  let reloads = 0;
   globalThis.chrome = {
     storage: { local: {
       async get(keys) { return Object.fromEntries(keys.map(key => [key, data[key]])); },
@@ -18,6 +19,8 @@ test('background records task, binding, manual check, and a readable status snap
     },
     tabs: {
       async query() { return [{ id: 7, url: 'https://booking.flyfrontier.com/Flight/Select' }]; },
+      async get() { return { id: 7, url: 'https://booking.flyfrontier.com/Flight/Select' }; },
+      async reload() { reloads++; },
       async sendMessage(id, message) { return message.validateOnly ? { status: 'matched' } : { status: 'candidate', candidates: [{ flightNumber: 'F9 2458', departureTime: '21:03', listedPrice: 49 }] }; },
     },
     notifications: { async create() {} },
@@ -29,7 +32,9 @@ test('background records task, binding, manual check, and a readable status snap
   const page = { url: 'https://justneon99.github.io/frontier-gowild-dashboard/booking.html' };
   assert.equal((await send({ type: 'SAVE_TASK', task }, page)).ok, true);
   assert.equal((await send({ type: 'BIND_ACTIVE' })).ok, true);
-  assert.equal((await send({ type: 'CHECK_NOW' })).result.status, 'fare_below_cap');
+  assert.equal((await send({ type: 'CHECK_NOW' })).started, true);
+  assert.equal(reloads, 1);
+  assert.equal((await send({ type: 'PAGE_READY' }, { tab: { id: 7 } })).ok, true);
   const status = await send({ type: 'GET_STATUS', taskId: task.id }, page);
   assert.equal(status.snapshot.bound, true);
   assert.deepEqual(status.snapshot.logs.map(entry => entry.kind), ['task_saved', 'tab_bound', 'check_started', 'check_result', 'notification_sent']);

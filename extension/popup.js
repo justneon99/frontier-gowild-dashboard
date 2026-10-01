@@ -12,6 +12,7 @@ async function run(type) {
     const result = await chrome.runtime.sendMessage({ type });
     await refresh();
     if (!result?.ok) $('#status').textContent = result?.error || 'Action failed';
+    else if (result.started) $('#status').textContent = 'Refreshing Frontier results. The new check will appear in the execution log.';
   } catch (error) { $('#status').textContent = error.message || 'Action failed'; }
 }
 $('#bind').addEventListener('click', () => run('BIND_ACTIVE'));

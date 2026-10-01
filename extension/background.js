@@ -1,4 +1,4 @@
-import { ZONES, OFFSETS, windowStart } from './schedule.mjs';
+import { ZONES, checkTimes } from './schedule.mjs';
 import { appendLog, summarizeResult } from './monitor-state.mjs';
 const storage = () => chrome.storage.local.get(['task','boundTabId','lastResult','lastNoticeKey','pendingTrigger','stopped']);
 let logQueue = Promise.resolve();
@@ -20,9 +20,9 @@ async function snapshot(taskId) {
 }
 async function schedule(task) {
   await chrome.alarms.clearAll();
-  const start = windowStart(task);
-  for (const minutes of OFFSETS) if (start + minutes * 60_000 > Date.now()) await chrome.alarms.create(`gowild-${minutes}`, { when: start + minutes * 60_000 });
-  return { windowStart: new Date(start).toISOString(), checks: OFFSETS.filter(minutes => start + minutes * 60_000 > Date.now()).length };
+  const times = checkTimes(task);
+  for (let index = 0; index < times.length; index++) await chrome.alarms.create(`gowild-${index}`, { when: times[index] });
+  return { nextCheckAt: times[0] ? new Date(times[0]).toISOString() : null, checks: times.length };
 }
 async function notify(title, message) {
   await chrome.notifications.create({ type: 'basic', iconUrl: 'icon.png', title, message, priority: 2 });
@@ -88,9 +88,18 @@ chrome.runtime.onMessage.addListener((message, sender, respond) => {
     }
     if (message?.type === 'CHECK_NOW') {
       const { task, boundTabId, stopped } = await storage(); if (!task || !boundTabId || stopped) { if (task) await log('check_error', { trigger: 'manual', status: 'tab_not_bound' }); throw new Error('Bind a matching Frontier tab first'); }
-      await log('check_started', { trigger: 'manual' });
-      try { const result = await scanTab(boundTabId, task); await processResult(result, task, 'manual'); return { ok: true, result: summarizeResult(result, task) }; }
-      catch { await log('check_error', { trigger: 'manual' }); throw new Error('Could not read the Frontier tab. Reload it and try again.'); }
+      try {
+        const tab = await chrome.tabs.get(boundTabId);
+        if (!tab.url?.startsWith('https://booking.flyfrontier.com/Flight/Select')) throw new Error('Frontier result page is no longer open');
+        await log('check_started', { trigger: 'manual' });
+        await chrome.storage.local.set({ pendingTrigger: 'manual' });
+        await chrome.tabs.reload(boundTabId);
+        return { ok: true, started: true };
+      } catch {
+        await chrome.storage.local.set({ pendingTrigger: null });
+        await log('check_error', { trigger: 'manual', status: 'tab_closed' });
+        throw new Error('Could not refresh the Frontier result tab. Reopen and bind it again.');
+      }
     }
     if (message?.type === 'PAGE_READY') {
       const { task, boundTabId, pendingTrigger, stopped } = await storage();
