@@ -1,4 +1,4 @@
-import { ZONES, checkTimes } from './schedule.mjs';
+import { ZONES, OFFSETS, windowStart, monitorCutoff, nextFollowUp, checkTimes } from './schedule.mjs';
 import { appendLog, summarizeResult } from './monitor-state.mjs';
 const storage = () => chrome.storage.local.get(['task','boundTabId','lastResult','lastNoticeKey','pendingTrigger','stopped']);
 let logQueue = Promise.resolve();
@@ -16,12 +16,19 @@ async function snapshot(taskId) {
   const taskLogs = (logs || []).filter(entry => entry.taskId === task.id);
   const lastAttempt = [...taskLogs].reverse().find(entry => ['check_started', 'check_result', 'check_error'].includes(entry.kind));
   const attemptState = lastAttempt?.kind === 'check_started' ? (Date.now() - Date.parse(lastAttempt.at) > 60_000 ? 'no_result' : 'running') : null;
-  return { active: true, taskId: task.id, bound: !!boundTabId, stopped: !!stopped, attemptState, lastResult: lastResult || null, nextCheckAt: alarms[0] ? new Date(alarms[0].scheduledTime).toISOString() : null, remainingChecks: alarms.length, logs: taskLogs.slice(-40) };
+  const next = alarms.find(alarm => alarm.scheduledTime < monitorCutoff(task));
+  return { active: true, taskId: task.id, bound: !!boundTabId, stopped: !!stopped, attemptState, lastResult: lastResult || null, nextCheckAt: next ? new Date(next.scheduledTime).toISOString() : null, remainingChecks: alarms.length ? checkTimes(task).length : 0, logs: taskLogs.slice(-40) };
 }
 async function schedule(task) {
   await chrome.alarms.clearAll();
-  const times = checkTimes(task);
-  for (let index = 0; index < times.length; index++) await chrome.alarms.create(`gowild-${index}`, { when: times[index] });
+  const now = Date.now(), start = windowStart(task), cutoff = monitorCutoff(task);
+  for (const minutes of OFFSETS) {
+    const at = start + minutes * 60_000;
+    if (at > now && at < cutoff) await chrome.alarms.create(`gowild-initial-${minutes}`, { when: at });
+  }
+  const repeatAt = nextFollowUp(task, now);
+  if (repeatAt !== null) await chrome.alarms.create('gowild-follow-up', { when: repeatAt, periodInMinutes: 30 });
+  const times = checkTimes(task, now);
   return { nextCheckAt: times[0] ? new Date(times[0]).toISOString() : null, checks: times.length };
 }
 async function notify(title, message) {
@@ -31,6 +38,10 @@ async function processResult(result, task, trigger) {
   const summary = summarizeResult(result, task);
   await chrome.storage.local.set({ lastResult: summary, pendingTrigger: null });
   await log('check_result', { trigger, status: summary.status, candidateCount: summary.candidateCount, ...(summary.flightNumber ? { flightNumber: summary.flightNumber, listedPrice: summary.listedPrice } : {}) });
+  if (['login_required', 'mismatch', 'unsupported_page', 'error'].includes(result.status)) {
+    await chrome.alarms.clearAll();
+    await log('monitor_paused', { status: result.status });
+  }
   const { lastNoticeKey } = await storage();
   if (result.status === 'login_required' && lastNoticeKey !== 'login_required') {
     await notify('GoWild Radar: login needed', 'Sign in to Frontier in the bound Chrome tab; monitoring cannot verify GoWild inventory while signed out.');
@@ -82,6 +93,7 @@ chrome.runtime.onMessage.addListener((message, sender, respond) => {
       try { result = await scanTab(tab.id, task, true); }
       catch { await log('bind_failed', { status: 'unsupported_page' }); throw new Error('Could not read the Frontier result tab. Reload it and try again.'); }
       if (result.status !== 'matched') { await log('bind_failed', { status: result.status }); throw new Error('Frontier tab must show the same route/date, one-way, one adult'); }
+      await schedule(task);
       await chrome.storage.local.set({ boundTabId: tab.id, lastResult: { status: 'bound', checkedAt: new Date().toISOString() }, lastNoticeKey: null });
       await log('tab_bound');
       return { ok: true, tabId: tab.id };
@@ -120,6 +132,7 @@ chrome.alarms.onAlarm.addListener(async alarm => {
   if (!alarm.name.startsWith('gowild-')) return;
   const { task, boundTabId, stopped } = await storage();
   if (!task || stopped) return;
+  if (Date.now() >= monitorCutoff(task)) { await chrome.alarms.clearAll(); await chrome.storage.local.set({ stopped: true, pendingTrigger: null }); await log('monitor_stopped', { status: 'window_ended' }); return; }
   if (!boundTabId) { await log('scheduled_skipped', { status: 'tab_not_bound' }); return; }
   try {
     const tab = await chrome.tabs.get(boundTabId);
@@ -133,5 +146,5 @@ chrome.alarms.onAlarm.addListener(async alarm => {
     await chrome.storage.local.set({ pendingTrigger: 'scheduled' });
     await chrome.tabs.reload(boundTabId);
   }
-  catch { await chrome.storage.local.set({ lastResult: { status: 'tab_closed', checkedAt: new Date().toISOString() }, pendingTrigger: null }); await log('check_error', { trigger: 'scheduled', status: 'tab_closed' }); await notify('GoWild Radar: tab closed', 'Reopen and bind a matching Frontier result tab to continue the remaining checks.'); }
+  catch { await chrome.alarms.clearAll(); await chrome.storage.local.set({ lastResult: { status: 'tab_closed', checkedAt: new Date().toISOString() }, pendingTrigger: null }); await log('check_error', { trigger: 'scheduled', status: 'tab_closed' }); await notify('GoWild Radar: tab closed', 'Reopen and bind a matching Frontier result tab to continue the remaining checks.'); }
 });
