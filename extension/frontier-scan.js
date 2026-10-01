@@ -2,20 +2,24 @@ const isoDate = value => { const match = String(value || '').match(/^(\d{1,2})\/
 const to24 = value => { const match = String(value || '').trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i); if (!match) return ''; return `${String((Number(match[1]) % 12) + (match[3].toUpperCase() === 'PM' ? 12 : 0)).padStart(2, '0')}:${match[2]}`; };
 const text = (root, selector) => root.querySelector(selector)?.textContent?.trim() || '';
 function waitForResults() {
-  if (document.querySelector('.greenBarLeftContentWrapper') && document.querySelector('.ibe-depart-section .navItem.gw')) return Promise.resolve(true);
+  const ready = () => document.querySelector('.header-search-container .greenBarLeftDeptCity') && document.querySelector('.header-search-container .greenBarLeftArrvCity') && document.querySelector('.ibe-depart-section .navItem.gw');
+  if (ready()) return Promise.resolve(true);
   return new Promise(resolve => {
-    const observer = new MutationObserver(() => { if (document.querySelector('.greenBarLeftContentWrapper') && document.querySelector('.ibe-depart-section .navItem.gw')) { observer.disconnect(); clearTimeout(timer); resolve(true); } });
+    const observer = new MutationObserver(() => { if (ready()) { observer.disconnect(); clearTimeout(timer); resolve(true); } });
     const timer = setTimeout(() => { observer.disconnect(); resolve(false); }, 15000);
     observer.observe(document.documentElement, { childList: true, subtree: true });
   });
 }
 function routeAndDate(task) {
-  const header = document.querySelector('.greenBarLeftContentWrapper');
-  const airports = header?.innerText?.match(/\b[A-Z]{3}\b/g) || [];
-  const oneWay = !document.querySelector('.ibe-return-section');
-  const oneAdult = /\b1 adult\b/i.test(header?.innerText || '');
-  const date = isoDate(document.querySelector('#searchDepartureDate')?.value);
-  return { matches: airports[0] === task.origin && airports[1] === task.destination && date === task.travelDate && oneWay && oneAdult, airports, date, oneWay, oneAdult };
+  const header = document.querySelector('.header-search-container');
+  const airports = [text(header, '.greenBarLeftDeptCity'), text(header, '.greenBarLeftArrvCity')];
+  const itineraryLabel = header?.querySelector('.header-search-button')?.getAttribute('aria-label') || '';
+  const oneWay = /\bone way\b/i.test(itineraryLabel) && !document.querySelector('.ibe-return-section');
+  const oneAdult = /\b1 adults?\b/i.test(itineraryLabel);
+  const selectedDate = document.querySelector('.ibe-depart-section .ibe-flight-slider-box-selected')?.getAttribute('data-date') || '';
+  const inputDate = isoDate(document.querySelector('#searchDepartureDate')?.value);
+  const date = selectedDate || inputDate;
+  return { matches: airports[0] === task.origin && airports[1] === task.destination && date === task.travelDate && (!selectedDate || !inputDate || selectedDate === inputDate) && oneWay && oneAdult, airports, date, oneWay, oneAdult };
 }
 async function scan(task, validateOnly = false) {
   if (location.hostname !== 'booking.flyfrontier.com' || location.pathname !== '/Flight/Select') return { status: 'unsupported_page' };

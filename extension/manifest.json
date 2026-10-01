@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "GoWild Radar Personal Monitor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Checks a prepared Frontier one-way result at a limited booking window and alerts on a possible GoWild nonstop fare. Never purchases.",
   "permissions": ["alarms", "notifications", "storage", "tabs"],
   "host_permissions": ["https://booking.flyfrontier.com/*", "https://justneon99.github.io/frontier-gowild-dashboard/*"],
