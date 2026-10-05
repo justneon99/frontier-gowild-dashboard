@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-28T12:06:30Z",
+  "updatedAt": "2026-10-05T17:06:21Z",
   "observations": [
     {
       "route": "SJC→LAS",
@@ -11,7 +11,7 @@
       "fareType": "Discount Den Basic",
       "nonstop": true,
       "source": "https://flights.flyfrontier.com/en/flights-from-san-jose",
-      "refreshStatus": "fresh",
+      "refreshStatus": "stale",
       "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
     },
     {
@@ -23,7 +23,7 @@
       "fareType": "Discount Den Basic",
       "nonstop": true,
       "source": "https://flights.flyfrontier.com/en/flights-from-san-francisco",
-      "refreshStatus": "fresh",
+      "refreshStatus": "stale",
       "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
     },
     {
@@ -35,7 +35,7 @@
       "fareType": "Discount Den Basic",
       "nonstop": true,
       "source": "https://flights.flyfrontier.com/en/flights-from-san-francisco",
-      "refreshStatus": "fresh",
+      "refreshStatus": "stale",
       "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
     },
     {
@@ -47,7 +47,7 @@
       "fareType": "Discount Den Basic",
       "nonstop": true,
       "source": "https://flights.flyfrontier.com/en/flights-from-salt-lake-city",
-      "refreshStatus": "fresh",
+      "refreshStatus": "stale",
       "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
     },
     {
@@ -59,7 +59,7 @@
       "fareType": "Discount Den Basic",
       "nonstop": true,
       "source": "https://flights.flyfrontier.com/en/flights-from-salt-lake-city",
-      "refreshStatus": "fresh",
+      "refreshStatus": "stale",
       "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
     },
     {
@@ -71,7 +71,7 @@
       "fareType": "Discount Den Basic",
       "nonstop": true,
       "source": "https://flights.flyfrontier.com/en/flights-from-los-angeles",
-      "refreshStatus": "fresh",
+      "refreshStatus": "stale",
       "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
     },
     {
@@ -83,7 +83,7 @@
       "fareType": "Discount Den Basic",
       "nonstop": true,
       "source": "https://flights.flyfrontier.com/en/flights-from-los-angeles",
-      "refreshStatus": "fresh",
+      "refreshStatus": "stale",
       "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
     },
     {
@@ -95,7 +95,7 @@
       "fareType": "Discount Den Basic",
       "nonstop": true,
       "source": "https://flights.flyfrontier.com/en/flights-from-san-diego",
-      "refreshStatus": "fresh",
+      "refreshStatus": "stale",
       "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
     },
     {
@@ -107,7 +107,7 @@
       "fareType": "Discount Den Basic",
       "nonstop": true,
       "source": "https://flights.flyfrontier.com/en/flights-from-san-diego",
-      "refreshStatus": "fresh",
+      "refreshStatus": "stale",
       "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
     },
     {
@@ -119,7 +119,7 @@
       "fareType": "Discount Den Basic",
       "nonstop": true,
       "source": "https://flights.flyfrontier.com/en/flights-from-san-diego",
-      "refreshStatus": "fresh",
+      "refreshStatus": "stale",
       "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
     },
     {
@@ -131,7 +131,7 @@
       "fareType": "Discount Den Basic",
       "nonstop": true,
       "source": "https://flights.flyfrontier.com/en/flights-from-las-vegas",
-      "refreshStatus": "fresh",
+      "refreshStatus": "stale",
       "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
     },
     {
@@ -143,7 +143,7 @@
       "fareType": "Discount Den Basic",
       "nonstop": true,
       "source": "https://flights.flyfrontier.com/en/flights-from-las-vegas",
-      "refreshStatus": "fresh",
+      "refreshStatus": "stale",
       "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
     },
     {
@@ -155,7 +155,7 @@
       "fareType": "Discount Den Basic",
       "nonstop": true,
       "source": "https://flights.flyfrontier.com/en/flights-from-las-vegas",
-      "refreshStatus": "fresh",
+      "refreshStatus": "stale",
       "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
     },
     {
@@ -167,7 +167,7 @@
       "fareType": "Discount Den Basic",
       "nonstop": true,
       "source": "https://flights.flyfrontier.com/en/flights-from-las-vegas",
-      "refreshStatus": "fresh",
+      "refreshStatus": "stale",
       "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
     },
     {
@@ -179,7 +179,7 @@
       "fareType": "Discount Den Basic",
       "nonstop": true,
       "source": "https://flights.flyfrontier.com/en/flights-from-denver",
-      "refreshStatus": "fresh",
+      "refreshStatus": "stale",
       "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
     },
     {
@@ -191,7 +191,7 @@
       "fareType": "Discount Den Basic",
       "nonstop": true,
       "source": "https://flights.flyfrontier.com/en/flights-from-denver",
-      "refreshStatus": "fresh",
+      "refreshStatus": "stale",
       "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
     },
     {
@@ -203,7 +203,7 @@
       "fareType": "Discount Den Basic",
       "nonstop": true,
       "source": "https://flights.flyfrontier.com/en/flights-from-denver",
-      "refreshStatus": "fresh",
+      "refreshStatus": "stale",
       "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
     },
     {
@@ -215,7 +215,7 @@
       "fareType": "Discount Den Basic",
       "nonstop": true,
       "source": "https://flights.flyfrontier.com/en/flights-from-denver",
-      "refreshStatus": "fresh",
+      "refreshStatus": "stale",
       "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
     },
     {
@@ -227,7 +227,7 @@
       "fareType": "Discount Den Basic",
       "nonstop": true,
       "source": "https://flights.flyfrontier.com/en/flights-from-denver",
-      "refreshStatus": "fresh",
+      "refreshStatus": "stale",
       "priceScope": "Lowest qualifying public quote observed on the official origin deal page during this weekly pass; not GoWild inventory."
     },
     {
@@ -426,167 +426,556 @@
     }
   ],
   "weeklyRefresh": {
-    "observedAt": "2026-09-28T05:06:30-07:00",
-    "windowStart": "2026-09-28",
-    "windowEnd": "2026-12-27",
+    "observedAt": "2026-10-05T10:06:21-07:00",
+    "windowStart": "2026-10-05",
+    "windowEnd": "2027-01-03",
     "airportTimeZone": "America/Los_Angeles",
-    "quotedDirections": 19,
-    "reviewedDirections": 30,
+    "quotedDirections": 0,
+    "reviewedDirections": 89,
     "directions": [
       {
         "route": "SJC→LAS",
-        "status": "found_under_100",
-        "note": "One lowest official public quote under $100 retained."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-san-jose"
       },
       {
         "route": "LAS→SJC",
-        "status": "found_under_100",
-        "note": "One lowest official public quote under $100 retained."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-las-vegas"
       },
       {
         "route": "SJC→LAX",
-        "status": "not_observed_in_public_deals",
-        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-san-jose"
       },
       {
         "route": "LAX→SJC",
-        "status": "not_observed_in_public_deals",
-        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-los-angeles"
       },
       {
         "route": "SFO→LAS",
-        "status": "found_under_100",
-        "note": "One lowest official public quote under $100 retained."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-san-francisco"
       },
       {
         "route": "LAS→SFO",
-        "status": "found_under_100",
-        "note": "One lowest official public quote under $100 retained."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-las-vegas"
       },
       {
         "route": "SFO→LAX",
-        "status": "not_observed_in_public_deals",
-        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-san-francisco"
       },
       {
         "route": "LAX→SFO",
-        "status": "not_observed_in_public_deals",
-        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-los-angeles"
       },
       {
         "route": "SFO→DEN",
-        "status": "found_under_100",
-        "note": "One lowest official public quote under $100 retained."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-san-francisco"
       },
       {
         "route": "DEN→SFO",
-        "status": "found_under_100",
-        "note": "One lowest official public quote under $100 retained."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-denver"
       },
       {
         "route": "SFO→SAN",
-        "status": "not_observed_in_public_deals",
-        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-san-francisco"
       },
       {
         "route": "SAN→SFO",
-        "status": "found_under_100",
-        "note": "One lowest official public quote under $100 retained."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-san-diego"
       },
       {
         "route": "SFO→SLC",
-        "status": "not_observed_in_public_deals",
-        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-san-francisco"
       },
       {
         "route": "SLC→SFO",
-        "status": "not_observed_in_public_deals",
-        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-salt-lake-city"
       },
       {
         "route": "SLC→DEN",
-        "status": "found_under_100",
-        "note": "One lowest official public quote under $100 retained."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-salt-lake-city"
       },
       {
         "route": "DEN→SLC",
-        "status": "found_under_100",
-        "note": "One lowest official public quote under $100 retained."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-denver"
       },
       {
         "route": "SLC→LAX",
-        "status": "not_observed_in_public_deals",
-        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-salt-lake-city"
       },
       {
         "route": "LAX→SLC",
-        "status": "found_under_100",
-        "note": "One lowest official public quote under $100 retained."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-los-angeles"
       },
       {
         "route": "SLC→LAS",
-        "status": "found_under_100",
-        "note": "One lowest official public quote under $100 retained."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-salt-lake-city"
       },
       {
         "route": "LAS→SLC",
-        "status": "found_under_100",
-        "note": "One lowest official public quote under $100 retained."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-las-vegas"
       },
       {
         "route": "LAX→LAS",
-        "status": "not_observed_in_public_deals",
-        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-los-angeles"
       },
       {
         "route": "LAS→LAX",
-        "status": "not_observed_in_public_deals",
-        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-las-vegas"
       },
       {
         "route": "LAX→DEN",
-        "status": "found_under_100",
-        "note": "One lowest official public quote under $100 retained."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-los-angeles"
       },
       {
         "route": "DEN→LAX",
-        "status": "found_under_100",
-        "note": "One lowest official public quote under $100 retained."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-denver"
       },
       {
         "route": "SAN→LAS",
-        "status": "found_under_100",
-        "note": "One lowest official public quote under $100 retained."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-san-diego"
       },
       {
         "route": "LAS→SAN",
-        "status": "found_under_100",
-        "note": "One lowest official public quote under $100 retained."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-las-vegas"
       },
       {
         "route": "SAN→DEN",
-        "status": "found_under_100",
-        "note": "One lowest official public quote under $100 retained."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-san-diego"
       },
       {
         "route": "DEN→SAN",
-        "status": "found_under_100",
-        "note": "One lowest official public quote under $100 retained."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-denver"
       },
       {
         "route": "LAS→DEN",
-        "status": "not_observed_in_public_deals",
-        "note": "No qualifying quote was visible in the official public deals reviewed this week; the full dynamic calendar was not verifiable, so this is not a claim that no fare or flight exists."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-las-vegas"
       },
       {
         "route": "DEN→LAS",
-        "status": "found_under_100",
-        "note": "One lowest official public quote under $100 retained."
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-denver"
+      },
+      {
+        "route": "MCO→LAS",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-orlando"
+      },
+      {
+        "route": "LAS→MCO",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-las-vegas"
+      },
+      {
+        "route": "MCO→LAX",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-orlando"
+      },
+      {
+        "route": "LAX→MCO",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-los-angeles"
+      },
+      {
+        "route": "MCO→DEN",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-orlando"
+      },
+      {
+        "route": "DEN→MCO",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-denver"
+      },
+      {
+        "route": "MCO→CLT",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-orlando"
+      },
+      {
+        "route": "CLT→MCO",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-charlotte"
+      },
+      {
+        "route": "MCO→EWR",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-orlando"
+      },
+      {
+        "route": "EWR→MCO",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-newark"
+      },
+      {
+        "route": "MCO→LGA",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-orlando"
+      },
+      {
+        "route": "LGA→MCO",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-new-york"
+      },
+      {
+        "route": "MCO→CUN",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-orlando"
+      },
+      {
+        "route": "CUN→MCO",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-cancun"
+      },
+      {
+        "route": "MCO→SJO",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-orlando"
+      },
+      {
+        "route": "SJO→MCO",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-san-jose-3"
+      },
+      {
+        "route": "MCO→GUA",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-orlando"
+      },
+      {
+        "route": "GUA→MCO",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-guatemala-city"
+      },
+      {
+        "route": "MCO→SAL",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-orlando"
+      },
+      {
+        "route": "SAL→MCO",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-san-salvador"
+      },
+      {
+        "route": "MCO→SAP",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-orlando"
+      },
+      {
+        "route": "SAP→MCO",
+        "status": "not_checked",
+        "note": "Official origin deal page unavailable in this limited pass; direction not verified."
+      },
+      {
+        "route": "CLT→LGA",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-charlotte"
+      },
+      {
+        "route": "LGA→CLT",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-new-york"
+      },
+      {
+        "route": "CLT→DEN",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-charlotte"
+      },
+      {
+        "route": "DEN→CLT",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-denver"
+      },
+      {
+        "route": "DEN→CUN",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-denver"
+      },
+      {
+        "route": "CUN→DEN",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-cancun"
+      },
+      {
+        "route": "SEA→DEN",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-seattle"
+      },
+      {
+        "route": "DEN→SEA",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-denver"
+      },
+      {
+        "route": "SEA→LAS",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-seattle"
+      },
+      {
+        "route": "LAS→SEA",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-las-vegas"
+      },
+      {
+        "route": "SEA→LAX",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-seattle"
+      },
+      {
+        "route": "LAX→SEA",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-los-angeles"
+      },
+      {
+        "route": "ATL→SFO",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+      },
+      {
+        "route": "SFO→ATL",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-san-francisco"
+      },
+      {
+        "route": "ATL→LAX",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+      },
+      {
+        "route": "LAX→ATL",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-los-angeles"
+      },
+      {
+        "route": "ATL→LAS",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+      },
+      {
+        "route": "LAS→ATL",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-las-vegas"
+      },
+      {
+        "route": "ATL→DEN",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+      },
+      {
+        "route": "DEN→ATL",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-denver"
+      },
+      {
+        "route": "ATL→MCO",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+      },
+      {
+        "route": "MCO→ATL",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-orlando"
+      },
+      {
+        "route": "ATL→LGA",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+      },
+      {
+        "route": "LGA→ATL",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-new-york"
+      },
+      {
+        "route": "ATL→EWR",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+      },
+      {
+        "route": "EWR→ATL",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-newark"
+      },
+      {
+        "route": "ATL→CUN",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+      },
+      {
+        "route": "CUN→ATL",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-cancun"
+      },
+      {
+        "route": "ATL→TPA",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+      },
+      {
+        "route": "TPA→ATL",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-tampa"
+      },
+      {
+        "route": "ATL→SJO",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+      },
+      {
+        "route": "SJO→ATL",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-san-jose-3"
+      },
+      {
+        "route": "ATL→GUA",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+      },
+      {
+        "route": "GUA→ATL",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-guatemala-city"
+      },
+      {
+        "route": "ATL→SAL",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+      },
+      {
+        "route": "SAL→ATL",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-san-salvador"
+      },
+      {
+        "route": "TPA→DEN",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-tampa"
+      },
+      {
+        "route": "DEN→TPA",
+        "status": "itinerary_unverified",
+        "note": "Official origin deal page reviewed, but a matching nonstop fare itinerary and final total could not be verified; no current fare is published.",
+        "source": "https://flights.flyfrontier.com/en/flights-from-denver"
       }
     ],
     "note": {
-      "zh": "本周核实 30 个直飞方向；官方公开低价页观察到 19 个低于 $100 的 Discount Den 报价。其余 11 个方向在本轮公开页面中未观察到合格报价，动态日历未能完整核实，因此不代表无航班或无低价。公开报价不是 GoWild 库存。",
-      "en": "This week reviewed 30 nonstop directions and observed 19 Discount Den quotes below $100 on Frontier public deal pages. No qualifying quote was observed for the other 11 directions; the full dynamic calendar could not be completely verified, so this does not mean no flight or low fare exists. Public quotes are not GoWild inventory."
+      "zh": "本周检查了 18 个出发机场的 Frontier 官方公开低价页。页面报价未说明具体行程是否直飞，故本轮没有新增已核实的低于 $100 直飞报价；9 月旧报价保留原观察时间并标为历史。SAP 出发方向本轮未核实。未核实不代表无航班或无低价，公开报价也不是 GoWild 库存。",
+      "en": "This week reviewed Frontier public deal pages for 18 origin airports. Those pages do not establish whether each priced itinerary is nonstop, so no new verified under-$100 nonstop quote was added. September observations keep their original timestamps and are historical. SAP-origin pricing was not verified. Unverified does not mean no flight or low fare; public quotes are not GoWild inventory."
     }
   }
 }

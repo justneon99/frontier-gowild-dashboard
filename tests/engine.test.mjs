@@ -112,5 +112,6 @@ test('ATL and TPA expansion keeps direct coverage, season dates, and Eastern rem
   assert.equal(bookingReminder('2026-10-24','TPA',0,'DEN').timeZone,'America/New_York');
   assert.equal(recommend({origin:'ATL',destination:'SJO',from:'2026-10-01',to:'2026-10-20'},routes,[],now).status,'season_not_yet_in_window');
   assert.equal(recommend({origin:'ATL',destination:'CUN',from:'2026-10-13',to:'2026-10-13'},routes,[],now).status,'no_matching_dates');
+  assert.deepEqual(recommend({origin:'ATL',destination:'SAL',from:'2026-10-10',to:'2026-10-18'},routes,[],now).options.map(option=>option.travelDate),['2026-10-10','2026-10-17']);
   for(const destination of ['LAS','EWR','LGA','LAX'])assert.equal(recommend({origin:'TPA',destination,from:'2026-10-24',to:'2026-10-24'},routes,[],now).status,'no_verified_nonstop');
 });

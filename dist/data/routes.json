@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-29",
+  "updatedAt": "2026-10-05",
   "weekdays": "Monday first; representative Frontier schedule only. Seasonal routes with unknown weekdays are not offered as recommended dates; confirm exact date on Frontier.",
   "routes": [
     {
@@ -712,19 +712,20 @@
       "a": "ATL",
       "b": "SAL",
       "days": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0
       ],
       "status": "seasonal",
       "starts": "2026-10-10",
       "source": "https://www.flightsfrom.com/ATL-SAL",
-      "reviewedAt": "2026-09-29",
-      "officialSource": "https://flights.flyfrontier.com/en/flights-from-atlanta"
+      "reviewedAt": "2026-10-05",
+      "officialSource": "https://flights.flyfrontier.com/en/flights-from-atlanta",
+      "sampleWindow": "Oct 12–18, 2026: F9 219 operates Saturday at 10:30 local time; first announced flight Oct 10"
     },
     {
       "a": "TPA",
