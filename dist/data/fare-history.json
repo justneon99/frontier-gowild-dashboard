@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-05T17:06:21Z",
+  "updatedAt": "2026-10-26T17:32:21Z",
   "observations": [
     {
       "route": "SJC→LAS",
@@ -426,9 +426,9 @@
     }
   ],
   "weeklyRefresh": {
-    "observedAt": "2026-10-05T10:06:21-07:00",
-    "windowStart": "2026-10-05",
-    "windowEnd": "2027-01-03",
+    "observedAt": "2026-10-26T10:32:21-07:00",
+    "windowStart": "2026-10-26",
+    "windowEnd": "2027-01-24",
     "airportTimeZone": "America/Los_Angeles",
     "quotedDirections": 0,
     "reviewedDirections": 89,
@@ -974,8 +974,8 @@
       }
     ],
     "note": {
-      "zh": "本周检查了 18 个出发机场的 Frontier 官方公开低价页。页面报价未说明具体行程是否直飞，故本轮没有新增已核实的低于 $100 直飞报价；9 月旧报价保留原观察时间并标为历史。SAP 出发方向本轮未核实。未核实不代表无航班或无低价，公开报价也不是 GoWild 库存。",
-      "en": "This week reviewed Frontier public deal pages for 18 origin airports. Those pages do not establish whether each priced itinerary is nonstop, so no new verified under-$100 nonstop quote was added. September observations keep their original timestamps and are historical. SAP-origin pricing was not verified. Unverified does not mean no flight or low fare; public quotes are not GoWild inventory."
+      "zh": "2026-10-26 检查了 18 个出发机场的 Frontier 官方公开低价页。页面报价未说明具体行程是否直飞或最终税费，故本轮没有新增已核实的低于 $100 直飞报价；旧报价保留原观察时间并标为历史。SAP 出发方向本轮未核实。未核实不代表无航班或无低价，公开报价也不是 GoWild 库存。",
+      "en": "On Oct 26, 2026, Frontier public deal pages for 18 origin airports were reviewed. They do not establish whether each priced itinerary is nonstop or the final tax-inclusive total, so no new verified under-$100 nonstop quote was added. Older observations retain their original timestamps and remain historical. SAP-origin pricing was not verified. Unverified does not mean no flight or low fare; public quotes are not GoWild inventory."
     }
   }
 }
