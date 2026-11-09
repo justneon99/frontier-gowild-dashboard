@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-05",
+  "updatedAt": "2026-11-09",
   "weekdays": "Monday first; representative Frontier schedule only. Seasonal routes with unknown weekdays are not offered as recommended dates; confirm exact date on Frontier.",
   "routes": [
     {
@@ -355,33 +355,45 @@
       "a": "MCO",
       "b": "SJO",
       "days": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
       ],
-      "status": "active",
-      "source": "https://www.flightsfrom.com/MCO-SJO"
+      "status": "seasonal",
+      "source": "https://www.flightsfrom.com/MCO-SJO",
+      "starts": "2026-12-18",
+      "reviewedAt": "2026-11-09",
+      "sampleWindow": "Dec 18–19, 2026 reported by schedule and airport sources; exact dates and weekdays require Frontier confirmation.",
+      "additionalSources": [
+        "https://www.directflights.com/MCO-SJO",
+        "https://www.flymco.com/new-resuming-service/"
+      ]
     },
     {
       "a": "MCO",
       "b": "GUA",
       "days": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
       ],
       "status": "seasonal",
       "source": "https://www.flightsfrom.com/MCO-GUA",
-      "sampleWindow": "2026-10-10 to 2026-10-18",
-      "starts": "2026-10-10"
+      "sampleWindow": "Dec 3, 2026 resumption per Orlando airport and two nonstop schedule sources; first week shows Thu/Sat/Sun, not a stable weekly pattern.",
+      "starts": "2026-12-03",
+      "reviewedAt": "2026-11-09",
+      "additionalSources": [
+        "https://www.directflights.com/MCO-GUA",
+        "https://www.flymco.com/new-resuming-service/"
+      ]
     },
     {
       "a": "MCO",
@@ -404,16 +416,23 @@
       "a": "MCO",
       "b": "SAP",
       "days": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
       ],
-      "status": "active",
-      "source": "https://www.directflights.com/MCO-SAP"
+      "status": "seasonal",
+      "source": "https://www.directflights.com/MCO-SAP",
+      "starts": "2026-12-02",
+      "reviewedAt": "2026-11-09",
+      "sampleWindow": "Schedule sources show Dec 2 and Dec 4 nonstop flights; Orlando airport lists Dec 17 resuming service. Conflicting start dates; verify specific date on Frontier.",
+      "additionalSources": [
+        "https://www.flightsfrom.com/MCO-SAP",
+        "https://www.flymco.com/new-resuming-service/"
+      ]
     },
     {
       "a": "CLT",
@@ -712,20 +731,23 @@
       "a": "ATL",
       "b": "SAL",
       "days": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        1,
-        0
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
       ],
       "status": "seasonal",
-      "starts": "2026-10-10",
+      "starts": "2026-12-17",
       "source": "https://www.flightsfrom.com/ATL-SAL",
-      "reviewedAt": "2026-10-05",
+      "reviewedAt": "2026-11-09",
       "officialSource": "https://flights.flyfrontier.com/en/flights-from-atlanta",
-      "sampleWindow": "Oct 12–18, 2026: F9 219 operates Saturday at 10:30 local time; first announced flight Oct 10"
+      "sampleWindow": "Dec 17, 2026 resumption per FlightsFrom and DirectFlights; prior October Saturday sample is historical, not a current weekly pattern.",
+      "additionalSources": [
+        "https://www.directflights.com/ATL-SAL"
+      ]
     },
     {
       "a": "TPA",

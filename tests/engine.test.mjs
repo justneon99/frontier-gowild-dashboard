@@ -22,7 +22,8 @@ test('new nonstop coverage distinguishes seasonal dates from unknown weekdays',(
   const routes=routesData.routes;
   assert.equal(recommend({origin:'MCO',destination:'CUN',from:'2026-10-01',to:'2026-12-20'},routes,[],now).status,'season_not_yet_in_window');
   assert.equal(recommend({origin:'MCO',destination:'LGA',from:'2026-12-01',to:'2026-12-15'},routes,[],now).status,'schedule_unverified');
-  assert.equal(recommend({origin:'MCO',destination:'SJO',from:'2026-10-24',to:'2026-10-24'},routes,[],now).options[0].reminder.localDate,'2026-10-14');
+  assert.equal(recommend({origin:'MCO',destination:'SJO',from:'2026-10-24',to:'2026-10-24'},routes,[],now).status,'season_not_yet_in_window');
+  assert.equal(recommend({origin:'MCO',destination:'SJO',from:'2026-12-18',to:'2026-12-24'},routes,[],now).status,'schedule_unverified');
   assert.equal(recommend({origin:'SAN',destination:'SAP',from:'2026-10-24',to:'2026-10-24'},routes,[],now).status,'no_verified_nonstop');
 });
 test('Seattle only recommends verified Frontier nonstops in either direction',()=>{
@@ -63,7 +64,8 @@ test('LAX to SFO retains September dates regardless of later fare evidence or bu
   assert.equal(result.options[2].bookingStatus,'scheduled');
 });
 test('an elapsed international reminder does not remove a scheduled travel date',()=>{
-  const result=recommend({origin:'MCO',destination:'SJO',from:'2026-10-03',to:'2026-10-03'},routesData.routes,[],now);
+  const sample=[{a:'MCO',b:'SJO',status:'active',days:[0,0,0,0,0,1,0]}];
+  const result=recommend({origin:'MCO',destination:'SJO',from:'2026-10-03',to:'2026-10-03'},sample,[],now);
   assert.equal(result.options[0].travelDate,'2026-10-03');
   assert.equal(result.options[0].bookingStatus,'check_now');
 });
@@ -112,6 +114,7 @@ test('ATL and TPA expansion keeps direct coverage, season dates, and Eastern rem
   assert.equal(bookingReminder('2026-10-24','TPA',0,'DEN').timeZone,'America/New_York');
   assert.equal(recommend({origin:'ATL',destination:'SJO',from:'2026-10-01',to:'2026-10-20'},routes,[],now).status,'season_not_yet_in_window');
   assert.equal(recommend({origin:'ATL',destination:'CUN',from:'2026-10-13',to:'2026-10-13'},routes,[],now).status,'no_matching_dates');
-  assert.deepEqual(recommend({origin:'ATL',destination:'SAL',from:'2026-10-10',to:'2026-10-18'},routes,[],now).options.map(option=>option.travelDate),['2026-10-10','2026-10-17']);
+  assert.equal(recommend({origin:'ATL',destination:'SAL',from:'2026-11-10',to:'2026-11-18'},routes,[],now).status,'season_not_yet_in_window');
+  assert.equal(recommend({origin:'ATL',destination:'SAL',from:'2026-12-17',to:'2026-12-23'},routes,[],now).status,'schedule_unverified');
   for(const destination of ['LAS','EWR','LGA','LAX'])assert.equal(recommend({origin:'TPA',destination,from:'2026-10-24',to:'2026-10-24'},routes,[],now).status,'no_verified_nonstop');
 });
