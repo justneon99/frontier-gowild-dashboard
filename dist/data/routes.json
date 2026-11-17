@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09",
+  "updatedAt": "2026-11-17",
   "weekdays": "Monday first; representative Frontier schedule only. Seasonal routes with unknown weekdays are not offered as recommended dates; confirm exact date on Frontier.",
   "routes": [
     {
@@ -96,31 +96,32 @@
       "a": "SFO",
       "b": "SLC",
       "days": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
+        0,
+        1,
+        0,
+        1,
+        0,
+        1,
+        1
       ],
       "status": "seasonal",
       "starts": "2026-11-21",
       "source": "https://www.flightsfrom.com/SFO-SLC",
-      "reviewedAt": "2026-09-29",
+      "reviewedAt": "2026-11-17",
       "displayLabel": {
-        "zh": "Frontier 直飞 · 班期待核实",
-        "en": "Frontier nonstop · verify dates"
+        "zh": "Frontier 直飞 · 样本周二/四/六/日",
+        "en": "Frontier nonstop · sample Tue/Thu/Sat/Sun"
       },
       "scheduleNote": {
-        "zh": "此双向航线统一展示。公开班期来源列出 Frontier 自 2026-11-21 恢复直飞；更早日期的 Frontier 直飞尚未核实，不能据此断言没有航班。官网公开报价未注明是否直飞，具体日期请到 Frontier 查询。",
-        "en": "One entry covers both directions. Public schedule sources list Frontier nonstop service from Nov 21, 2026. Earlier Frontier nonstop dates remain unverified; this does not establish that no flights exist. Public fare pages do not specify nonstop service. Check exact dates with Frontier."
+        "zh": "此双向航线统一展示。FlightsFrom 的 2026-11-23 至 11-29 样本周列出双向 Frontier 直飞：周二、四、六、日。此前日期尚未核实；班期可能变动，请在 Frontier 核实具体出行日。",
+        "en": "One entry covers both directions. FlightsFrom lists Frontier nonstops in both directions on Tue/Thu/Sat/Sun during Nov 23–29, 2026. Earlier dates remain unverified. Schedules may change; confirm the exact travel date on Frontier."
       },
       "bookingSource": "https://flights.flyfrontier.com/en/flights-from-san-francisco-to-salt-lake-city",
       "additionalSources": [
         "https://www.flightsfrom.com/SLC-SFO",
         "https://www.flightconnections.com/flights-from-sfo-to-slc"
-      ]
+      ],
+      "sampleWindow": "Nov 23–29, 2026: F93394 SFO→SLC and F93393 SLC→SFO on Tue/Thu/Sat/Sun. Representative week only; confirm exact travel dates on Frontier."
     },
     {
       "a": "SLC",
